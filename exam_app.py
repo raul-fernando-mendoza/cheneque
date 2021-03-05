@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, request, abort
+from flask import Flask, request, abort, jsonify
 from flask_json import FlaskJSON, JsonError, json_response, as_json
 from flask_cors import CORS, cross_origin
 
@@ -62,6 +62,10 @@ def requestapi():
         abort(404, description=str(e))
     return json_response(result=resp);
 
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
 #curl -X POST --data '{"exam_impro_criteria":{"label":"","exam_impro_parameter_id":""}}' http://192.168.15.12/flask/exam_app/getObject
 @app.route('/getObject', methods=['POST'])
 @cross_origin(supports_credentials=True)
@@ -121,6 +125,22 @@ def requestUpdateObject():
 def get_value(user_id):
     return dict(value=12)
 
+
+@app.route('/api', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def processRequest():
+    # We use 'force' to skip mimetype checking to have shorter curl command.
+    log.debug("processRequest has been called")
+    data = request.get_json(force=True)
+    log.debug("data:" + str(data))
+    try:
+        obj = mysql_connect.processRequest(data)
+        log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
+    except Exception as e:
+        log.error("Exception:" + str(e))
+        log.error("data:" + str(data))
+        abort(404, description=str(e))
+    return json_response(result=obj)
 
 if __name__ == '__main__':
     logging.basicConfig(filename='/var/www/cgi-bin/exam_app.log',  level=logging.DEBUG)

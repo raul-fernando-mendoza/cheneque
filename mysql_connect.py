@@ -114,6 +114,8 @@ class Table:
                 rowValue = row[self.tableName + "." + key]
                 if isinstance(rowValue , datetime.datetime):
                     obj[key] = rowValue.strftime("%Y/%m/%d %H:%M:%S")
+                elif isinstance(rowValue , datetime.date):
+                    obj[key] = rowValue.strftime("%Y/%m/%d")                     
                 else:
                     obj[key] = rowValue
         return obj
@@ -123,10 +125,14 @@ class Table:
             value = self.tableFilter[key]
             if not isinstance(value,dict) and not isinstance(value,list):
                 rowValue = row[self.tableName + "." + key]
+                
                 if isinstance(rowValue , datetime.datetime):
                     v = rowValue.strftime("%Y/%m/%d %H:%M:%S")
+                elif isinstance(rowValue , datetime.date):
+                    v = rowValue.strftime("%Y/%m/%d")                    
                 else:
                     v = rowValue                
+                
                 if obj[key] != v:
                     return False
         return True        
@@ -147,7 +153,7 @@ class Qry:
                     self.createTableList( key, t.tableFilter )
         except Exception as e:
             log.error("Exception: createTableList" + str(e))
-            raise e
+            raise
 
     def getTableByName(self,tableName):
         for i in range(0,len(self.tables)):
@@ -164,7 +170,7 @@ class Qry:
                     log.debug("key %s is a %s" , key, type(keyValue))
                     if isinstance(keyValue,list):
                         filter = keyValue[0]
-                    else:
+                    elif isinstance(keyValue,dict):
                         filter = keyValue                
                     t = self.getTableByName(key)
                     newObj = t.createObjectFromRow( objRow )
@@ -197,14 +203,14 @@ class Qry:
                     self.fillObjectFromRow( lastObject, objRow, filter) 
         except Exception as e:
             log.error("fillObjectFromRow:" + str(e))
-            raise e                
+            raise                
 
     def buildObject(self, request, query):
         try:
             result = None
             mydb = MySql()
             cursor = mydb.getConnection().cursor()
-            log.debug("excecuting query")            
+            log.debug("Executing query: %s", query)            
             cursor.execute(query)
             column_names = cursor.column_names 
             
@@ -220,9 +226,9 @@ class Qry:
                     keyValue = request[key]
                     if ( isinstance(keyValue,dict) or isinstance(keyValue,list) ) and key not in self.reservedWords:
                         log.debug("creating object for:%s", key)
-                        if ( isinstance(keyValue,dict) or isinstance(keyValue,list) ):
+                        if isinstance(keyValue,list):
                             filter = keyValue[0]
-                        else:
+                        elif isinstance(keyValue,dict):
                             filter = keyValue
                         t = self.getTableByName(key)
                         newObj = t.createObjectFromRow( objRow )
@@ -231,7 +237,7 @@ class Qry:
                         if result == None: 
                             log.debug("key %s is null creating new", key)
                             if t.isList:
-                                log.debug("key % is array creating new")
+                                log.debug("key % is array creating new", t.tableName)
                                 result = [] 
                                 result.append( newObj )                           
                             else:
@@ -252,11 +258,13 @@ class Qry:
                             lastObject = newObj
 
                         self.fillObjectFromRow( lastObject, objRow, filter) 
+            cursor.close()
         except Exception as e:
             log.error("Exception buildObject:" + str(e))
+            raise
               
         finally:
-            cursor.close()
+            
             mydb.close()
 
         return result
@@ -305,6 +313,9 @@ class Qry:
 
             log.debug( "join:" + join )
 
+            qry = select + join
+            log.debug("qry:%s", qry)
+
             log.debug("creating where")
             where = ""
             for i in range(0, len(self.tables)):
@@ -319,7 +330,6 @@ class Qry:
                         where = " " + where + " AND " + w 
             log.debug( "where:" + where )
 
-            qry = select + join 
             if where !="" :
                 qry = qry + "\nWHERE " +  where
 
@@ -352,7 +362,7 @@ class Qry:
             
         except Exception as e:
             log.error("Exception executeQry %s",str(e))
-            raise e
+            raise
         finally:
             mydb.close()
 
@@ -371,7 +381,8 @@ def getObject(request):
         obj = q.executeQry( request )
         return obj
     except Exception as e:
-        log.error("error:" + str(e) )
+        log.error("getObject error:" + str(e) )
+        raise
 
 def addObject(request):
     try:
@@ -405,7 +416,7 @@ def addObject(request):
         log.error("Exception addObject:" + str(e) )
         cursor.close()
         connection.rollback()
-        return { "error":str(e)}
+        raise
     finally:
         mydb.close()
     return { "id":rowid}
@@ -452,11 +463,27 @@ def updateObject(request):
         log.error("Exception addObject:" + str(e) )
         cursor.close()
         connection.rollback()
-        return { "error":str(e)}
+        raise
     finally:
         mydb.close()
     return { "status":"OK"}
 
+
+def processRequest(req):
+    service = req["service"]  #always cheneque
+    database = req["database"]
+    action = req["action"] # get put(insert else update) remove
+    data = req["data"]
+
+    log.debug("processRequest service:%s database:%s action:%s data:%s", service, database, action, data )
+
+    if action == "get":
+        return getObject( data )
+    elif action == "add":
+        return addObject( data )
+    else:
+        log.error("action not found %s", action)
+        raise Exception("Action " + str(action) +" you probably want to use add get or del")
 
 if __name__ == "__main__":
     print("hello mysql_connect")
