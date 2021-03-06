@@ -384,42 +384,84 @@ def getObject(request):
         log.error("getObject error:" + str(e) )
         raise
 
+def insertObject(connection, parent_id_field, parent_id, table, request):
+    cursor = connection.cursor()
+    rowid = None
+    fieldsExp = ""
+    valuesExp = ""
+
+    if parent_id_field != None :
+        request[parent_id_field]=parent_id
+
+    for key in request:
+        keyValue = request[key]
+        if ( isinstance(keyValue,dict) or isinstance(keyValue,list) ):
+            continue  
+        
+        if( fieldsExp != ""):
+            fieldsExp = fieldsExp + ","
+        fieldsExp = fieldsExp + key
+
+        if( valuesExp != ""):
+            valuesExp = valuesExp + ","
+        
+
+        value = request[key]
+        if value == None:
+            valuesExp = valuesExp + "null"
+        elif isinstance(value, bool):
+            if value == True:
+                valuesExp = valuesExp + "1"
+            else:
+                valuesExp = valuesExp + "0"
+        elif isinstance(value,str):                    
+            valuesExp = valuesExp + "'" + value + "'"
+        elif isinstance(value , datetime.datetime):
+            valuesExp = valuesExp + value.strftime("%Y-%m-%d %H:%M:%S")
+        elif isinstance(value , datetime.date):
+            valuesExp = valuesExp + value.strftime("%Y-%m-%d")             
+        else:
+            valuesExp = valuesExp + str(value)
+                     
+    sql = "INSERT INTO " + table + "(" + fieldsExp + ") values(" + valuesExp + ")"
+    log.debug("sql:" + sql)
+        
+    cursor.execute(sql)
+
+    rowid= cursor.lastrowid
+
+    request["id"] = rowid
+
+    #now call recursivelly to insert all child 
+    for key in request:
+        keyValue = request[key]
+        if isinstance(keyValue,dict):
+            insertObject( table + "_id", rowid, key, keyValue) 
+        elif isinstance(keyValue,list):
+            for i in range(0, len(keyValue)):
+                insertObject( connection, table + "_id", rowid, key, keyValue[i])
+
+
+    
+
 def addObject(request):
     try:
         mydb = MySql()
         connection = mydb.getConnection()
-        cursor = connection.cursor()
-        rowid = None
-        database = ""
-        fieldsExp = ""
-        valuesExp = ""
+
         for key in request:
             database = key
-            record = request[database]
-            for field in record:
-                if valuesExp != "":
-                    valuesExp = valuesExp + "," 
-                    fieldsExp = fieldsExp + "," 
-                value = record[field]
-                if isinstance(value,str):                    
-                    valuesExp = valuesExp + "'" + value + "'"
-                else:
-                    valuesExp = valuesExp + str(value)
-                fieldsExp = fieldsExp + field              
-        sql = "INSERT INTO " + database + "(" + fieldsExp + ") values(" + valuesExp + ")"
-        log.debug("sql:" + sql)
-        
-        cursor.execute(sql)
+            insertObject( connection, None, None, database, request[database])
+
         connection.commit()
-        rowid= cursor.lastrowid
+            
     except Exception as e:
         log.error("Exception addObject:" + str(e) )
-        cursor.close()
         connection.rollback()
         raise
     finally:
         mydb.close()
-    return { "id":rowid}
+    return request
 
 
 def updateObject(request):
