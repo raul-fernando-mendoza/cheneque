@@ -3,8 +3,18 @@ import datetime
 import json
 import logging
 import mysql.connector
+import decimal
+import uuid
 
 log = logging.getLogger("exam_app")
+
+class Error(Exception):
+    """Base class for exceptions in this module."""
+    pass
+
+class LoginError(Error):
+    pass
+
 
 class MySql:
     cnx = None
@@ -112,10 +122,13 @@ class Table:
             value = self.tableFilter[key]
             if not isinstance(value,dict) and not isinstance(value,list):
                 rowValue = row[self.tableName + "." + key]
+                log.debug("createObjectFromRow key %s is a %s" , key, type(rowValue))
                 if isinstance(rowValue , datetime.datetime):
                     obj[key] = rowValue.strftime("%Y/%m/%d %H:%M:%S")
                 elif isinstance(rowValue , datetime.date):
-                    obj[key] = rowValue.strftime("%Y/%m/%d")                     
+                    obj[key] = rowValue.strftime("%Y/%m/%d") 
+                elif isinstance(rowValue, decimal.Decimal ):
+                    obj[key] = float( rowValue )                    
                 else:
                     obj[key] = rowValue
         return obj
@@ -129,7 +142,9 @@ class Table:
                 if isinstance(rowValue , datetime.datetime):
                     v = rowValue.strftime("%Y/%m/%d %H:%M:%S")
                 elif isinstance(rowValue , datetime.date):
-                    v = rowValue.strftime("%Y/%m/%d")                    
+                    v = rowValue.strftime("%Y/%m/%d")   
+                elif isinstance(rowValue, decimal.Decimal ):
+                    v = float( rowValue )                                      
                 else:
                     v = rowValue                
                 
@@ -166,8 +181,9 @@ class Qry:
             for key in request.keys():
                 log.debug("filling object key %s", key)
                 keyValue = request[key]
+                log.debug("key %s is a %s" , key, type(keyValue))
                 if isinstance(keyValue,dict) or isinstance(keyValue,list):
-                    log.debug("key %s is a %s" , key, type(keyValue))
+                    
                     if isinstance(keyValue,list):
                         filter = keyValue[0]
                     elif isinstance(keyValue,dict):
@@ -204,71 +220,7 @@ class Qry:
         except Exception as e:
             log.error("fillObjectFromRow:" + str(e))
             raise                
-
-    def buildObject(self, request, query):
-        try:
-            result = None
-            mydb = MySql()
-            cursor = mydb.getConnection().cursor()
-            log.debug("Executing query: %s", query)            
-            cursor.execute(query)
-            column_names = cursor.column_names 
-            
-            for row in cursor:
-                objRow = dict(zip(column_names,row))
-               
-                #log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
-                for i in range(0,len(column_names)):
-                    log.debug("%s:%s", column_names[i], objRow[column_names[i]] )
-
-                
-                for key in request.keys():
-                    keyValue = request[key]
-                    if ( isinstance(keyValue,dict) or isinstance(keyValue,list) ) and key not in self.reservedWords:
-                        log.debug("creating object for:%s", key)
-                        if isinstance(keyValue,list):
-                            filter = keyValue[0]
-                        elif isinstance(keyValue,dict):
-                            filter = keyValue
-                        t = self.getTableByName(key)
-                        newObj = t.createObjectFromRow( objRow )
-                        #ensure there is a lastObject
-                        
-                        if result == None: 
-                            log.debug("key %s is null creating new", key)
-                            if t.isList:
-                                log.debug("key % is array creating new", t.tableName)
-                                result = [] 
-                                result.append( newObj )                           
-                            else:
-                                log.debug("key % is object creating new", key)
-                                result = newObj
-                            lastObject = newObj
-                        else:
-                            log.debug("key %s is not null retring last", key)
-                            if t.isList:        
-                                lastObject = result[-1]
-                            else:
-                                lastObject = result 
-                        #compare the new row to the previous one and if false then there should be a new row
-                        log.debug("comparing objects")
-                        if t.compareObjToRow( lastObject, objRow) == False:
-                            log.debug("last object is not the same creating new row")
-                            result.append( newObj )
-                            lastObject = newObj
-
-                        self.fillObjectFromRow( lastObject, objRow, filter) 
-            cursor.close()
-        except Exception as e:
-            log.error("Exception buildObject:" + str(e))
-            raise
-              
-        finally:
-            
-            mydb.close()
-
-        return result
-
+    
     def buildQry(self, request):
         try:
             mydb = MySql()    
@@ -320,14 +272,13 @@ class Qry:
             where = ""
             for i in range(0, len(self.tables)):
                 t = self.tables[i]
-                if i == 0:
-                    w = t.getWhereExpression()
-                    if w != "":
-                        where =  t.getWhereExpression()
-                else:
-                    w = t.getWhereExpression() 
-                    if w != "":
-                        where = " " + where + " AND " + w 
+                w = t.getWhereExpression()
+                if w != "":
+                    if where != "":
+                        where = where + " and " + w
+                    else:
+                        where = w
+
             log.debug( "where:" + where )
 
             if where !="" :
@@ -366,6 +317,71 @@ class Qry:
         finally:
             mydb.close()
 
+    def buildObject(self, request, query):
+        try:
+            result = None
+            mydb = MySql()
+            cursor = mydb.getConnection().cursor()
+            log.debug("Executing query: %s", query)            
+            cursor.execute(query)
+            column_names = cursor.column_names 
+            
+            for row in cursor:
+                objRow = dict(zip(column_names,row))
+               
+                #log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
+                for i in range(0,len(column_names)):
+                    log.debug("%s:%s", column_names[i], objRow[column_names[i]] )
+
+                
+                for key in request.keys():
+                    keyValue = request[key]
+                    if ( isinstance(keyValue,dict) or isinstance(keyValue,list) ) and key not in self.reservedWords:
+                        log.debug("creating object for:%s", key)
+                        if isinstance(keyValue,list):
+                            filter = keyValue[0]
+                        elif isinstance(keyValue,dict):
+                            filter = keyValue
+                        t = self.getTableByName(key)
+                        newObj = t.createObjectFromRow( objRow )
+                        #ensure there is a lastObject
+                        
+                        if result == None: 
+                            log.debug("key %s is null creating new", key)
+                            if t.isList:
+                                log.debug("key %s is array creating new", t.tableName)
+                                result = [] 
+                                result.append( newObj )                           
+                            else:
+                                log.debug("key %s is object creating new", key)
+                                result = newObj
+                            lastObject = newObj
+                        else:
+                            log.debug("key %s is not null retring last", key)
+                            if t.isList:        
+                                lastObject = result[-1]
+                            else:
+                                lastObject = result 
+                        #compare the new row to the previous one and if false then there should be a new row
+                        log.debug("comparing objects")
+                        if t.compareObjToRow( lastObject, objRow) == False:
+                            log.debug("last object is not the same creating new row")
+                            result.append( newObj )
+                            lastObject = newObj
+
+                        self.fillObjectFromRow( lastObject, objRow, filter) 
+            cursor.close()
+        except Exception as e:
+            log.error("Exception buildObject:" + str(e))
+            raise
+              
+        finally:
+            
+            mydb.close()
+
+        return result
+
+
     def executeQry(self,request):
         qry = self.buildQry(request)
         obj = self.buildObject(request, qry)
@@ -395,6 +411,7 @@ def insertObject(connection, parent_id_field, parent_id, table, request):
 
     for key in request:
         keyValue = request[key]
+        log.debug("key %s is instance of %s",key, type(keyValue) )
         if ( isinstance(keyValue,dict) or isinstance(keyValue,list) ):
             continue  
         
@@ -417,9 +434,9 @@ def insertObject(connection, parent_id_field, parent_id, table, request):
         elif isinstance(value,str):                    
             valuesExp = valuesExp + "'" + value + "'"
         elif isinstance(value , datetime.datetime):
-            valuesExp = valuesExp + value.strftime("%Y-%m-%d %H:%M:%S")
+            valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d %H:%M:%S") + "'"
         elif isinstance(value , datetime.date):
-            valuesExp = valuesExp + value.strftime("%Y-%m-%d")             
+            valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d")+ "'"             
         else:
             valuesExp = valuesExp + str(value)
                      
@@ -430,7 +447,8 @@ def insertObject(connection, parent_id_field, parent_id, table, request):
 
     rowid= cursor.lastrowid
 
-    request["id"] = rowid
+    if "id" in request and rowid:
+        request["id"] = rowid
 
     #now call recursivelly to insert all child 
     for key in request:
@@ -450,8 +468,12 @@ def addObject(request):
         connection = mydb.getConnection()
 
         for key in request:
-            database = key
-            insertObject( connection, None, None, database, request[database])
+            keyValue = request[key]
+            if isinstance(keyValue,dict):
+                insertObject(connection, None, None, key, keyValue) 
+            elif isinstance(keyValue,list):
+                for i in range(0, len(keyValue)):
+                    insertObject(connection, None, None, key, keyValue[i])            
 
         connection.commit()
             
@@ -493,6 +515,17 @@ def updateObject(request):
             value = record[field]
             if isinstance(value,str):                    
                 whereExp = whereExp + field + "="+  "'" + value + "'"
+            elif isinstance(value, bool):
+                if value == True:
+                    valuesExp = valuesExp + "1"
+                else:
+                    valuesExp = valuesExp + "0"
+            elif isinstance(value,str):                    
+                valuesExp = valuesExp + "'" + value + "'"
+            elif isinstance(value , datetime.datetime):
+                valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d %H:%M:%S") + "'"
+            elif isinstance(value , datetime.date):
+                valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d")+ "'"                   
             else:
                 whereExp = whereExp + field + "="+  str(value)
 
@@ -510,6 +543,94 @@ def updateObject(request):
         mydb.close()
     return { "status":"OK"}
 
+def login(request):
+    user_name = request["user_name"]
+    password = request["password"]
+    login_request = {
+        "user":{
+            "id":"",
+            "user_name":user_name,
+            "password":password
+        }
+    }
+    login_result = getObject( login_request )
+    if login_result == None or password != login_result["password"]:
+        log.error("invalid login for %s", user_name)
+        raise LoginError("invalid user_name or password")
+    
+    token = str(uuid.uuid4())
+    t = datetime.datetime.now() + datetime.timedelta(days=1) 
+    user_id = login_result["id"]
+
+    token_request = {
+        "credentials":{
+            "token":token,
+            "expirationDate": t.strftime("%Y/%m/%d %H:%M:%S"),
+            "user_id":user_id
+        }
+    }
+
+    addObject( token_request )
+
+    request_user = {
+        "user":{
+            "id":user_id,
+            "user_name":"",
+            "user_role":[{
+               "role_id":"" 
+            }],
+            "user_attribute":[{
+                "attribute_name":"",
+                "attribute_value":""
+            }]
+        }
+    }
+    result = getObject(request_user)
+
+    result["token"] = token
+
+    return result
+
+def validateToken(request):
+    token = request["token"]  
+
+    token_request = {
+        "credentials":{
+            "token":token,
+            "expirationDate":"",
+            "user_id":""
+        }
+    } 
+
+    result = getObject( token_request ) 
+    if result == None :
+        raise LoginError("Token not found")
+
+    t = datetime.datetime.now()
+    e = datetime.datetime.strptime(result["expirationDate"], "%Y/%m/%d %H:%M:%S")
+    if t > e:
+        raise LoginError("Token Expired")
+
+    request_user = {
+        "user":{
+            "id":result["user_id"],
+            "user_name":"",
+            "user_role":[{
+               "role_id":"" 
+            }],
+            "user_attribute":[{
+                "attribute_name":"",
+                "attribute_value":""
+            }]
+        }
+    }
+    result = getObject(request_user)
+
+    result["token"] = token
+
+    return result
+
+
 
 def processRequest(req):
     service = req["service"]  #always cheneque
@@ -523,9 +644,15 @@ def processRequest(req):
         return getObject( data )
     elif action == "add":
         return addObject( data )
+    elif action == "update":
+        return updateObject( data )  
+    elif action == "login":
+        return login( data )   
+    elif action == "validateToken":
+        return validateToken( data )                     
     else:
         log.error("action not found %s", action)
-        raise Exception("Action " + str(action) +" you probably want to use add get or del")
+        raise Exception("Action " + str(action) +" you probably want to use: get, add, update or remove")
 
 if __name__ == "__main__":
     print("hello mysql_connect")

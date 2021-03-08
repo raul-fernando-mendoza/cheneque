@@ -136,6 +136,10 @@ def processRequest():
     try:
         obj = mysql_connect.processRequest(data)
         log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
+    except mysql_connect.LoginError as le:
+        log.error("Exception:" + str(le))
+        log.error("data:" + str(data))
+        abort(401, description=str(e))        
     except Exception as e:
         log.error("Exception:" + str(e))
         log.error("data:" + str(data))
