@@ -604,11 +604,13 @@ def validateToken(request):
 
     result = getObject( token_request ) 
     if result == None :
+        log.error("Token not found %s", token)
         raise LoginError("Token not found")
 
     t = datetime.datetime.now()
     e = datetime.datetime.strptime(result["expirationDate"], "%Y/%m/%d %H:%M:%S")
     if t > e:
+        log.error("Token expired %s %s %s", token, t.strftime("%Y/%m/%d %H:%M:%S"), e.strftime("%Y/%m/%d %H:%M:%S"))
         raise LoginError("Token Expired")
 
     request_user = {
@@ -641,15 +643,17 @@ def processRequest(req):
     log.debug("processRequest service:%s database:%s action:%s data:%s", service, database, action, data )
 
     if action == "get":
+        validateToken( req ) 
         return getObject( data )
     elif action == "add":
+        validateToken( data ) 
         return addObject( data )
     elif action == "update":
+        validateToken( data ) 
         return updateObject( data )  
     elif action == "login":
         return login( data )   
-    elif action == "validateToken":
-        return validateToken( data )                     
+                
     else:
         log.error("action not found %s", action)
         raise Exception("Action " + str(action) +" you probably want to use: get, add, update or remove")

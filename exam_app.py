@@ -138,11 +138,11 @@ def processRequest():
         log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
     except mysql_connect.LoginError as le:
         log.error("Exception:" + str(le))
-        log.error("data:" + str(data))
-        abort(401, description=str(e))        
+        log.error("data:" + json.dumps(data,  indent=4, sort_keys=True))
+        abort(401, description=str(le))        
     except Exception as e:
         log.error("Exception:" + str(e))
-        log.error("data:" + str(data))
+        log.error("data:" + json.dumps(data,  indent=4, sort_keys=True))
         abort(404, description=str(e))
     return json_response(result=obj)
 

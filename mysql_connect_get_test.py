@@ -17,7 +17,42 @@ class TestExam(unittest.TestCase):
     """
     
     def testGet(self):
-            data = {'service': 'cheneque', 'database': 'entities', 'action': 'get', 'data': {'exam_impro_ap_parameter': [{'id': '', 'completado': '', 'maestro': {'id': '2', 'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}, 'exam_impro_ap': {'fechaApplicacion': '', 'completado': '', 'materia': '', 'estudiante': {'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}}, 'exam_impro_parameter': {'label': '', 'exam_impro_type': {'label': ''}}}]}}
+            data = {
+                "action": "get",
+                "data": {
+                    "exam_impro_ap_parameter": [
+                        {
+                            "completado": "",
+                            "exam_impro_ap": {
+                                "completado": "",
+                                "estudiante": {
+                                    "apellidoMaterno": "",
+                                    "apellidoPaterno": "",
+                                    "nombre": ""
+                                },
+                                "fechaApplicacion": "",
+                                "materia": ""
+                            },
+                            "exam_impro_parameter": {
+                                "exam_impro_type": {
+                                    "label": ""
+                                },
+                                "label": ""
+                            },
+                            "id": "",
+                            "maestro": {
+                                "apellidoMaterno": "",
+                                "apellidoPaterno": "",
+                                "id": "",
+                                "nombre": ""
+                            }
+                        }
+                    ]
+                },
+                "database": "entities",
+                "service": "cheneque",
+                "token": "09fbfc96-ff4c-44b8-ac05-2bd62b5dc997"
+            }
             
             obj = mysql_connect.processRequest(data)
             logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
