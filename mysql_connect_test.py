@@ -12,16 +12,34 @@ class TestExamenObservations(unittest.TestCase):
     
     def testReadObject(self):
             data = {
-                "exam_impro_parameter":[{
-                    "id":"",
-                    "exam_impro_type_id":1,
-                    "label":"",
-                    "exam_impro_criteria":[{
-                        "id":"",
-                        "label":"",
-                        "initially_selected":""
-                    }]
-                }]
+                    "exam_impro_type": {
+                        "exam_impro_parameter(+)": [
+                            {
+                                "exam_impro_criteria(+)": [
+                                    {
+                                        "exam_impro_parameter_id": "",
+                                        "exam_impro_question(+)": [
+                                            {
+                                                "description": "",
+                                                "exam_impro_criteria_id": "",
+                                                "id": "",
+                                                "label": "",
+                                                "points": ""
+                                            }
+                                        ],
+                                        "id": "",
+                                        "initially_selected": "",
+                                        "label": ""
+                                    }
+                                ],
+                                "exam_impro_type_id": "",
+                                "id": "",
+                                "label": ""
+                            }
+                        ],
+                        "id": 4,
+                        "label": ""
+                    }
             }
             obj = mysql_connect.getObject(data)
             logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
@@ -53,11 +71,7 @@ class TestExamenObservations(unittest.TestCase):
     def testReadObject(self):
         data = {
             "exam_impro_criteria":{  
-                "label":"some new criteria 2",
-                "exam_impro_parameter_id":1
-            },
-            "where":{
-                id:17
+               id:17
             }
         }
         obj = mysql_connect.addObject(data)

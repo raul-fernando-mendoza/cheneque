@@ -15,6 +15,8 @@ class Error(Exception):
 class LoginError(Error):
     pass
 
+class DeleteWithEmptyWhereError(Error):
+    pass
 
 class MySql:
     cnx = None
@@ -77,10 +79,16 @@ class Table:
     tableName = None
     tableFilter = None
     isList = False
+    isOuterJoin = False
     def __init__(self,parentTableName, tableName, filter):
-        log.debug( "new Table(%s,%s)", str(parentTableName) , str(tableName) ), 
+        log.debug( "new Table(%s,%s)", str(parentTableName) , str(tableName) ) 
         self.parentTableName = parentTableName
-        self.tableName = tableName
+        if tableName.endswith("(+)") == True:
+            l = len(tableName) - 3
+            self.tableName = tableName[0:l] 
+            self.isOuterJoin = True
+        else:
+            self.tableName = tableName
         
         if isinstance( filter, list ):
             self.tableFilter = filter[0]
@@ -117,12 +125,15 @@ class Table:
         return where
 
     def createObjectFromRow( self, row ):
+        isNullObject = True
         obj = {}
         for key in self.tableFilter.keys():
             value = self.tableFilter[key]
             if not isinstance(value,dict) and not isinstance(value,list):
                 rowValue = row[self.tableName + "." + key]
                 log.debug("createObjectFromRow key %s is a %s" , key, type(rowValue))
+                if rowValue!=None:
+                    isNullObject = False
                 if isinstance(rowValue , datetime.datetime):
                     obj[key] = rowValue.strftime("%Y/%m/%d %H:%M:%S")
                 elif isinstance(rowValue , datetime.date):
@@ -131,7 +142,10 @@ class Table:
                     obj[key] = float( rowValue )                    
                 else:
                     obj[key] = rowValue
-        return obj
+        if isNullObject:
+            return None
+        else:
+            return obj
     
     def compareObjToRow(self, obj, row ):
         for key in self.tableFilter.keys():
@@ -165,12 +179,19 @@ class Qry:
                 if (isinstance(request[key],dict) or isinstance(request[key],list) ) and key not in self.reservedWords:
                     t = Table(parentTable, key, request[key])
                     self.tables.append( t )
-                    self.createTableList( key, t.tableFilter )
+                    self.createTableList( t.tableName, t.tableFilter )
         except Exception as e:
             log.error("Exception: createTableList" + str(e))
             raise
 
     def getTableByName(self,tableName):
+
+        if tableName.endswith("(+)") == True:
+            l = len(tableName) - 3
+            tableName = tableName[0:l] 
+        else:
+            tableName = tableName
+
         for i in range(0,len(self.tables)):
             if self.tables[i].tableName == tableName :
                 return self.tables[i]
@@ -183,40 +204,42 @@ class Qry:
                 keyValue = request[key]
                 log.debug("key %s is a %s" , key, type(keyValue))
                 if isinstance(keyValue,dict) or isinstance(keyValue,list):
-                    
                     if isinstance(keyValue,list):
                         filter = keyValue[0]
                     elif isinstance(keyValue,dict):
                         filter = keyValue                
                     t = self.getTableByName(key)
                     newObj = t.createObjectFromRow( objRow )
-                    #ensure there is a lastObject
-                
-                    if key not in obj:
+                    if t.tableName not in obj:
                         log.debug("object %s is null creating new", key) 
                         if t.isList:
                             log.debug("objet %s is array creating new", key)
-                            obj[key] = [] 
-                            obj[key].append( newObj )                           
+                            obj[t.tableName] = []
+                            if newObj != None:
+                                obj[t.tableName].append( newObj )                           
                         else:
                             log.debug("object %s is object creating new", key)
-                            obj[key] = newObj
+                            obj[t.tableName] = newObj
                         lastObject = newObj
                     else:
                         if t.isList:
-                            log.debug("object %s was not null and array retring last", key)        
-                            lastObject = obj[key][-1]
+                            log.debug("object %s was not null and array retring last", key) 
+                            if len(obj[t.tableName]) > 0:
+                                lastObject = obj[t.tableName][-1]
+                            else:
+                                lastObject = None
                         else:
                             log.debug("object %s was not null and object retrivig last")
-                            lastObject = obj[key] 
+                            lastObject = obj[t.tableName] 
                     #compare the new row to the previous one and if false then there should be a new row
                     log.debug("compare vs last Object")
-                    if t.compareObjToRow( lastObject, objRow) == False:
-                        log.debug("new row is different from last adding row")
-                        obj[key].append( newObj )
-                        lastObject = newObj
-                    log.debug("call for sub filters")
-                    self.fillObjectFromRow( lastObject, objRow, filter) 
+                    if lastObject != None:
+                        if t.compareObjToRow( lastObject, objRow) == False:
+                            log.debug("new row is different from last adding row")
+                            obj[t.tableName].append( newObj )
+                            lastObject = newObj
+                        log.debug("call for sub filters")
+                        self.fillObjectFromRow( lastObject, objRow, filter) 
         except Exception as e:
             log.error("fillObjectFromRow:" + str(e))
             raise                
@@ -246,7 +269,10 @@ class Qry:
                 if i == 0:
                     join = "FROM " + t.tableName 
                 else:
-                    join = join + " JOIN " + t.tableName + " ON ("
+                    if t.isOuterJoin:
+                        join = join + " LEFT JOIN " + t.tableName + " ON ("
+                    else:
+                        join = join + " JOIN " + t.tableName + " ON ("
                 
                     constraints = mydb.getConstraints( t.parentTableName, t.tableName )
 
@@ -391,16 +417,19 @@ class Qry:
         return self.data        
 
 def getObject(request):
+    log.info("GetObject Called")
     try:
         q = Qry()
-        log.debug("len( q.tables ):%i", len( q.tables ) )
         obj = q.executeQry( request )
-        return obj
+        
     except Exception as e:
         log.error("getObject error:" + str(e) )
         raise
+    log.info("GetObject Called ended")
+    return obj
 
 def insertObject(connection, parent_id_field, parent_id, table, request):
+    log.info("Insertobject called")
     cursor = connection.cursor()
     rowid = None
     fieldsExp = ""
@@ -444,6 +473,7 @@ def insertObject(connection, parent_id_field, parent_id, table, request):
     log.debug("sql:" + sql)
         
     cursor.execute(sql)
+    log.debug("insert ended")
 
     rowid= cursor.lastrowid
 
@@ -458,11 +488,14 @@ def insertObject(connection, parent_id_field, parent_id, table, request):
         elif isinstance(keyValue,list):
             for i in range(0, len(keyValue)):
                 insertObject( connection, table + "_id", rowid, key, keyValue[i])
+    log.debug("Insertobject ended")
+    return request
 
 
     
 
 def addObject(request):
+    log.info("AddObject called")
     try:
         mydb = MySql()
         connection = mydb.getConnection()
@@ -476,6 +509,7 @@ def addObject(request):
                     insertObject(connection, None, None, key, keyValue[i])            
 
         connection.commit()
+        log.debug("end object called")
             
     except Exception as e:
         log.error("Exception addObject:" + str(e) )
@@ -483,11 +517,12 @@ def addObject(request):
         raise
     finally:
         mydb.close()
+    log.info("AddObject  ended")
     return request
 
 
 def updateObject(request):
-
+    log.info("UpdateObject called")
     try:
         mydb = MySql()
         connection = mydb.getConnection()
@@ -541,11 +576,52 @@ def updateObject(request):
         raise
     finally:
         mydb.close()
+    log.info("UpdateObject ended")
     return { "status":"OK"}
 
+def deleteObject(request):
+    log.info("DeleteObject called")
+    try:
+        
+        mydb = MySql()
+        connection = mydb.getConnection()
+        cursor = connection.cursor()
+        table = ""
+        whereExp = ""
+        for key in request:
+            table = key
+            record = request[table]
+            for field in record:
+                if whereExp != "":
+                    whereExp = whereExp + "," 
+                value = record[field]
+                if isinstance(value,str):                    
+                    whereExp = whereExp + field + "="+  "'" + value + "'"
+                else:
+                    whereExp = whereExp + field + "="+  str(value)
+
+        if whereExp == "":
+            raise DeleteWithEmptyWhereError("where can not be null in delete")
+        sql = "DELETE FROM " + table + " WHERE " + whereExp
+        log.debug("sql:" + sql)
+        
+        cursor.execute(sql)
+        log.debug("delete completed")
+        connection.commit()
+    except Exception as e:
+        log.error("Exception removeObject:" + str(e) )
+        connection.rollback()
+        raise
+    finally:
+        mydb.close()
+    log.info("DeleteObject called")
+    return { "status":"OK"}
+
+
+
 def login(request):
-    user_name = request["user_name"]
-    password = request["password"]
+    user_name = request["user"]["user_name"]
+    password = request["user"]["password"]
     login_request = {
         "user":{
             "id":"",
@@ -571,23 +647,10 @@ def login(request):
     }
 
     addObject( token_request )
-
-    request_user = {
-        "user":{
-            "id":user_id,
-            "user_name":"",
-            "user_role":[{
-               "role_id":"" 
-            }],
-            "user_attribute":[{
-                "attribute_name":"",
-                "attribute_value":""
-            }]
-        }
-    }
-    result = getObject(request_user)
+    result = getObject(request)
 
     result["token"] = token
+    result["password"] = ""
 
     return result
 
@@ -613,24 +676,7 @@ def validateToken(request):
         log.error("Token expired %s %s %s", token, t.strftime("%Y/%m/%d %H:%M:%S"), e.strftime("%Y/%m/%d %H:%M:%S"))
         raise LoginError("Token Expired")
 
-    request_user = {
-        "user":{
-            "id":result["user_id"],
-            "user_name":"",
-            "user_role":[{
-               "role_id":"" 
-            }],
-            "user_attribute":[{
-                "attribute_name":"",
-                "attribute_value":""
-            }]
-        }
-    }
-    result = getObject(request_user)
 
-    result["token"] = token
-
-    return result
 
 
 
@@ -646,11 +692,15 @@ def processRequest(req):
         validateToken( req ) 
         return getObject( data )
     elif action == "add":
-        validateToken( data ) 
+        validateToken( req ) 
         return addObject( data )
     elif action == "update":
-        validateToken( data ) 
+        validateToken( req ) 
         return updateObject( data )  
+    elif action == "delete":
+        validateToken( req ) 
+        return deleteObject( data )  
+
     elif action == "login":
         return login( data )   
                 

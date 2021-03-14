@@ -17,12 +17,12 @@ class TestExam(unittest.TestCase):
     """
     
     def testGet(self):
-            data = {
+            request = {
                 "action": "get",
                 "data": {
                     "exam_impro_ap_parameter": [
                         {
-                            "completado": "",
+                            "completado": True,
                             "exam_impro_ap": {
                                 "completado": "",
                                 "estudiante": {
@@ -43,7 +43,6 @@ class TestExam(unittest.TestCase):
                             "maestro": {
                                 "apellidoMaterno": "",
                                 "apellidoPaterno": "",
-                                "id": "",
                                 "nombre": ""
                             }
                         }
@@ -51,10 +50,10 @@ class TestExam(unittest.TestCase):
                 },
                 "database": "entities",
                 "service": "cheneque",
-                "token": "09fbfc96-ff4c-44b8-ac05-2bd62b5dc997"
+                "token": "bc193bee-69f6-4eb0-9cba-e79df446857a"
             }
             
-            obj = mysql_connect.processRequest(data)
+            obj = mysql_connect.processRequest(request)
             logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
     
 if __name__ == '__main__':
