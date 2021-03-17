@@ -20,37 +20,42 @@ class TestExam(unittest.TestCase):
             request = {
                 "action": "get",
                 "data": {
-                    "exam_impro_ap_parameter": [
-                        {
-                            "completado": True,
-                            "exam_impro_ap": {
-                                "completado": "",
-                                "estudiante": {
-                                    "apellidoMaterno": "",
-                                    "apellidoPaterno": "",
-                                    "nombre": ""
-                                },
-                                "fechaApplicacion": "",
-                                "materia": ""
-                            },
-                            "exam_impro_parameter": {
-                                "exam_impro_type": {
-                                    "label": ""
-                                },
+                    "exam_impro_type": {
+                        "exam_impro_parameter(+)": [
+                            {
+                                "exam_impro_criteria(+)": [
+                                    {
+                                        "exam_impro_parameter_id": "",
+                                        "exam_impro_question(+)": [
+                                            {
+                                                "description": "",
+                                                "exam_impro_criteria_id": "",
+                                                "id": "",
+                                                "label": "",
+                                                "points": ""
+                                            }
+                                        ],
+                                        "id": "",
+                                        "idx": "",
+                                        "initially_selected": "",
+                                        "label": ""
+                                    }
+                                ],
+                                "exam_impro_type_id": "",
+                                "id": "",
                                 "label": ""
-                            },
-                            "id": "",
-                            "maestro": {
-                                "apellidoMaterno": "",
-                                "apellidoPaterno": "",
-                                "nombre": ""
                             }
-                        }
-                    ]
+                        ],
+                        "id": 16,
+                        "label": ""
+                    },
+                    "orderBy":{
+                        "exam_impro_criteria.idx":""
+                    }
                 },
                 "database": "entities",
                 "service": "cheneque",
-                "token": "bc193bee-69f6-4eb0-9cba-e79df446857a"
+                "token": "7680ea3c-244b-4f4a-af3b-4cc1a475b3e8"
             }
             
             obj = mysql_connect.processRequest(request)

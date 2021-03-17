@@ -18,6 +18,50 @@ class LoginError(Error):
 class DeleteWithEmptyWhereError(Error):
     pass
 
+def addFieldValueToExpresion(expresion, field, value, sep):
+    if len(expresion) > 0:
+        expresion = expresion + sep
+
+    if value == None:
+        expresion = expresion + field + "= null"
+    elif isinstance(value,str):                    
+        expresion = expresion + field + "="+  "'" + value + "'"
+    elif isinstance(value, bool):
+        if value==True:
+            expresion = expresion + field + "=" + "1"
+        else:
+            expresion = expresion + field + "="  + "0"
+    elif isinstance(value , datetime.datetime):
+        expresion = expresion + field + "="  + "'" + value.strftime("%Y-%m-%d %H:%M:%S") + "'"
+    elif isinstance(value , datetime.date):
+        expresion = expresion + field + "=" + "'" + value.strftime("%Y-%m-%d")+ "'"                   
+    else:
+        expresion = expresion + field + "="+  str(value)
+    return expresion
+
+def getAddValueToExpresion(expresion,value,sep):
+    if len(expresion) > 0:
+        expresion = expresion + sep
+
+    if value == None:
+        expresion = expresion + "null"
+    elif isinstance(value,str):                    
+        expresion = expresion +  "'" + value + "'"
+    elif isinstance(value, bool):
+        if value==True:
+            expresion = expresion + "1"
+        else:
+            expresion = expresion + "0"
+    elif isinstance(value , datetime.datetime):
+        expresion = expresion + "'" + value.strftime("%Y-%m-%d %H:%M:%S") + "'"
+    elif isinstance(value , datetime.date):
+        expresion = expresion + "'" + value.strftime("%Y-%m-%d")+ "'"                   
+    else:
+        expresion = expresion + str(value)
+    return expresion
+
+
+
 class MySql:
     cnx = None
 
@@ -115,12 +159,7 @@ class Table:
             value = self.tableFilter[key]
             if value != "":
                 if not isinstance(value,dict) and not isinstance(value,list): 
-                    if where != "": 
-                        where = where + " and "
-                    if isinstance(value,str):
-                        where = where + " " + self.tableName + "." + key + " = '" + str(value) + "'"
-                    else:
-                        where = where + " " + self.tableName + "." + key +  " = " + str(value) 
+                    where = addFieldValueToExpresion(where, self.tableName + "." + key, value, " and ")
                 
         return where
 
@@ -443,32 +482,13 @@ def insertObject(connection, parent_id_field, parent_id, table, request):
         log.debug("key %s is instance of %s",key, type(keyValue) )
         if ( isinstance(keyValue,dict) or isinstance(keyValue,list) ):
             continue  
-        
+
         if( fieldsExp != ""):
             fieldsExp = fieldsExp + ","
         fieldsExp = fieldsExp + key
 
-        if( valuesExp != ""):
-            valuesExp = valuesExp + ","
-        
-
-        value = request[key]
-        if value == None:
-            valuesExp = valuesExp + "null"
-        elif isinstance(value, bool):
-            if value == True:
-                valuesExp = valuesExp + "1"
-            else:
-                valuesExp = valuesExp + "0"
-        elif isinstance(value,str):                    
-            valuesExp = valuesExp + "'" + value + "'"
-        elif isinstance(value , datetime.datetime):
-            valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d %H:%M:%S") + "'"
-        elif isinstance(value , datetime.date):
-            valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d")+ "'"             
-        else:
-            valuesExp = valuesExp + str(value)
-                     
+        valuesExp = getAddValueToExpresion(valuesExp,request[key],"," )
+                    
     sql = "INSERT INTO " + table + "(" + fieldsExp + ") values(" + valuesExp + ")"
     log.debug("sql:" + sql)
         
@@ -520,6 +540,22 @@ def addObject(request):
     log.info("AddObject  ended")
     return request
 
+def update(cursor, table, record):
+    updateExp = ""
+    whereExp = ""
+    for key in record:
+        if key != "where":
+            updateExp = addFieldValueToExpresion(updateExp, key, record[key],",")                                                  
+        elif key == "where":
+            where = record[key]
+            for field in where:
+                whereExp = addFieldValueToExpresion(whereExp, field, where[field]," and ")
+
+    sql = "UPDATE " + table + " set " + updateExp + " WHERE " + whereExp
+    log.debug("sql:" + sql)
+
+    cursor.execute(sql)
+
 
 def updateObject(request):
     log.info("UpdateObject called")
@@ -527,47 +563,15 @@ def updateObject(request):
         mydb = MySql()
         connection = mydb.getConnection()
         cursor = connection.cursor()
-        rowid = None        
-        database = ""
-        updateExp = ""
-        whereExp = ""
-        for key in request:
-            if key != "where":
-                database = key
-                record = request[database]
-                for field in record:
-                    if updateExp != "":
-                        updateExp = updateExp + "," 
-                    value = record[field]
-                    if isinstance(value,str):                    
-                        updateExp = updateExp + field + "="+  "'" + value + "'"
-                    else:
-                        updateExp = updateExp + field + "="+  str(value)
-        record = request["where"]
-        for field in record:
-            if whereExp != "":
-                whereExp = whereExp + "," 
-            value = record[field]
-            if isinstance(value,str):                    
-                whereExp = whereExp + field + "="+  "'" + value + "'"
-            elif isinstance(value, bool):
-                if value == True:
-                    valuesExp = valuesExp + "1"
-                else:
-                    valuesExp = valuesExp + "0"
-            elif isinstance(value,str):                    
-                valuesExp = valuesExp + "'" + value + "'"
-            elif isinstance(value , datetime.datetime):
-                valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d %H:%M:%S") + "'"
-            elif isinstance(value , datetime.date):
-                valuesExp = valuesExp + "'" + value.strftime("%Y-%m-%d")+ "'"                   
-            else:
-                whereExp = whereExp + field + "="+  str(value)
 
-        sql = "UPDATE " + database + " set " + updateExp + " WHERE " + whereExp
-        log.debug("sql:" + sql)
-        
-        cursor.execute(sql)
+        for table in request:
+            value = request[table]
+            if isinstance(value,list):
+                for r in value:
+                    update(cursor, table, r)
+            else:
+                update(cursor, table, value)
+            
         connection.commit()
     except Exception as e:
         log.error("Exception addObject:" + str(e) )
