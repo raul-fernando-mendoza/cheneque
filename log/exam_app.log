@@ -1,0 +1,1544 @@
+2021-03-18 17:09:45,577 - exam_app - DEBUG - processRequest has been called
+2021-03-18 17:09:45,580 - exam_app - DEBUG - data:{'service': 'cheneque', 'database': 'entities', 'action': 'update', 'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'data': {'exam_impro_ap_parameter': {'comentario': '', 'where': {'id': 299}}}}
+2021-03-18 17:09:45,581 - exam_app - DEBUG - processRequest service:cheneque database:entities action:update data:{'exam_impro_ap_parameter': {'comentario': '', 'where': {'id': 299}}}
+2021-03-18 17:09:45,582 - exam_app - INFO - GetObject Called
+2021-03-18 17:09:45,587 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa61106b8>
+2021-03-18 17:09:45,588 - exam_app - DEBUG - new Table(None,credentials)
+2021-03-18 17:09:45,588 - exam_app - DEBUG - tableFilter:{'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'expirationDate': '', 'user_id': ''}
+2021-03-18 17:09:45,588 - exam_app - DEBUG - self.tables length 1
+2021-03-18 17:09:45,589 - exam_app - DEBUG - select 0 table:credentials temp:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:45,589 - exam_app - DEBUG - select:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:45,589 - exam_app - DEBUG - creating join
+2021-03-18 17:09:45,589 - exam_app - DEBUG - join:FROM credentials
+2021-03-18 17:09:45,589 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+2021-03-18 17:09:45,590 - exam_app - DEBUG - creating where
+2021-03-18 17:09:45,590 - exam_app - DEBUG - where:credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:45,590 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:45,592 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa61106b8>
+2021-03-18 17:09:45,593 - exam_app - DEBUG - Executing query: SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:45,594 - exam_app - DEBUG - credentials.token:beda57eb-8962-4a14-9d8c-670d00ba91b1
+2021-03-18 17:09:45,595 - exam_app - DEBUG - credentials.expirationDate:2021-03-19 17:02:29
+2021-03-18 17:09:45,595 - exam_app - DEBUG - credentials.user_id:1
+2021-03-18 17:09:45,595 - exam_app - DEBUG - creating object for:credentials
+2021-03-18 17:09:45,595 - exam_app - DEBUG - createObjectFromRow key token is a <class 'str'>
+2021-03-18 17:09:45,596 - exam_app - DEBUG - createObjectFromRow key expirationDate is a <class 'datetime.datetime'>
+2021-03-18 17:09:45,596 - exam_app - DEBUG - createObjectFromRow key user_id is a <class 'int'>
+2021-03-18 17:09:45,596 - exam_app - DEBUG - key credentials is null creating new
+2021-03-18 17:09:45,596 - exam_app - DEBUG - key credentials is object creating new
+2021-03-18 17:09:45,597 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,597 - exam_app - DEBUG - filling object key token
+2021-03-18 17:09:45,597 - exam_app - DEBUG - key token is a <class 'str'>
+2021-03-18 17:09:45,598 - exam_app - DEBUG - filling object key expirationDate
+2021-03-18 17:09:45,598 - exam_app - DEBUG - key expirationDate is a <class 'str'>
+2021-03-18 17:09:45,598 - exam_app - DEBUG - filling object key user_id
+2021-03-18 17:09:45,598 - exam_app - DEBUG - key user_id is a <class 'str'>
+2021-03-18 17:09:45,599 - exam_app - INFO - GetObject Called ended
+2021-03-18 17:09:45,599 - exam_app - INFO - UpdateObject called
+2021-03-18 17:09:45,602 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa6147eb0>
+2021-03-18 17:09:45,602 - exam_app - DEBUG - sql:UPDATE exam_impro_ap_parameter set comentario='' WHERE id=299
+2021-03-18 17:09:45,634 - exam_app - INFO - UpdateObject ended
+2021-03-18 17:09:45,635 - exam_app - DEBUG - {
+    "status": "OK"
+}
+2021-03-18 17:09:45,693 - exam_app - DEBUG - processRequest has been called
+2021-03-18 17:09:45,695 - exam_app - DEBUG - data:{'service': 'cheneque', 'database': 'entities', 'action': 'get', 'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'data': {'exam_impro_ap_parameter': [{'id': '', 'completado': '', 'maestro': {'id': '', 'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}, 'exam_impro_ap': {'fechaApplicacion': '', 'completado': '', 'materia': '', 'estudiante': {'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}}, 'exam_impro_parameter': {'label': '', 'exam_impro_type': {'label': ''}}}]}}
+2021-03-18 17:09:45,696 - exam_app - DEBUG - processRequest service:cheneque database:entities action:get data:{'exam_impro_ap_parameter': [{'id': '', 'completado': '', 'maestro': {'id': '', 'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}, 'exam_impro_ap': {'fechaApplicacion': '', 'completado': '', 'materia': '', 'estudiante': {'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}}, 'exam_impro_parameter': {'label': '', 'exam_impro_type': {'label': ''}}}]}
+2021-03-18 17:09:45,697 - exam_app - INFO - GetObject Called
+2021-03-18 17:09:45,700 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa6033d90>
+2021-03-18 17:09:45,701 - exam_app - DEBUG - new Table(None,credentials)
+2021-03-18 17:09:45,701 - exam_app - DEBUG - tableFilter:{'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'expirationDate': '', 'user_id': ''}
+2021-03-18 17:09:45,701 - exam_app - DEBUG - self.tables length 1
+2021-03-18 17:09:45,702 - exam_app - DEBUG - select 0 table:credentials temp:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:45,702 - exam_app - DEBUG - select:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:45,703 - exam_app - DEBUG - creating join
+2021-03-18 17:09:45,703 - exam_app - DEBUG - join:FROM credentials
+2021-03-18 17:09:45,703 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+2021-03-18 17:09:45,704 - exam_app - DEBUG - creating where
+2021-03-18 17:09:45,704 - exam_app - DEBUG - where:credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:45,704 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:45,707 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa6033d90>
+2021-03-18 17:09:45,709 - exam_app - DEBUG - Executing query: SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:45,710 - exam_app - DEBUG - credentials.token:beda57eb-8962-4a14-9d8c-670d00ba91b1
+2021-03-18 17:09:45,710 - exam_app - DEBUG - credentials.expirationDate:2021-03-19 17:02:29
+2021-03-18 17:09:45,711 - exam_app - DEBUG - credentials.user_id:1
+2021-03-18 17:09:45,711 - exam_app - DEBUG - creating object for:credentials
+2021-03-18 17:09:45,711 - exam_app - DEBUG - createObjectFromRow key token is a <class 'str'>
+2021-03-18 17:09:45,711 - exam_app - DEBUG - createObjectFromRow key expirationDate is a <class 'datetime.datetime'>
+2021-03-18 17:09:45,712 - exam_app - DEBUG - createObjectFromRow key user_id is a <class 'int'>
+2021-03-18 17:09:45,712 - exam_app - DEBUG - key credentials is null creating new
+2021-03-18 17:09:45,712 - exam_app - DEBUG - key credentials is object creating new
+2021-03-18 17:09:45,712 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,713 - exam_app - DEBUG - filling object key token
+2021-03-18 17:09:45,713 - exam_app - DEBUG - key token is a <class 'str'>
+2021-03-18 17:09:45,713 - exam_app - DEBUG - filling object key expirationDate
+2021-03-18 17:09:45,713 - exam_app - DEBUG - key expirationDate is a <class 'str'>
+2021-03-18 17:09:45,713 - exam_app - DEBUG - filling object key user_id
+2021-03-18 17:09:45,714 - exam_app - DEBUG - key user_id is a <class 'str'>
+2021-03-18 17:09:45,714 - exam_app - INFO - GetObject Called ended
+2021-03-18 17:09:45,714 - exam_app - INFO - GetObject Called
+2021-03-18 17:09:45,716 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa6033328>
+2021-03-18 17:09:45,717 - exam_app - DEBUG - new Table(None,exam_impro_ap_parameter)
+2021-03-18 17:09:45,717 - exam_app - DEBUG - tableFilter:{'id': '', 'completado': '', 'maestro': {'id': '', 'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}, 'exam_impro_ap': {'fechaApplicacion': '', 'completado': '', 'materia': '', 'estudiante': {'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}}, 'exam_impro_parameter': {'label': '', 'exam_impro_type': {'label': ''}}}
+2021-03-18 17:09:45,717 - exam_app - DEBUG - new Table(exam_impro_ap_parameter,maestro)
+2021-03-18 17:09:45,717 - exam_app - DEBUG - tableFilter:{'id': '', 'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}
+2021-03-18 17:09:45,718 - exam_app - DEBUG - new Table(exam_impro_ap_parameter,exam_impro_ap)
+2021-03-18 17:09:45,718 - exam_app - DEBUG - tableFilter:{'fechaApplicacion': '', 'completado': '', 'materia': '', 'estudiante': {'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}}
+2021-03-18 17:09:45,718 - exam_app - DEBUG - new Table(exam_impro_ap,estudiante)
+2021-03-18 17:09:45,718 - exam_app - DEBUG - tableFilter:{'nombre': '', 'apellidoPaterno': '', 'apellidoMaterno': ''}
+2021-03-18 17:09:45,719 - exam_app - DEBUG - new Table(exam_impro_ap_parameter,exam_impro_parameter)
+2021-03-18 17:09:45,719 - exam_app - DEBUG - tableFilter:{'label': '', 'exam_impro_type': {'label': ''}}
+2021-03-18 17:09:45,719 - exam_app - DEBUG - new Table(exam_impro_parameter,exam_impro_type)
+2021-03-18 17:09:45,719 - exam_app - DEBUG - tableFilter:{'label': ''}
+2021-03-18 17:09:45,719 - exam_app - DEBUG - self.tables length 6
+2021-03-18 17:09:45,720 - exam_app - DEBUG - select 0 table:exam_impro_ap_parameter temp:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+
+2021-03-18 17:09:45,720 - exam_app - DEBUG - select 1 table:maestro temp:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+
+2021-03-18 17:09:45,720 - exam_app - DEBUG - select 2 table:exam_impro_ap temp:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+
+2021-03-18 17:09:45,721 - exam_app - DEBUG - select 3 table:estudiante temp:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+,estudiante.nombre as 'estudiante.nombre', estudiante.apellidoPaterno as 'estudiante.apellidoPaterno', estudiante.apellidoMaterno as 'estudiante.apellidoMaterno'
+
+2021-03-18 17:09:45,721 - exam_app - DEBUG - select 4 table:exam_impro_parameter temp:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+,estudiante.nombre as 'estudiante.nombre', estudiante.apellidoPaterno as 'estudiante.apellidoPaterno', estudiante.apellidoMaterno as 'estudiante.apellidoMaterno'
+,exam_impro_parameter.label as 'exam_impro_parameter.label'
+
+2021-03-18 17:09:45,721 - exam_app - DEBUG - select 5 table:exam_impro_type temp:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+,estudiante.nombre as 'estudiante.nombre', estudiante.apellidoPaterno as 'estudiante.apellidoPaterno', estudiante.apellidoMaterno as 'estudiante.apellidoMaterno'
+,exam_impro_parameter.label as 'exam_impro_parameter.label'
+,exam_impro_type.label as 'exam_impro_type.label'
+
+2021-03-18 17:09:45,722 - exam_app - DEBUG - select:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+,estudiante.nombre as 'estudiante.nombre', estudiante.apellidoPaterno as 'estudiante.apellidoPaterno', estudiante.apellidoMaterno as 'estudiante.apellidoMaterno'
+,exam_impro_parameter.label as 'exam_impro_parameter.label'
+,exam_impro_type.label as 'exam_impro_type.label'
+
+2021-03-18 17:09:45,722 - exam_app - DEBUG - creating join
+2021-03-18 17:09:45,724 - exam_app - DEBUG - constraint:exam_impro_ap_parameter, maestro_id , exam_impro_ap_parameter_ibfk_3, maestro, id
+2021-03-18 17:09:45,726 - exam_app - DEBUG - constraint:exam_impro_ap_parameter, exam_impro_ap_id , exam_impro_ap_parameter_ibfk_1, exam_impro_ap, id
+2021-03-18 17:09:45,728 - exam_app - DEBUG - constraint:exam_impro_ap, estudiante_id , exam_impro_ap_ibfk_1, estudiante, id
+2021-03-18 17:09:45,730 - exam_app - DEBUG - constraint:exam_impro_ap_parameter, exam_impro_parameter_id , exam_impro_ap_parameter_ibfk_2, exam_impro_parameter, id
+2021-03-18 17:09:45,732 - exam_app - DEBUG - constraint:exam_impro_parameter, exam_impro_type_id , exam_impro_parameter_ibfk_1, exam_impro_type, id
+2021-03-18 17:09:45,733 - exam_app - DEBUG - join:FROM exam_impro_ap_parameter JOIN maestro ON (exam_impro_ap_parameter.maestro_id = maestro.id) JOIN exam_impro_ap ON (exam_impro_ap_parameter.exam_impro_ap_id = exam_impro_ap.id) JOIN estudiante ON (exam_impro_ap.estudiante_id = estudiante.id) JOIN exam_impro_parameter ON (exam_impro_ap_parameter.exam_impro_parameter_id = exam_impro_parameter.id) JOIN exam_impro_type ON (exam_impro_parameter.exam_impro_type_id = exam_impro_type.id)
+2021-03-18 17:09:45,733 - exam_app - DEBUG - qry:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+,estudiante.nombre as 'estudiante.nombre', estudiante.apellidoPaterno as 'estudiante.apellidoPaterno', estudiante.apellidoMaterno as 'estudiante.apellidoMaterno'
+,exam_impro_parameter.label as 'exam_impro_parameter.label'
+,exam_impro_type.label as 'exam_impro_type.label'
+FROM exam_impro_ap_parameter JOIN maestro ON (exam_impro_ap_parameter.maestro_id = maestro.id) JOIN exam_impro_ap ON (exam_impro_ap_parameter.exam_impro_ap_id = exam_impro_ap.id) JOIN estudiante ON (exam_impro_ap.estudiante_id = estudiante.id) JOIN exam_impro_parameter ON (exam_impro_ap_parameter.exam_impro_parameter_id = exam_impro_parameter.id) JOIN exam_impro_type ON (exam_impro_parameter.exam_impro_type_id = exam_impro_type.id)
+2021-03-18 17:09:45,734 - exam_app - DEBUG - creating where
+2021-03-18 17:09:45,734 - exam_app - DEBUG - where:
+2021-03-18 17:09:45,734 - exam_app - DEBUG - qry:SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+,estudiante.nombre as 'estudiante.nombre', estudiante.apellidoPaterno as 'estudiante.apellidoPaterno', estudiante.apellidoMaterno as 'estudiante.apellidoMaterno'
+,exam_impro_parameter.label as 'exam_impro_parameter.label'
+,exam_impro_type.label as 'exam_impro_type.label'
+FROM exam_impro_ap_parameter JOIN maestro ON (exam_impro_ap_parameter.maestro_id = maestro.id) JOIN exam_impro_ap ON (exam_impro_ap_parameter.exam_impro_ap_id = exam_impro_ap.id) JOIN estudiante ON (exam_impro_ap.estudiante_id = estudiante.id) JOIN exam_impro_parameter ON (exam_impro_ap_parameter.exam_impro_parameter_id = exam_impro_parameter.id) JOIN exam_impro_type ON (exam_impro_parameter.exam_impro_type_id = exam_impro_type.id)
+2021-03-18 17:09:45,737 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa6033328>
+2021-03-18 17:09:45,737 - exam_app - DEBUG - Executing query: SELECT exam_impro_ap_parameter.id as 'exam_impro_ap_parameter.id', exam_impro_ap_parameter.completado as 'exam_impro_ap_parameter.completado'
+,maestro.id as 'maestro.id', maestro.nombre as 'maestro.nombre', maestro.apellidoPaterno as 'maestro.apellidoPaterno', maestro.apellidoMaterno as 'maestro.apellidoMaterno'
+,exam_impro_ap.fechaApplicacion as 'exam_impro_ap.fechaApplicacion', exam_impro_ap.completado as 'exam_impro_ap.completado', exam_impro_ap.materia as 'exam_impro_ap.materia'
+,estudiante.nombre as 'estudiante.nombre', estudiante.apellidoPaterno as 'estudiante.apellidoPaterno', estudiante.apellidoMaterno as 'estudiante.apellidoMaterno'
+,exam_impro_parameter.label as 'exam_impro_parameter.label'
+,exam_impro_type.label as 'exam_impro_type.label'
+FROM exam_impro_ap_parameter JOIN maestro ON (exam_impro_ap_parameter.maestro_id = maestro.id) JOIN exam_impro_ap ON (exam_impro_ap_parameter.exam_impro_ap_id = exam_impro_ap.id) JOIN estudiante ON (exam_impro_ap.estudiante_id = estudiante.id) JOIN exam_impro_parameter ON (exam_impro_ap_parameter.exam_impro_parameter_id = exam_impro_parameter.id) JOIN exam_impro_type ON (exam_impro_parameter.exam_impro_type_id = exam_impro_type.id)
+2021-03-18 17:09:45,741 - exam_app - DEBUG - exam_impro_ap_parameter.id:285
+2021-03-18 17:09:45,742 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,742 - exam_app - DEBUG - maestro.id:86
+2021-03-18 17:09:45,742 - exam_app - DEBUG - maestro.nombre:Renata
+2021-03-18 17:09:45,742 - exam_app - DEBUG - maestro.apellidoPaterno:Aleman
+2021-03-18 17:09:45,743 - exam_app - DEBUG - maestro.apellidoMaterno: 
+2021-03-18 17:09:45,743 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,743 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,743 - exam_app - DEBUG - exam_impro_ap.materia:SHAMADAN
+2021-03-18 17:09:45,744 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,744 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,744 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,748 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,749 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,749 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,749 - exam_app - DEBUG - key exam_impro_ap_parameter is null creating new
+2021-03-18 17:09:45,749 - exam_app - DEBUG - key exam_impro_ap_parameter is array creating new
+2021-03-18 17:09:45,750 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,750 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,750 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,751 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,751 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,751 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,751 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,752 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,752 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,752 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,753 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,753 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,753 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,753 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,754 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,754 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,754 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,755 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,755 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,755 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,755 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,756 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,756 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,756 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,756 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,757 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,757 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,757 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,757 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,757 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,758 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,758 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,758 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,758 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,759 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,759 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,759 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,759 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,759 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,760 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,760 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,760 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,760 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,761 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,761 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,761 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,761 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,761 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,762 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,762 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,762 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,762 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,762 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,763 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,763 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,763 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,763 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,764 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,764 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,764 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,764 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,764 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,765 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,765 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,765 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,765 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,766 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,766 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,766 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,766 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,766 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,767 - exam_app - DEBUG - exam_impro_ap_parameter.id:286
+2021-03-18 17:09:45,767 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,767 - exam_app - DEBUG - maestro.id:85
+2021-03-18 17:09:45,767 - exam_app - DEBUG - maestro.nombre:Blanca
+2021-03-18 17:09:45,769 - exam_app - DEBUG - maestro.apellidoMaterno:
+2021-03-18 17:09:45,769 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,770 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,770 - exam_app - DEBUG - exam_impro_ap.materia:SHAMADAN
+2021-03-18 17:09:45,770 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,770 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,771 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,774 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,774 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,774 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,774 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,775 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,775 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,775 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,775 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,775 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,776 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,776 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,776 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,776 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,777 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,777 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,777 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,777 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,777 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,778 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,778 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,778 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,778 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,778 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,779 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,779 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,779 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,779 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,780 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,780 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,780 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,780 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,780 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,781 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,781 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,781 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,781 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,782 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,782 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,782 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,782 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,782 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,783 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,783 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,783 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,783 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,783 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,784 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,784 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,784 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,784 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,785 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,785 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,785 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,785 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,785 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,786 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,786 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,786 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,786 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,786 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,787 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,787 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,787 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,787 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,788 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,788 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,788 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,788 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,788 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,789 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,789 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,789 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,789 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,790 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,790 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,790 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,790 - exam_app - DEBUG - exam_impro_ap_parameter.id:287
+2021-03-18 17:09:45,791 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,791 - exam_app - DEBUG - maestro.id:90
+2021-03-18 17:09:45,791 - exam_app - DEBUG - maestro.nombre:alumna1
+2021-03-18 17:09:45,791 - exam_app - DEBUG - maestro.apellidoPaterno:-
+2021-03-18 17:09:45,791 - exam_app - DEBUG - maestro.apellidoMaterno:None
+2021-03-18 17:09:45,792 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,792 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,792 - exam_app - DEBUG - exam_impro_ap.materia:SHAMADAN
+2021-03-18 17:09:45,792 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,792 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,793 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,796 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,796 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,796 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,797 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,797 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,797 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,797 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,797 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,798 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,798 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,798 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,798 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,798 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,799 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,799 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,799 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'NoneType'>
+2021-03-18 17:09:45,799 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,800 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,800 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,800 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,800 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,800 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,801 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,801 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,801 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,801 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,802 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,802 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,802 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,802 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,802 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,803 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,803 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,803 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,803 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,803 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,804 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,804 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,804 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,804 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,805 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,805 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,805 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,805 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,805 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,806 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,806 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,806 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,806 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,807 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,807 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,807 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,807 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,807 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,808 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,808 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,808 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,808 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,808 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,809 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,809 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,809 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,809 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,810 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,810 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,810 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,810 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,810 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,811 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,811 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,811 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,811 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,811 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,812 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,812 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,812 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,813 - exam_app - DEBUG - exam_impro_ap_parameter.id:288
+2021-03-18 17:09:45,813 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,813 - exam_app - DEBUG - maestro.id:91
+2021-03-18 17:09:45,813 - exam_app - DEBUG - maestro.nombre:alumna2
+2021-03-18 17:09:45,813 - exam_app - DEBUG - maestro.apellidoPaterno:-
+2021-03-18 17:09:45,814 - exam_app - DEBUG - maestro.apellidoMaterno:None
+2021-03-18 17:09:45,814 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,814 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,814 - exam_app - DEBUG - exam_impro_ap.materia:SHAMADAN
+2021-03-18 17:09:45,814 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,815 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,815 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,818 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,818 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,819 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,819 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,819 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,819 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,820 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,820 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,820 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,820 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,820 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,821 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,821 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,821 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,821 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,822 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'NoneType'>
+2021-03-18 17:09:45,822 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,822 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,822 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,822 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,823 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,823 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,823 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,823 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,823 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,824 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,824 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,824 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,824 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,825 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,825 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,825 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,825 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,825 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,826 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,826 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,826 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,826 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,827 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,827 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,827 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,827 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,827 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,828 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,828 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,828 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,828 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,828 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,829 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,829 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,829 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,829 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,830 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,830 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,830 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,830 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,830 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,831 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,831 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,831 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,831 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,831 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,832 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,832 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,832 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,832 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,833 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,833 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,833 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,833 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,833 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,834 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,834 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,834 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,834 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,834 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,835 - exam_app - DEBUG - exam_impro_ap_parameter.id:297
+2021-03-18 17:09:45,835 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,835 - exam_app - DEBUG - maestro.id:87
+2021-03-18 17:09:45,836 - exam_app - DEBUG - maestro.nombre:Yelbiz
+2021-03-18 17:09:45,836 - exam_app - DEBUG - maestro.apellidoPaterno:Villanueva
+2021-03-18 17:09:45,836 - exam_app - DEBUG - maestro.apellidoMaterno: 
+2021-03-18 17:09:45,836 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,836 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,837 - exam_app - DEBUG - exam_impro_ap.materia:shamadan
+2021-03-18 17:09:45,837 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,837 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,837 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,841 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,842 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,842 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,842 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,842 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,843 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,843 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,843 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,843 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,843 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,844 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,844 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,844 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,844 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,845 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,845 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,845 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,845 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,845 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,846 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,846 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,846 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,846 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,846 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,847 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,847 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,847 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,847 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,847 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,848 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,848 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,848 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,848 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,849 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,849 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,849 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,849 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,850 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,850 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,850 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,850 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,850 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,851 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,851 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,851 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,851 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,851 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,852 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,852 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,852 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,852 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,853 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,853 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,853 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,853 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,854 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,854 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,854 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,854 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,854 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,855 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,855 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,855 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,855 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,855 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,856 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,856 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,856 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,856 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,857 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,857 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,857 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,857 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,857 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,858 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,858 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,858 - exam_app - DEBUG - exam_impro_ap_parameter.id:298
+2021-03-18 17:09:45,859 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,859 - exam_app - DEBUG - maestro.id:91
+2021-03-18 17:09:45,859 - exam_app - DEBUG - maestro.nombre:alumna2
+2021-03-18 17:09:45,859 - exam_app - DEBUG - maestro.apellidoPaterno:-
+2021-03-18 17:09:45,859 - exam_app - DEBUG - maestro.apellidoMaterno:None
+2021-03-18 17:09:45,860 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,860 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,860 - exam_app - DEBUG - exam_impro_ap.materia:shamadan
+2021-03-18 17:09:45,860 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,860 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,861 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,864 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,864 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,864 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,865 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,865 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,865 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,865 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,865 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,866 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,866 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,866 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,866 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,867 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,867 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,867 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,867 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'NoneType'>
+2021-03-18 17:09:45,867 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,868 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,868 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,868 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,868 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,869 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,869 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,869 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,869 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,869 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,870 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,870 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,870 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,870 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,870 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,871 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,871 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,871 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,871 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,872 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,872 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,872 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,872 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,872 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,873 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,873 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,873 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,873 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,874 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,874 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,874 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,874 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,874 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,875 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,875 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,875 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,875 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,875 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,876 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,876 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,876 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,876 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,877 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,877 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,877 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,877 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,877 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,878 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,878 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,878 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,878 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,879 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,879 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,879 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,879 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,879 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,880 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,880 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,880 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,880 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,881 - exam_app - DEBUG - exam_impro_ap_parameter.id:299
+2021-03-18 17:09:45,881 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,881 - exam_app - DEBUG - maestro.id:91
+2021-03-18 17:09:45,881 - exam_app - DEBUG - maestro.nombre:alumna2
+2021-03-18 17:09:45,881 - exam_app - DEBUG - maestro.apellidoPaterno:-
+2021-03-18 17:09:45,882 - exam_app - DEBUG - maestro.apellidoMaterno:None
+2021-03-18 17:09:45,882 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,882 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,882 - exam_app - DEBUG - exam_impro_ap.materia:shamadan
+2021-03-18 17:09:45,883 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,883 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,883 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,886 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,886 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,887 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,887 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,887 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,887 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,888 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,888 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,888 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,888 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,888 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,889 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,889 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,889 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,889 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,889 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'NoneType'>
+2021-03-18 17:09:45,890 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,890 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,890 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,890 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,891 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,891 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,891 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,891 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,891 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,892 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,892 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,892 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,892 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,893 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,893 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,893 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,893 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,893 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,894 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,894 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,894 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,894 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,895 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,895 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,895 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,895 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,895 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,896 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,896 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,896 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,896 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,896 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,897 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,897 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,897 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,897 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,898 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,898 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,898 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,898 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,898 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,899 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,899 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,899 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,899 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,899 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,900 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,900 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,900 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,900 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,900 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,901 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,901 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,901 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,901 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,902 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,902 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,902 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,902 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,902 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,903 - exam_app - DEBUG - exam_impro_ap_parameter.id:300
+2021-03-18 17:09:45,903 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,903 - exam_app - DEBUG - maestro.id:91
+2021-03-18 17:09:45,903 - exam_app - DEBUG - maestro.nombre:alumna2
+2021-03-18 17:09:45,904 - exam_app - DEBUG - maestro.apellidoPaterno:-
+2021-03-18 17:09:45,904 - exam_app - DEBUG - maestro.apellidoMaterno:None
+2021-03-18 17:09:45,904 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-16
+2021-03-18 17:09:45,904 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,905 - exam_app - DEBUG - exam_impro_ap.materia:shamadan
+2021-03-18 17:09:45,905 - exam_app - DEBUG - estudiante.nombre:Maria
+2021-03-18 17:09:45,905 - exam_app - DEBUG - estudiante.apellidoPaterno:Jimenez
+2021-03-18 17:09:45,905 - exam_app - DEBUG - estudiante.apellidoMaterno:Gomez
+2021-03-18 17:09:45,908 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,909 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,909 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,909 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,909 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,910 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,910 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,910 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,910 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,910 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,911 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,911 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,911 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,911 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,912 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,912 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'NoneType'>
+2021-03-18 17:09:45,912 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,912 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,912 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,913 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,913 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,913 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,913 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,913 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,914 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,914 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,914 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,914 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,915 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,915 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,915 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,915 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,915 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,916 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,916 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,916 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,916 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,917 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,917 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,917 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,917 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,917 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,918 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,918 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,918 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,918 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,918 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,919 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,919 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,919 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,919 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,920 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,920 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,920 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,920 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,920 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,921 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,921 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,921 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,921 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,921 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,922 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,922 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,922 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,922 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,923 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,923 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,923 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,923 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,923 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,924 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,924 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,924 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,924 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,924 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,925 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,925 - exam_app - DEBUG - exam_impro_ap_parameter.id:325
+2021-03-18 17:09:45,925 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,926 - exam_app - DEBUG - maestro.id:1
+2021-03-18 17:09:45,926 - exam_app - DEBUG - maestro.nombre:Claudia
+2021-03-18 17:09:45,926 - exam_app - DEBUG - maestro.apellidoPaterno:Gamboa
+2021-03-18 17:09:45,926 - exam_app - DEBUG - maestro.apellidoMaterno:Villa
+2021-03-18 17:09:45,926 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-17
+2021-03-18 17:09:45,927 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,927 - exam_app - DEBUG - exam_impro_ap.materia:probando porcentajes
+2021-03-18 17:09:45,927 - exam_app - DEBUG - estudiante.nombre:Renata
+2021-03-18 17:09:45,929 - exam_app - DEBUG - estudiante.apellidoMaterno:Moreno
+2021-03-18 17:09:45,929 - exam_app - DEBUG - exam_impro_parameter.label:Cuerpo 1
+2021-03-18 17:09:45,929 - exam_app - DEBUG - exam_impro_type.label:Primero casi cuarto
+2021-03-18 17:09:45,929 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,930 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,930 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,930 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,930 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,930 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,931 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,931 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,931 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,931 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,932 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,932 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,932 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,932 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,932 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,933 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,933 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,933 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,933 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,934 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,934 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,934 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,934 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,934 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,935 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,935 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,935 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,935 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,935 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,936 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,936 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,936 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,936 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,937 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,937 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,937 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,937 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,937 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,938 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,938 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,938 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,938 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,938 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,939 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,939 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,939 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,939 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,940 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,940 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,940 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,940 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,940 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,941 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,941 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,941 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,941 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,941 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,942 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,942 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,942 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,942 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,943 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,943 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,943 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,943 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,943 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,944 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,944 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,944 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,944 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,945 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,945 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,945 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,945 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,945 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,946 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,946 - exam_app - DEBUG - exam_impro_ap_parameter.id:326
+2021-03-18 17:09:45,946 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,946 - exam_app - DEBUG - maestro.id:2
+2021-03-18 17:09:45,947 - exam_app - DEBUG - maestro.nombre:Virginia
+2021-03-18 17:09:45,947 - exam_app - DEBUG - maestro.apellidoPaterno:Gamboa
+2021-03-18 17:09:45,947 - exam_app - DEBUG - maestro.apellidoMaterno:Villa
+2021-03-18 17:09:45,947 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-17
+2021-03-18 17:09:45,947 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,948 - exam_app - DEBUG - exam_impro_ap.materia:probando porcentajes
+2021-03-18 17:09:45,948 - exam_app - DEBUG - estudiante.nombre:Renata
+2021-03-18 17:09:45,950 - exam_app - DEBUG - estudiante.apellidoMaterno:Moreno
+2021-03-18 17:09:45,950 - exam_app - DEBUG - exam_impro_parameter.label:Espacio 2
+2021-03-18 17:09:45,950 - exam_app - DEBUG - exam_impro_type.label:Primero casi cuarto
+2021-03-18 17:09:45,950 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,951 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,951 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,951 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,951 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,951 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,952 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,952 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,952 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,952 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,952 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,953 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,953 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,953 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,953 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,954 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,954 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,954 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,954 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,954 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,955 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,955 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,955 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,955 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,955 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,956 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,956 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,956 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,956 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,957 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,957 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,957 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,957 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,957 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,958 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,958 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,958 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,958 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,959 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,959 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,959 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,959 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,959 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,960 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,960 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,960 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,960 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,960 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,961 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,961 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,961 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,961 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,962 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,962 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,962 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,962 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,962 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,963 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,963 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,963 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,963 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,963 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,964 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,964 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,964 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,964 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,965 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,965 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,965 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,965 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,965 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,966 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,966 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,966 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,966 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,966 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,967 - exam_app - DEBUG - exam_impro_ap_parameter.id:327
+2021-03-18 17:09:45,967 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,967 - exam_app - DEBUG - maestro.id:85
+2021-03-18 17:09:45,968 - exam_app - DEBUG - maestro.nombre:Blanca
+2021-03-18 17:09:45,969 - exam_app - DEBUG - maestro.apellidoMaterno:
+2021-03-18 17:09:45,970 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-17
+2021-03-18 17:09:45,970 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,970 - exam_app - DEBUG - exam_impro_ap.materia:probando porcentajes
+2021-03-18 17:09:45,970 - exam_app - DEBUG - estudiante.nombre:Renata
+2021-03-18 17:09:45,972 - exam_app - DEBUG - estudiante.apellidoMaterno:Moreno
+2021-03-18 17:09:45,972 - exam_app - DEBUG - exam_impro_parameter.label:Tiempo 3
+2021-03-18 17:09:45,972 - exam_app - DEBUG - exam_impro_type.label:Primero casi cuarto
+2021-03-18 17:09:45,973 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,973 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,973 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,973 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,973 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,974 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,974 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,974 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,974 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,974 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,975 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,975 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,975 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,975 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,976 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,976 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,976 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,976 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,976 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,977 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,977 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,977 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,977 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,977 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,978 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,978 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,978 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,978 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,979 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:45,979 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:45,979 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:45,979 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,979 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:45,980 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:45,980 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:45,980 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,980 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,981 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:45,981 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:45,981 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,981 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,981 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:45,982 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:45,982 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:45,982 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:45,982 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,982 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,983 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,983 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:45,983 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:45,983 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,984 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,984 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,984 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,984 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,984 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,985 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,985 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,985 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:45,985 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:45,985 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,986 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:45,986 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:45,986 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,986 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,987 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,987 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,987 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:45,987 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:45,987 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:45,988 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:45,988 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:45,988 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,988 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,989 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:45,989 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:45,989 - exam_app - DEBUG - exam_impro_ap_parameter.id:328
+2021-03-18 17:09:45,989 - exam_app - DEBUG - exam_impro_ap_parameter.completado:1
+2021-03-18 17:09:45,990 - exam_app - DEBUG - maestro.id:86
+2021-03-18 17:09:45,990 - exam_app - DEBUG - maestro.nombre:Renata
+2021-03-18 17:09:45,990 - exam_app - DEBUG - maestro.apellidoPaterno:Aleman
+2021-03-18 17:09:45,990 - exam_app - DEBUG - maestro.apellidoMaterno: 
+2021-03-18 17:09:45,990 - exam_app - DEBUG - exam_impro_ap.fechaApplicacion:2021-03-17
+2021-03-18 17:09:45,991 - exam_app - DEBUG - exam_impro_ap.completado:0
+2021-03-18 17:09:45,991 - exam_app - DEBUG - exam_impro_ap.materia:probando porcentajes
+2021-03-18 17:09:45,991 - exam_app - DEBUG - estudiante.nombre:Renata
+2021-03-18 17:09:45,993 - exam_app - DEBUG - estudiante.apellidoMaterno:Moreno
+2021-03-18 17:09:45,993 - exam_app - DEBUG - exam_impro_parameter.label:Energia 4
+2021-03-18 17:09:45,993 - exam_app - DEBUG - exam_impro_type.label:Primero casi cuarto
+2021-03-18 17:09:45,993 - exam_app - DEBUG - creating object for:exam_impro_ap_parameter
+2021-03-18 17:09:45,994 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,994 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:45,994 - exam_app - DEBUG - key exam_impro_ap_parameter is not null retring last
+2021-03-18 17:09:45,994 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:45,995 - exam_app - DEBUG - last object is not the same creating new row
+2021-03-18 17:09:45,995 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,995 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,995 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:45,995 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:45,996 - exam_app - DEBUG - filling object key maestro
+2021-03-18 17:09:45,996 - exam_app - DEBUG - key maestro is a <class 'dict'>
+2021-03-18 17:09:45,996 - exam_app - DEBUG - createObjectFromRow key id is a <class 'int'>
+2021-03-18 17:09:45,996 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:45,996 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,997 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,997 - exam_app - DEBUG - object maestro is null creating new
+2021-03-18 17:09:45,997 - exam_app - DEBUG - object maestro is object creating new
+2021-03-18 17:09:45,997 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:45,998 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:45,998 - exam_app - DEBUG - filling object key id
+2021-03-18 17:09:45,998 - exam_app - DEBUG - key id is a <class 'str'>
+2021-03-18 17:09:45,998 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:45,998 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:45,999 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:45,999 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:45,999 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:45,999 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:45,999 - exam_app - DEBUG - filling object key exam_impro_ap
+2021-03-18 17:09:46,000 - exam_app - DEBUG - key exam_impro_ap is a <class 'dict'>
+2021-03-18 17:09:46,000 - exam_app - DEBUG - createObjectFromRow key fechaApplicacion is a <class 'datetime.date'>
+2021-03-18 17:09:46,000 - exam_app - DEBUG - createObjectFromRow key completado is a <class 'int'>
+2021-03-18 17:09:46,000 - exam_app - DEBUG - createObjectFromRow key materia is a <class 'str'>
+2021-03-18 17:09:46,001 - exam_app - DEBUG - object exam_impro_ap is null creating new
+2021-03-18 17:09:46,001 - exam_app - DEBUG - object exam_impro_ap is object creating new
+2021-03-18 17:09:46,001 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:46,001 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:46,001 - exam_app - DEBUG - filling object key fechaApplicacion
+2021-03-18 17:09:46,002 - exam_app - DEBUG - key fechaApplicacion is a <class 'str'>
+2021-03-18 17:09:46,002 - exam_app - DEBUG - filling object key completado
+2021-03-18 17:09:46,002 - exam_app - DEBUG - key completado is a <class 'str'>
+2021-03-18 17:09:46,002 - exam_app - DEBUG - filling object key materia
+2021-03-18 17:09:46,003 - exam_app - DEBUG - key materia is a <class 'str'>
+2021-03-18 17:09:46,003 - exam_app - DEBUG - filling object key estudiante
+2021-03-18 17:09:46,003 - exam_app - DEBUG - key estudiante is a <class 'dict'>
+2021-03-18 17:09:46,003 - exam_app - DEBUG - createObjectFromRow key nombre is a <class 'str'>
+2021-03-18 17:09:46,003 - exam_app - DEBUG - createObjectFromRow key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:46,004 - exam_app - DEBUG - createObjectFromRow key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:46,004 - exam_app - DEBUG - object estudiante is null creating new
+2021-03-18 17:09:46,004 - exam_app - DEBUG - object estudiante is object creating new
+2021-03-18 17:09:46,004 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:46,005 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:46,005 - exam_app - DEBUG - filling object key nombre
+2021-03-18 17:09:46,005 - exam_app - DEBUG - key nombre is a <class 'str'>
+2021-03-18 17:09:46,005 - exam_app - DEBUG - filling object key apellidoPaterno
+2021-03-18 17:09:46,005 - exam_app - DEBUG - key apellidoPaterno is a <class 'str'>
+2021-03-18 17:09:46,006 - exam_app - DEBUG - filling object key apellidoMaterno
+2021-03-18 17:09:46,006 - exam_app - DEBUG - key apellidoMaterno is a <class 'str'>
+2021-03-18 17:09:46,006 - exam_app - DEBUG - filling object key exam_impro_parameter
+2021-03-18 17:09:46,006 - exam_app - DEBUG - key exam_impro_parameter is a <class 'dict'>
+2021-03-18 17:09:46,006 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:46,007 - exam_app - DEBUG - object exam_impro_parameter is null creating new
+2021-03-18 17:09:46,007 - exam_app - DEBUG - object exam_impro_parameter is object creating new
+2021-03-18 17:09:46,007 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:46,007 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:46,007 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:46,008 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:46,008 - exam_app - DEBUG - filling object key exam_impro_type
+2021-03-18 17:09:46,008 - exam_app - DEBUG - key exam_impro_type is a <class 'dict'>
+2021-03-18 17:09:46,008 - exam_app - DEBUG - createObjectFromRow key label is a <class 'str'>
+2021-03-18 17:09:46,009 - exam_app - DEBUG - object exam_impro_type is null creating new
+2021-03-18 17:09:46,009 - exam_app - DEBUG - object exam_impro_type is object creating new
+2021-03-18 17:09:46,009 - exam_app - DEBUG - compare vs last Object
+2021-03-18 17:09:46,009 - exam_app - DEBUG - call for sub filters
+2021-03-18 17:09:46,009 - exam_app - DEBUG - filling object key label
+2021-03-18 17:09:46,010 - exam_app - DEBUG - key label is a <class 'str'>
+2021-03-18 17:09:46,010 - exam_app - INFO - GetObject Called ended
+2021-03-18 17:09:46,012 - exam_app - DEBUG - [
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "SHAMADAN"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Habilidad t\u00e9cnica"
+        },
+        "id": 285,
+        "maestro": {
+            "apellidoMaterno": " ",
+            "apellidoPaterno": "Aleman",
+            "id": 86,
+            "nombre": "Renata"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "SHAMADAN"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Dificultad t\u00e9cnica y Complementos"
+        },
+        "id": 286,
+        "maestro": {
+            "apellidoMaterno": "",
+            "apellidoPaterno": "Mu\u00f1oz",
+            "id": 85,
+            "nombre": "Blanca"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "SHAMADAN"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Proyecci\u00f3n"
+        },
+        "id": 287,
+        "maestro": {
+            "apellidoMaterno": null,
+            "apellidoPaterno": "-",
+            "id": 90,
+            "nombre": "alumna1"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "SHAMADAN"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Composici\u00f3n coreogr\u00e1fica "
+        },
+        "id": 288,
+        "maestro": {
+            "apellidoMaterno": null,
+            "apellidoPaterno": "-",
+            "id": 91,
+            "nombre": "alumna2"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "shamadan"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Habilidad t\u00e9cnica"
+        },
+        "id": 297,
+        "maestro": {
+            "apellidoMaterno": " ",
+            "apellidoPaterno": "Villanueva",
+            "id": 87,
+            "nombre": "Yelbiz"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "shamadan"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Dificultad t\u00e9cnica y Complementos"
+        },
+        "id": 298,
+        "maestro": {
+            "apellidoMaterno": null,
+            "apellidoPaterno": "-",
+            "id": 91,
+            "nombre": "alumna2"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "shamadan"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Proyecci\u00f3n"
+        },
+        "id": 299,
+        "maestro": {
+            "apellidoMaterno": null,
+            "apellidoPaterno": "-",
+            "id": 91,
+            "nombre": "alumna2"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Gomez",
+                "apellidoPaterno": "Jimenez",
+                "nombre": "Maria"
+            },
+            "fechaApplicacion": "2021/03/16",
+            "materia": "shamadan"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Improvisaci\u00f3n 3\u00ba nivel"
+            },
+            "label": "Composici\u00f3n coreogr\u00e1fica "
+        },
+        "id": 300,
+        "maestro": {
+            "apellidoMaterno": null,
+            "apellidoPaterno": "-",
+            "id": 91,
+            "nombre": "alumna2"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Moreno",
+                "apellidoPaterno": "Alem\u00e1n",
+                "nombre": "Renata"
+            },
+            "fechaApplicacion": "2021/03/17",
+            "materia": "probando porcentajes"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Primero casi cuarto"
+            },
+            "label": "Cuerpo 1"
+        },
+        "id": 325,
+        "maestro": {
+            "apellidoMaterno": "Villa",
+            "apellidoPaterno": "Gamboa",
+            "id": 1,
+            "nombre": "Claudia"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Moreno",
+                "apellidoPaterno": "Alem\u00e1n",
+                "nombre": "Renata"
+            },
+            "fechaApplicacion": "2021/03/17",
+            "materia": "probando porcentajes"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Primero casi cuarto"
+            },
+            "label": "Espacio 2"
+        },
+        "id": 326,
+        "maestro": {
+            "apellidoMaterno": "Villa",
+            "apellidoPaterno": "Gamboa",
+            "id": 2,
+            "nombre": "Virginia"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Moreno",
+                "apellidoPaterno": "Alem\u00e1n",
+                "nombre": "Renata"
+            },
+            "fechaApplicacion": "2021/03/17",
+            "materia": "probando porcentajes"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Primero casi cuarto"
+            },
+            "label": "Tiempo 3"
+        },
+        "id": 327,
+        "maestro": {
+            "apellidoMaterno": "",
+            "apellidoPaterno": "Mu\u00f1oz",
+            "id": 85,
+            "nombre": "Blanca"
+        }
+    },
+    {
+        "completado": 1,
+        "exam_impro_ap": {
+            "completado": 0,
+            "estudiante": {
+                "apellidoMaterno": "Moreno",
+                "apellidoPaterno": "Alem\u00e1n",
+                "nombre": "Renata"
+            },
+            "fechaApplicacion": "2021/03/17",
+            "materia": "probando porcentajes"
+        },
+        "exam_impro_parameter": {
+            "exam_impro_type": {
+                "label": "Primero casi cuarto"
+            },
+            "label": "Energia 4"
+        },
+        "id": 328,
+        "maestro": {
+            "apellidoMaterno": " ",
+            "apellidoPaterno": "Aleman",
+            "id": 86,
+            "nombre": "Renata"
+        }
+    }
+]

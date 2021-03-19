@@ -1,0 +1,404 @@
+2021-03-18 17:09:35,433 - exam_app - DEBUG - processRequest has been called
+2021-03-18 17:09:35,436 - exam_app - DEBUG - data:{'service': 'cheneque', 'database': 'entities', 'action': 'add', 'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'data': {'exam_impro_ap_question': [{'id': None, 'exam_impro_ap_criteria_id': 774, 'exam_impro_question_id': 296, 'graded': 0.4}, {'id': None, 'exam_impro_ap_criteria_id': 774, 'exam_impro_question_id': 294, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 774, 'exam_impro_question_id': 295, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 776, 'exam_impro_question_id': 300, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 291, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 289, 'graded': 0.4}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 287, 'graded': 1}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 290, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 288, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 773, 'exam_impro_question_id': 292, 'graded': 1}, {'id': None, 'exam_impro_ap_criteria_id': 773, 'exam_impro_question_id': 293, 'graded': 0.8}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 307, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 305, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 303, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 306, 'graded': 1}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 304, 'graded': 1}]}}
+2021-03-18 17:09:35,437 - exam_app - DEBUG - processRequest service:cheneque database:entities action:add data:{'exam_impro_ap_question': [{'id': None, 'exam_impro_ap_criteria_id': 774, 'exam_impro_question_id': 296, 'graded': 0.4}, {'id': None, 'exam_impro_ap_criteria_id': 774, 'exam_impro_question_id': 294, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 774, 'exam_impro_question_id': 295, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 776, 'exam_impro_question_id': 300, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 291, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 289, 'graded': 0.4}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 287, 'graded': 1}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 290, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 772, 'exam_impro_question_id': 288, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 773, 'exam_impro_question_id': 292, 'graded': 1}, {'id': None, 'exam_impro_ap_criteria_id': 773, 'exam_impro_question_id': 293, 'graded': 0.8}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 307, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 305, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 303, 'graded': 0.6}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 306, 'graded': 1}, {'id': None, 'exam_impro_ap_criteria_id': 779, 'exam_impro_question_id': 304, 'graded': 1}]}
+2021-03-18 17:09:35,439 - exam_app - INFO - GetObject Called
+2021-03-18 17:09:35,442 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ff24a8>
+2021-03-18 17:09:35,443 - exam_app - DEBUG - new Table(None,credentials)
+2021-03-18 17:09:35,443 - exam_app - DEBUG - tableFilter:{'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'expirationDate': '', 'user_id': ''}
+2021-03-18 17:09:35,443 - exam_app - DEBUG - self.tables length 1
+2021-03-18 17:09:35,444 - exam_app - DEBUG - select 0 table:credentials temp:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:35,444 - exam_app - DEBUG - select:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:35,445 - exam_app - DEBUG - creating join
+2021-03-18 17:09:35,445 - exam_app - DEBUG - join:FROM credentials
+2021-03-18 17:09:35,445 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+2021-03-18 17:09:35,446 - exam_app - DEBUG - creating where
+2021-03-18 17:09:35,446 - exam_app - DEBUG - where:credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:35,446 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:35,449 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ff24a8>
+2021-03-18 17:09:35,450 - exam_app - DEBUG - Executing query: SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:35,452 - exam_app - DEBUG - credentials.token:beda57eb-8962-4a14-9d8c-670d00ba91b1
+2021-03-18 17:09:35,452 - exam_app - DEBUG - credentials.expirationDate:2021-03-19 17:02:29
+2021-03-18 17:09:35,452 - exam_app - DEBUG - credentials.user_id:1
+2021-03-18 17:09:35,453 - exam_app - DEBUG - creating object for:credentials
+2021-03-18 17:09:35,453 - exam_app - DEBUG - createObjectFromRow key token is a <class 'str'>
+2021-03-18 17:09:35,453 - exam_app - DEBUG - createObjectFromRow key expirationDate is a <class 'datetime.datetime'>
+2021-03-18 17:09:35,453 - exam_app - DEBUG - createObjectFromRow key user_id is a <class 'int'>
+2021-03-18 17:09:35,454 - exam_app - DEBUG - key credentials is null creating new
+2021-03-18 17:09:35,454 - exam_app - DEBUG - key credentials is object creating new
+2021-03-18 17:09:35,454 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:35,454 - exam_app - DEBUG - filling object key token
+2021-03-18 17:09:35,455 - exam_app - DEBUG - key token is a <class 'str'>
+2021-03-18 17:09:35,455 - exam_app - DEBUG - filling object key expirationDate
+2021-03-18 17:09:35,455 - exam_app - DEBUG - key expirationDate is a <class 'str'>
+2021-03-18 17:09:35,455 - exam_app - DEBUG - filling object key user_id
+2021-03-18 17:09:35,455 - exam_app - DEBUG - key user_id is a <class 'str'>
+2021-03-18 17:09:35,456 - exam_app - INFO - GetObject Called ended
+2021-03-18 17:09:35,456 - exam_app - INFO - AddObject called
+2021-03-18 17:09:35,458 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ff2220>
+2021-03-18 17:09:35,459 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,459 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,460 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,460 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,460 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,461 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,774,296,0.4)
+2021-03-18 17:09:35,461 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,462 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,462 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,463 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,463 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,463 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,463 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,464 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,774,294,0.6)
+2021-03-18 17:09:35,464 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,465 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,465 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,465 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,466 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,466 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,466 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,466 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,774,295,0.6)
+2021-03-18 17:09:35,467 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,467 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,468 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,468 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,468 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,469 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,469 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,469 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,776,300,0.6)
+2021-03-18 17:09:35,470 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,471 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,471 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,471 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,472 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,472 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,472 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,472 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,772,291,0.6)
+2021-03-18 17:09:35,646 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,647 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,647 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,648 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,648 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,648 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,649 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,649 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,772,289,0.4)
+2021-03-18 17:09:35,649 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,650 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,650 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,650 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,651 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,651 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,651 - exam_app - DEBUG - key graded is instance of <class 'int'>
+2021-03-18 17:09:35,651 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,772,287,1)
+2021-03-18 17:09:35,652 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,652 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,652 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,653 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,653 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,653 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,654 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,654 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,772,290,0.6)
+2021-03-18 17:09:35,655 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,655 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,655 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,656 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,657 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,657 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,657 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,657 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,772,288,0.6)
+2021-03-18 17:09:35,658 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,658 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,659 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,659 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,659 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,660 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,660 - exam_app - DEBUG - key graded is instance of <class 'int'>
+2021-03-18 17:09:35,660 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,773,292,1)
+2021-03-18 17:09:35,661 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,661 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,661 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,662 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,662 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,663 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,663 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,663 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,773,293,0.8)
+2021-03-18 17:09:35,664 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,664 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,664 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,665 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,665 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,666 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,666 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,666 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,779,307,0.6)
+2021-03-18 17:09:35,667 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,667 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,667 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,668 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,668 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,669 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,669 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,669 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,779,305,0.6)
+2021-03-18 17:09:35,670 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,670 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,671 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,671 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,671 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,672 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,672 - exam_app - DEBUG - key graded is instance of <class 'float'>
+2021-03-18 17:09:35,672 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,779,303,0.6)
+2021-03-18 17:09:35,673 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,673 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,673 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,674 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,674 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,674 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,674 - exam_app - DEBUG - key graded is instance of <class 'int'>
+2021-03-18 17:09:35,675 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,779,306,1)
+2021-03-18 17:09:35,675 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,675 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,676 - exam_app - INFO - Insertobject called
+2021-03-18 17:09:35,676 - exam_app - DEBUG - key id is instance of <class 'NoneType'>
+2021-03-18 17:09:35,676 - exam_app - DEBUG - key exam_impro_ap_criteria_id is instance of <class 'int'>
+2021-03-18 17:09:35,677 - exam_app - DEBUG - key exam_impro_question_id is instance of <class 'int'>
+2021-03-18 17:09:35,677 - exam_app - DEBUG - key graded is instance of <class 'int'>
+2021-03-18 17:09:35,677 - exam_app - DEBUG - sql:INSERT INTO exam_impro_ap_question(id,exam_impro_ap_criteria_id,exam_impro_question_id,graded) values(null,779,304,1)
+2021-03-18 17:09:35,678 - exam_app - DEBUG - insert ended
+2021-03-18 17:09:35,678 - exam_app - DEBUG - Insertobject ended
+2021-03-18 17:09:35,699 - exam_app - DEBUG - end object called
+2021-03-18 17:09:35,700 - exam_app - INFO - AddObject  ended
+2021-03-18 17:09:35,701 - exam_app - DEBUG - {
+    "exam_impro_ap_question": [
+        {
+            "exam_impro_ap_criteria_id": 774,
+            "exam_impro_question_id": 296,
+            "graded": 0.4,
+            "id": 1636
+        },
+        {
+            "exam_impro_ap_criteria_id": 774,
+            "exam_impro_question_id": 294,
+            "graded": 0.6,
+            "id": 1637
+        },
+        {
+            "exam_impro_ap_criteria_id": 774,
+            "exam_impro_question_id": 295,
+            "graded": 0.6,
+            "id": 1638
+        },
+        {
+            "exam_impro_ap_criteria_id": 776,
+            "exam_impro_question_id": 300,
+            "graded": 0.6,
+            "id": 1639
+        },
+        {
+            "exam_impro_ap_criteria_id": 772,
+            "exam_impro_question_id": 291,
+            "graded": 0.6,
+            "id": 1640
+        },
+        {
+            "exam_impro_ap_criteria_id": 772,
+            "exam_impro_question_id": 289,
+            "graded": 0.4,
+            "id": 1641
+        },
+        {
+            "exam_impro_ap_criteria_id": 772,
+            "exam_impro_question_id": 287,
+            "graded": 1,
+            "id": 1642
+        },
+        {
+            "exam_impro_ap_criteria_id": 772,
+            "exam_impro_question_id": 290,
+            "graded": 0.6,
+            "id": 1643
+        },
+        {
+            "exam_impro_ap_criteria_id": 772,
+            "exam_impro_question_id": 288,
+            "graded": 0.6,
+            "id": 1644
+        },
+        {
+            "exam_impro_ap_criteria_id": 773,
+            "exam_impro_question_id": 292,
+            "graded": 1,
+            "id": 1645
+        },
+        {
+            "exam_impro_ap_criteria_id": 773,
+            "exam_impro_question_id": 293,
+            "graded": 0.8,
+            "id": 1646
+        },
+        {
+            "exam_impro_ap_criteria_id": 779,
+            "exam_impro_question_id": 307,
+            "graded": 0.6,
+            "id": 1647
+        },
+        {
+            "exam_impro_ap_criteria_id": 779,
+            "exam_impro_question_id": 305,
+            "graded": 0.6,
+            "id": 1648
+        },
+        {
+            "exam_impro_ap_criteria_id": 779,
+            "exam_impro_question_id": 303,
+            "graded": 0.6,
+            "id": 1649
+        },
+        {
+            "exam_impro_ap_criteria_id": 779,
+            "exam_impro_question_id": 306,
+            "graded": 1,
+            "id": 1650
+        },
+        {
+            "exam_impro_ap_criteria_id": 779,
+            "exam_impro_question_id": 304,
+            "graded": 1,
+            "id": 1651
+        }
+    ]
+}
+2021-03-18 17:09:35,837 - exam_app - DEBUG - processRequest has been called
+2021-03-18 17:09:35,839 - exam_app - DEBUG - data:{'service': 'cheneque', 'database': 'entities', 'action': 'update', 'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'data': {'exam_impro_ap_parameter': {'completado': True, 'where': {'id': 299}}}}
+2021-03-18 17:09:35,840 - exam_app - DEBUG - processRequest service:cheneque database:entities action:update data:{'exam_impro_ap_parameter': {'completado': True, 'where': {'id': 299}}}
+2021-03-18 17:09:35,840 - exam_app - INFO - GetObject Called
+2021-03-18 17:09:35,846 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ff2d48>
+2021-03-18 17:09:35,846 - exam_app - DEBUG - new Table(None,credentials)
+2021-03-18 17:09:35,847 - exam_app - DEBUG - tableFilter:{'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'expirationDate': '', 'user_id': ''}
+2021-03-18 17:09:35,847 - exam_app - DEBUG - self.tables length 1
+2021-03-18 17:09:35,847 - exam_app - DEBUG - select 0 table:credentials temp:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:35,848 - exam_app - DEBUG - select:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:35,848 - exam_app - DEBUG - creating join
+2021-03-18 17:09:35,848 - exam_app - DEBUG - join:FROM credentials
+2021-03-18 17:09:35,848 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+2021-03-18 17:09:35,849 - exam_app - DEBUG - creating where
+2021-03-18 17:09:35,849 - exam_app - DEBUG - where:credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:35,849 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:35,852 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ff2d48>
+2021-03-18 17:09:35,852 - exam_app - DEBUG - Executing query: SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:35,854 - exam_app - DEBUG - credentials.token:beda57eb-8962-4a14-9d8c-670d00ba91b1
+2021-03-18 17:09:35,855 - exam_app - DEBUG - credentials.expirationDate:2021-03-19 17:02:29
+2021-03-18 17:09:35,855 - exam_app - DEBUG - credentials.user_id:1
+2021-03-18 17:09:35,855 - exam_app - DEBUG - creating object for:credentials
+2021-03-18 17:09:35,855 - exam_app - DEBUG - createObjectFromRow key token is a <class 'str'>
+2021-03-18 17:09:35,856 - exam_app - DEBUG - createObjectFromRow key expirationDate is a <class 'datetime.datetime'>
+2021-03-18 17:09:35,856 - exam_app - DEBUG - createObjectFromRow key user_id is a <class 'int'>
+2021-03-18 17:09:35,856 - exam_app - DEBUG - key credentials is null creating new
+2021-03-18 17:09:35,857 - exam_app - DEBUG - key credentials is object creating new
+2021-03-18 17:09:35,857 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:35,857 - exam_app - DEBUG - filling object key token
+2021-03-18 17:09:35,857 - exam_app - DEBUG - key token is a <class 'str'>
+2021-03-18 17:09:35,858 - exam_app - DEBUG - filling object key expirationDate
+2021-03-18 17:09:35,858 - exam_app - DEBUG - key expirationDate is a <class 'str'>
+2021-03-18 17:09:35,858 - exam_app - DEBUG - filling object key user_id
+2021-03-18 17:09:35,858 - exam_app - DEBUG - key user_id is a <class 'str'>
+2021-03-18 17:09:35,859 - exam_app - INFO - GetObject Called ended
+2021-03-18 17:09:35,859 - exam_app - INFO - UpdateObject called
+2021-03-18 17:09:35,861 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ff2d60>
+2021-03-18 17:09:35,862 - exam_app - DEBUG - sql:UPDATE exam_impro_ap_parameter set completado=1 WHERE id=299
+2021-03-18 17:09:38,743 - exam_app - INFO - UpdateObject ended
+2021-03-18 17:09:38,744 - exam_app - DEBUG - {
+    "status": "OK"
+}
+2021-03-18 17:09:38,806 - exam_app - DEBUG - processRequest has been called
+2021-03-18 17:09:38,807 - exam_app - DEBUG - data:{'service': 'cheneque', 'database': 'entities', 'action': 'get', 'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'data': {'exam_impro_calificacion': {'grade': '', 'exam_impro_ap_parameter_id': 299}}}
+2021-03-18 17:09:38,808 - exam_app - DEBUG - processRequest service:cheneque database:entities action:get data:{'exam_impro_calificacion': {'grade': '', 'exam_impro_ap_parameter_id': 299}}
+2021-03-18 17:09:38,809 - exam_app - INFO - GetObject Called
+2021-03-18 17:09:38,813 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ffba18>
+2021-03-18 17:09:38,813 - exam_app - DEBUG - new Table(None,credentials)
+2021-03-18 17:09:38,814 - exam_app - DEBUG - tableFilter:{'token': 'beda57eb-8962-4a14-9d8c-670d00ba91b1', 'expirationDate': '', 'user_id': ''}
+2021-03-18 17:09:38,814 - exam_app - DEBUG - self.tables length 1
+2021-03-18 17:09:38,814 - exam_app - DEBUG - select 0 table:credentials temp:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:38,815 - exam_app - DEBUG - select:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+
+2021-03-18 17:09:38,815 - exam_app - DEBUG - creating join
+2021-03-18 17:09:38,816 - exam_app - DEBUG - join:FROM credentials
+2021-03-18 17:09:38,816 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+2021-03-18 17:09:38,816 - exam_app - DEBUG - creating where
+2021-03-18 17:09:38,817 - exam_app - DEBUG - where:credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:38,817 - exam_app - DEBUG - qry:SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:38,821 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ffba18>
+2021-03-18 17:09:38,822 - exam_app - DEBUG - Executing query: SELECT credentials.token as 'credentials.token', credentials.expirationDate as 'credentials.expirationDate', credentials.user_id as 'credentials.user_id'
+FROM credentials
+WHERE credentials.token='beda57eb-8962-4a14-9d8c-670d00ba91b1'
+2021-03-18 17:09:38,823 - exam_app - DEBUG - credentials.token:beda57eb-8962-4a14-9d8c-670d00ba91b1
+2021-03-18 17:09:38,824 - exam_app - DEBUG - credentials.expirationDate:2021-03-19 17:02:29
+2021-03-18 17:09:38,824 - exam_app - DEBUG - credentials.user_id:1
+2021-03-18 17:09:38,824 - exam_app - DEBUG - creating object for:credentials
+2021-03-18 17:09:38,824 - exam_app - DEBUG - createObjectFromRow key token is a <class 'str'>
+2021-03-18 17:09:38,825 - exam_app - DEBUG - createObjectFromRow key expirationDate is a <class 'datetime.datetime'>
+2021-03-18 17:09:38,825 - exam_app - DEBUG - createObjectFromRow key user_id is a <class 'int'>
+2021-03-18 17:09:38,825 - exam_app - DEBUG - key credentials is null creating new
+2021-03-18 17:09:38,825 - exam_app - DEBUG - key credentials is object creating new
+2021-03-18 17:09:38,826 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:38,826 - exam_app - DEBUG - filling object key token
+2021-03-18 17:09:38,826 - exam_app - DEBUG - key token is a <class 'str'>
+2021-03-18 17:09:38,826 - exam_app - DEBUG - filling object key expirationDate
+2021-03-18 17:09:38,826 - exam_app - DEBUG - key expirationDate is a <class 'str'>
+2021-03-18 17:09:38,827 - exam_app - DEBUG - filling object key user_id
+2021-03-18 17:09:38,827 - exam_app - DEBUG - key user_id is a <class 'str'>
+2021-03-18 17:09:38,827 - exam_app - INFO - GetObject Called ended
+2021-03-18 17:09:38,828 - exam_app - INFO - GetObject Called
+2021-03-18 17:09:38,830 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ffbc88>
+2021-03-18 17:09:38,830 - exam_app - DEBUG - new Table(None,exam_impro_calificacion)
+2021-03-18 17:09:38,830 - exam_app - DEBUG - tableFilter:{'grade': '', 'exam_impro_ap_parameter_id': 299}
+2021-03-18 17:09:38,831 - exam_app - DEBUG - self.tables length 1
+2021-03-18 17:09:38,831 - exam_app - DEBUG - select 0 table:exam_impro_calificacion temp:SELECT exam_impro_calificacion.grade as 'exam_impro_calificacion.grade', exam_impro_calificacion.exam_impro_ap_parameter_id as 'exam_impro_calificacion.exam_impro_ap_parameter_id'
+
+2021-03-18 17:09:38,831 - exam_app - DEBUG - select:SELECT exam_impro_calificacion.grade as 'exam_impro_calificacion.grade', exam_impro_calificacion.exam_impro_ap_parameter_id as 'exam_impro_calificacion.exam_impro_ap_parameter_id'
+
+2021-03-18 17:09:38,831 - exam_app - DEBUG - creating join
+2021-03-18 17:09:38,832 - exam_app - DEBUG - join:FROM exam_impro_calificacion
+2021-03-18 17:09:38,832 - exam_app - DEBUG - qry:SELECT exam_impro_calificacion.grade as 'exam_impro_calificacion.grade', exam_impro_calificacion.exam_impro_ap_parameter_id as 'exam_impro_calificacion.exam_impro_ap_parameter_id'
+FROM exam_impro_calificacion
+2021-03-18 17:09:38,832 - exam_app - DEBUG - creating where
+2021-03-18 17:09:38,832 - exam_app - DEBUG - where:exam_impro_calificacion.exam_impro_ap_parameter_id=299
+2021-03-18 17:09:38,833 - exam_app - DEBUG - qry:SELECT exam_impro_calificacion.grade as 'exam_impro_calificacion.grade', exam_impro_calificacion.exam_impro_ap_parameter_id as 'exam_impro_calificacion.exam_impro_ap_parameter_id'
+FROM exam_impro_calificacion
+WHERE exam_impro_calificacion.exam_impro_ap_parameter_id=299
+2021-03-18 17:09:38,835 - exam_app - DEBUG - <mysql.connector.connection.MySQLConnection object at 0xa5ffbc88>
+2021-03-18 17:09:38,835 - exam_app - DEBUG - Executing query: SELECT exam_impro_calificacion.grade as 'exam_impro_calificacion.grade', exam_impro_calificacion.exam_impro_ap_parameter_id as 'exam_impro_calificacion.exam_impro_ap_parameter_id'
+FROM exam_impro_calificacion
+WHERE exam_impro_calificacion.exam_impro_ap_parameter_id=299
+2021-03-18 17:09:38,844 - exam_app - DEBUG - exam_impro_calificacion.grade:6.9
+2021-03-18 17:09:38,844 - exam_app - DEBUG - exam_impro_calificacion.exam_impro_ap_parameter_id:299
+2021-03-18 17:09:38,844 - exam_app - DEBUG - creating object for:exam_impro_calificacion
+2021-03-18 17:09:38,845 - exam_app - DEBUG - createObjectFromRow key grade is a <class 'decimal.Decimal'>
+2021-03-18 17:09:38,845 - exam_app - DEBUG - createObjectFromRow key exam_impro_ap_parameter_id is a <class 'int'>
+2021-03-18 17:09:38,846 - exam_app - DEBUG - key exam_impro_calificacion is null creating new
+2021-03-18 17:09:38,846 - exam_app - DEBUG - key exam_impro_calificacion is object creating new
+2021-03-18 17:09:38,846 - exam_app - DEBUG - comparing objects
+2021-03-18 17:09:38,847 - exam_app - DEBUG - filling object key grade
+2021-03-18 17:09:38,847 - exam_app - DEBUG - key grade is a <class 'str'>
+2021-03-18 17:09:38,847 - exam_app - DEBUG - filling object key exam_impro_ap_parameter_id
+2021-03-18 17:09:38,848 - exam_app - DEBUG - key exam_impro_ap_parameter_id is a <class 'int'>
+2021-03-18 17:09:38,848 - exam_app - INFO - GetObject Called ended
+2021-03-18 17:09:38,849 - exam_app - DEBUG - {
+    "exam_impro_ap_parameter_id": 299,
+    "grade": 6.9
+}

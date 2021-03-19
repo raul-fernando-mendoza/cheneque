@@ -68,8 +68,8 @@ class MySql:
     def __init__(self):
         self.cnx = mysql.connector.connect(
         user="eApp",
-        password="odroid",     
-        host="localhost",
+        password="Argos4905!",     
+        host="34.70.28.168",
         
         database="entities"
         )

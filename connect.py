@@ -5,9 +5,9 @@ print("Content-Type: text/html\n")
 import mysql.connector
 
 mydb = mysql.connector.connect(
-  host="localhost",
+  host="10.128.0.12",
   user="eApp",
-  password="odroid"
+  password="Argos4905!"
 )
 
 print(mydb)
