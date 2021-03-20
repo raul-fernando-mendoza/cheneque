@@ -69,7 +69,7 @@ class MySql:
         self.cnx = mysql.connector.connect(
         user="eApp",
         password="Argos4905!",     
-        host="34.70.28.168",
+        host="10.128.0.12",
         
         database="entities"
         )
