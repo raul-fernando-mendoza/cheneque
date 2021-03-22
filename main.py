@@ -7,6 +7,8 @@ import logging
 import json
 import mysql_connect
 
+
+
 log = logging.getLogger("exam_app")
 
 app = Flask(__name__)
@@ -42,5 +44,5 @@ def processRequest():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    logging.debug('logger has started')    
-    app.run()
+    logging.debug('logger has started')  
+    app.run(host='0.0.0.0')

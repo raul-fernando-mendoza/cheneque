@@ -6,6 +6,9 @@ import mysql.connector
 import decimal
 import uuid
 
+from firebase_admin import auth
+
+
 log = logging.getLogger("exam_app")
 
 class Error(Exception):
@@ -66,14 +69,21 @@ class MySql:
     cnx = None
 
     def __init__(self):
-        self.cnx = mysql.connector.connect(
-        user="eApp",
-        password="Argos4905!",     
-        host="10.128.0.12",
-        
-        database="entities"
-        )
-        log.debug(self.cnx)         
+        try:
+            self.cnx = mysql.connector.connect(
+            user="eApp",
+            #   GCP cloud
+            #password="Argos4905!",     
+            #host="10.128.0.12", 
+            
+            #local database        
+            host="192.168.15.12", 
+            password="odroid",       
+            database="entities"
+            )
+            log.debug(self.cnx)         
+        except:
+            log.error("Exception connecting to database") 
 
     def getConnection(self):
         return self.cnx
@@ -659,26 +669,14 @@ def login(request):
     return result
 
 def validateToken(request):
-    token = request["token"]  
+    log.debug("Validating token has been called")
+    id_token = request["token"]  
 
-    token_request = {
-        "credentials":{
-            "token":token,
-            "expirationDate":"",
-            "user_id":""
-        }
-    } 
+    decoded_token = auth.verify_id_token(id_token)
+    log.debug("decoded_token %s", decoded_token)
+    uid = decoded_token['uid']
+    log.debug("uid:" + uid)
 
-    result = getObject( token_request ) 
-    if result == None :
-        log.error("Token not found %s", token)
-        raise LoginError("Token not found")
-
-    t = datetime.datetime.now()
-    e = datetime.datetime.strptime(result["expirationDate"], "%Y/%m/%d %H:%M:%S")
-    if t > e:
-        log.error("Token expired %s %s %s", token, t.strftime("%Y/%m/%d %H:%M:%S"), e.strftime("%Y/%m/%d %H:%M:%S"))
-        raise LoginError("Token Expired")
 
 
 
