@@ -5,9 +5,25 @@ import logging
 import mysql.connector
 import decimal
 import uuid
-
+import firebase_admin 
 from firebase_admin import auth
 
+
+# Initialize the default app only in development
+# export GOOGLE_APPLICATION_CREDENTIALS="/home/raul/cheneque/celtic-bivouac-307316-firebase-adminsdk-pbsww-2ccfde6abd.json"
+
+#   GCP cloud
+#database_host="10.128.0.12", 
+#database_password="Argos4905!",
+
+#local database        
+database_host="192.168.15.12"
+database_password="odroid"
+
+default_app = firebase_admin.initialize_app()
+
+
+print(default_app.name)  # "[DEFAULT]"
 
 log = logging.getLogger("exam_app")
 
@@ -77,13 +93,13 @@ class MySql:
             #host="10.128.0.12", 
             
             #local database        
-            host="192.168.15.12", 
-            password="odroid",       
+            host=database_host, 
+            password=database_password,       
             database="entities"
             )
             log.debug(self.cnx)         
-        except:
-            log.error("Exception connecting to database") 
+        except Exception as e:
+            log.error("Exception connecting to database:" + e) 
 
     def getConnection(self):
         return self.cnx
@@ -676,6 +692,12 @@ def validateToken(request):
     log.debug("decoded_token %s", decoded_token)
     uid = decoded_token['uid']
     log.debug("uid:" + uid)
+    email = decoded_token["email"]
+    log.debug("email:" + email)
+
+    if not email:
+        log.error("Token not valid")
+        raise LoginError("Token Expired")         
 
 
 

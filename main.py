@@ -6,7 +6,10 @@ from flask_cors import CORS, cross_origin
 import logging
 import json
 import mysql_connect
-import handlers
+from logging import handlers
+import sys
+
+
 
 #logging.basicConfig(filename='/var/www/cgi-bin/exam_app.log', format='%(asctime)-15s %(message)s', level=logging.DEBUG)
 logger = logging.getLogger("exam_app")
