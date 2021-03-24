@@ -689,11 +689,23 @@ def validateToken(request):
     id_token = request["token"]  
 
     decoded_token = auth.verify_id_token(id_token)
-    log.debug("decoded_token %s", decoded_token)
+
+  
+
+    log.debug("decoded_token %s", json.dumps(decoded_token,  indent=4, sort_keys=True))
     uid = decoded_token['uid']
     log.debug("uid:" + uid)
     email = decoded_token["email"]
     log.debug("email:" + email)
+
+    #auth.set_custom_user_claims(uid, {'admin': True})
+
+
+    user = auth.get_user(uid)
+    log.debug("user %s", json.dumps(decoded_token,  indent=4, sort_keys=True))
+
+    
+    log.debug("user claims %s", json.dumps(user.custom_claims,  indent=4, sort_keys=True))
 
     if not email:
         log.error("Token not valid")
@@ -723,7 +735,9 @@ def processRequest(req):
         return updateObject( data )  
     elif action == "delete":
         validateToken( req ) 
-        return deleteObject( data )  
+        return deleteObject( data ) 
+    elif action == "createUser":
+        return addObject( data )         
 
     elif action == "login":
         return login( data )   
