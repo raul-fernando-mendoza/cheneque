@@ -738,6 +738,9 @@ def processRequest(req):
         return deleteObject( data ) 
     elif action == "createUser":
         return addObject( data )         
+    elif action == "deleteUser":
+        return deleteObject( data )
+
 
     elif action == "login":
         return login( data )   

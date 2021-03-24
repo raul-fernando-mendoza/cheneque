@@ -10,8 +10,8 @@ logging.debug('test has started')
 class TestExamenObservations(unittest.TestCase):
     def testDeleteObject(self):
         data = {
-            "exam_impro_question":{
-                "id":45
+            "user":{
+                "uid":"abcd1234"
             }
         }
         obj = mysql_connect.deleteObject(data)
