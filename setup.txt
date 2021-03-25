@@ -1,11 +1,63 @@
-sudo apt install python3-venv
-python3 -m venv env
+apt install python3.7.3
+apt install python3-pip python3-setuptools python3.7-venv
+
+apt install python-pip python-setuptools python-venv
+
+curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+sudo python2 get-pip.py
+
+ls /usr/bin/python*
+update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7  0
+
+update-alternatives --remove python3 /usr/bin/python3.7  0
+
+update-alternatives --install /usr/bin/python python /usr/bin/python2  0
+
+python3.7 -m venv /path/to/venv
+python -m venv cheneque27
+ virtualenv env
 
 pip3 install Flask
 pip3 install flask_json
 pip3 install flask_cors
 pip3 install mysql-connector-python
+pip3 install firebase_admin
 
 pip3 freeze > requirements.txt
 
 gcloud app deploy
+
+/*
+maybe need
+pip3 install grpcio
+pip3 install --no-cache-dir  --force-reinstall -Iv grpcio
+pip install google-cloud-core
+pip3 install install google-cloud-firestore
+
+grpcio==1.13.0rc3
+google-cloud-firestore==0.29.0
+google-cloud-storage==1.10.0
+
+pip3 install --upgrade setuptools
+
+
+ignore files
+gcloud topic gcloudignore
+gcloud app create --project=MY-PROJECT-ID
+
+compile python specific version
+https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/
+sudo wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz
+sudo tar xzf Python-3.5.2.tgz
+cd Python-3.5.2
+sudo ./configure
+sudo make altinstall
+
+report firebase_admin using python3.7.3
+https://python-catalin.blogspot.com/2019/04/testing-firebase-with-python-373.html
+
+
+sudo apt-get install python-pip python-dev libmysqlclient-dev
+pip install pymysql
+
+*/
