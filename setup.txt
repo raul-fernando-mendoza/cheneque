@@ -7,7 +7,12 @@ curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
 sudo python2 get-pip.py
 
 ls /usr/bin/python*
+
+update-alternatives --list python3
+
 update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7  0
+
+update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9  0
 
 update-alternatives --remove python3 /usr/bin/python3.7  0
 
@@ -16,6 +21,20 @@ update-alternatives --install /usr/bin/python python /usr/bin/python2  0
 python3.7 -m venv /path/to/venv
 python -m venv cheneque27
  virtualenv env
+
+##### python 3.9
+sudo add-apt-repository ppa:deadsnakes/ppa 
+sudo apt update 
+sudo apt install python3.9
+python3.9 -V 
+
+sudo apt install python3.9-distutils
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3.9 get-pip.py
+
+sudo apt install python3-pip
+sudo apt-get install python3.9-dev python3.9-venv
+python3.9 -m venv venv_cheneque
 
 pip3 install Flask
 pip3 install flask_json

@@ -5,10 +5,10 @@ from flask_cors import CORS, cross_origin
 
 import logging
 import json
-from cheneque.mysql_connect import processRequest
+import mysql_connect 
 
 
-logger = logging.getLogger("exam_app")
+log = logging.getLogger("exam_app")
 
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def get_time():
     return json_response(time=now)
 
 
-@app.route('/api', methods=['POST'])
+@app.route('/api', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def processRequest():
     # We use 'force' to skip mimetype checking to have shorter curl command.
@@ -44,5 +44,5 @@ def processRequest():
     return json_response(result=obj)
 
 if __name__ == '__main__':
-    logging.info('********************* Cheneque logger has started ************************')  
+    log.info('********************* Cheneque logger has started ************************')  
     app.run(host='0.0.0.0')

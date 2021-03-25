@@ -2,7 +2,7 @@ import unittest
 from datetime import date
 import json
 import logging
-from cheneque.mysql_connect import processRequest
+from mysql_connect import processRequest
 
 logging = logging.getLogger("exam_app")
 logging.debug("logging has started")
@@ -22,38 +22,15 @@ class TestExam(unittest.TestCase):
             request = {
                 "action": "get",
                 "data": {
-                    "exam_impro_ap_parameter": [
+                    "exam_impro_type": [
                         {
-                            "completado": "",
-                            "exam_impro_ap": {
-                                "completado": "",
-                                "estudiante": {
-                                    "apellidoMaterno": "",
-                                    "apellidoPaterno": "",
-                                    "nombre": ""
-                                },
-                                "fechaApplicacion": "",
-                                "materia": ""
-                            },
-                            "exam_impro_parameter": {
-                                "exam_impro_type": {
-                                    "label": ""
-                                },
-                                "label": ""
-                            },
                             "id": "",
-                            "maestro": {
-                                "apellidoMaterno": "",
-                                "apellidoPaterno": "",
-                                "email": "",
-                                "nombre": ""
-                            }
+                            "label": ""
                         }
-                    ]
                 },
                 "database": "entities",
                 "service": "cheneque",
-                "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjRlMDBlOGZlNWYyYzg4Y2YwYzcwNDRmMzA3ZjdlNzM5Nzg4ZTRmMWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vY2VsdGljLWJpdm91YWMtMzA3MzE2IiwiYXVkIjoiY2VsdGljLWJpdm91YWMtMzA3MzE2IiwiYXV0aF90aW1lIjoxNjE2NDUzNDA2LCJ1c2VyX2lkIjoieTIweUdWY0NtNlY2SnI4NmFBZHlVN2NKWWw1MyIsInN1YiI6InkyMHlHVmNDbTZWNkpyODZhQWR5VTdjSllsNTMiLCJpYXQiOjE2MTY0NTM0MDcsImV4cCI6MTYxNjQ1NzAwNywiZW1haWwiOiJjbGF1ZGlhLmdhbWJvYUByYXhhY2FkZW15LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJjbGF1ZGlhLmdhbWJvYUByYXhhY2FkZW15LmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.XjCzMvgtXHyoJGUYuQqcw7Le8Vs0pT16co5fOhV4FBqN7vPX9kzwJXZ018FV6eLJb4FSigdTsTvFc_FSD_9bCj9pRJv5_ROjG80YCtfxxokxUp8J2DUHJsce6FLIaWwb0q_z2cHcgeuMB5IE7zQYM6A4RsRjNtCPwveVR3rpDGc0Kr3vYxw1VuiRUHktwgxpDyITTzOAuEF5c1hk5mhtxS6GR6EzetTUEjyCZKUKqq-TB41fCNe0QPShdiBbFpYUtDTMNqvC3kiCFNpEvCXt9Phh0RElweRcgzNAmfKZGafcprkFlZ-67f_2D6Krn5PBChV3NJEr9JdjAxjf5NcF5Q"
+                "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImY4NDY2MjEyMTQxMjQ4NzUxOWJiZjhlYWQ4ZGZiYjM3ODYwMjk5ZDciLCJ0eXAiOiJKV1QifQ.eyJhZG1pbiI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2NlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1ZCI6ImNlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1dGhfdGltZSI6MTYxNjY5ODU1NSwidXNlcl9pZCI6InkyMHlHVmNDbTZWNkpyODZhQWR5VTdjSllsNTMiLCJzdWIiOiJ5MjB5R1ZjQ202VjZKcjg2YUFkeVU3Y0pZbDUzIiwiaWF0IjoxNjE2Njk4NTU1LCJleHAiOjE2MTY3MDIxNTUsImVtYWlsIjoiY2xhdWRpYS5nYW1ib2FAcmF4YWNhZGVteS5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiY2xhdWRpYS5nYW1ib2FAcmF4YWNhZGVteS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.oZD3i4_RdV5wOiUDSOWf05FAfZzFQMWNhBpNWObAPZAFYEJjf_GdW95vpd1R-Cmmc7HPdNbtXmrEh8WnEWiTqIfkZtPHGBKGzJ2WQf0BQp0hnb6cb2cZtwBTwHjad09PWcqi0QhIvFJgwr2c1BWw05RpTqJirMUbb6fmzyKjKjbM7NxMlIudFUnP7KNTemNM0wQyarGhN3L5amUaX--d1A-9g1PJFEsithmh1nChoBFrNKr141V8FAuCWAQ4ySF5HkjbBtjM0swStaEfyuBPtJH-WZpaj_910Nm4uLU_NxGazW6xePrnNUzzqaEwjkuAb_iFa-Cnr-zMOPDVi9MPvA"
             }
             
             obj = processRequest(request)
@@ -63,4 +40,5 @@ if __name__ == '__main__':
     unittest.main()
 
 
-curl -d '{json}' -H 'Content-Type: application/json' https://example.com/login
+#curl -d '{"action": "get","data": {"exam_impro_type": [{"id": "","label": ""}},"database": "entities","service": "cheneque","token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImY4NDY2MjEyMTQxMjQ4NzUxOWJiZjhlYWQ4ZGZiYjM3ODYwMjk5ZDciLCJ0eXAiOiJKV1QifQ.eyJhZG1pbiI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2NlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1ZCI6ImNlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1dGhfdGltZSI6MTYxNjY5ODU1NSwidXNlcl9pZCI6InkyMHlHVmNDbTZWNkpyODZhQWR5VTdjSllsNTMiLCJzdWIiOiJ5MjB5R1ZjQ202VjZKcjg2YUFkeVU3Y0pZbDUzIiwiaWF0IjoxNjE2Njk4NTU1LCJleHAiOjE2MTY3MDIxNTUsImVtYWlsIjoiY2xhdWRpYS5nYW1ib2FAcmF4YWNhZGVteS5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiY2xhdWRpYS5nYW1ib2FAcmF4YWNhZGVteS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.oZD3i4_RdV5wOiUDSOWf05FAfZzFQMWNhBpNWObAPZAFYEJjf_GdW95vpd1R-Cmmc7HPdNbtXmrEh8WnEWiTqIfkZtPHGBKGzJ2WQf0BQp0hnb6cb2cZtwBTwHjad09PWcqi0QhIvFJgwr2c1BWw05RpTqJirMUbb6fmzyKjKjbM7NxMlIudFUnP7KNTemNM0wQyarGhN3L5amUaX--d1A-9g1PJFEsithmh1nChoBFrNKr141V8FAuCWAQ4ySF5HkjbBtjM0swStaEfyuBPtJH-WZpaj_910Nm4uLU_NxGazW6xePrnNUzzqaEwjkuAb_iFa-Cnr-zMOPDVi9MPvA"}' -H 'Content-Type: application/json' localhost:5000/api
+#curl -d '{"action": "get","data": {"exam_impro_type": [{"id": "","label": ""}},"database": "entities","service": "cheneque","token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImY4NDY2MjEyMTQxMjQ4NzUxOWJiZjhlYWQ4ZGZiYjM3ODYwMjk5ZDciLCJ0eXAiOiJKV1QifQ.eyJhZG1pbiI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2NlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1ZCI6ImNlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1dGhfdGltZSI6MTYxNjY5ODU1NSwidXNlcl9pZCI6InkyMHlHVmNDbTZWNkpyODZhQWR5VTdjSllsNTMiLCJzdWIiOiJ5MjB5R1ZjQ202VjZKcjg2YUFkeVU3Y0pZbDUzIiwiaWF0IjoxNjE2Njk4NTU1LCJleHAiOjE2MTY3MDIxNTUsImVtYWlsIjoiY2xhdWRpYS5nYW1ib2FAcmF4YWNhZGVteS5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiY2xhdWRpYS5nYW1ib2FAcmF4YWNhZGVteS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.oZD3i4_RdV5wOiUDSOWf05FAfZzFQMWNhBpNWObAPZAFYEJjf_GdW95vpd1R-Cmmc7HPdNbtXmrEh8WnEWiTqIfkZtPHGBKGzJ2WQf0BQp0hnb6cb2cZtwBTwHjad09PWcqi0QhIvFJgwr2c1BWw05RpTqJirMUbb6fmzyKjKjbM7NxMlIudFUnP7KNTemNM0wQyarGhN3L5amUaX--d1A-9g1PJFEsithmh1nChoBFrNKr141V8FAuCWAQ4ySF5HkjbBtjM0swStaEfyuBPtJH-WZpaj_910Nm4uLU_NxGazW6xePrnNUzzqaEwjkuAb_iFa-Cnr-zMOPDVi9MPvA"}' -H 'Content-Type: application/json' https://celtic-bivouac-307316.uc.r.appspot.com/api

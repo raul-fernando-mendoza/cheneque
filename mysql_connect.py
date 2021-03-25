@@ -7,7 +7,7 @@ import decimal
 import uuid
 import firebase_admin 
 from firebase_admin import auth
-from cheneque.environments_prd import config
+from environments_prd import config
 
 
 # Initialize the default app only in development
@@ -740,7 +740,7 @@ def processRequest(req):
                 
     else:
         log.error("action not found %s", action)
-        raise Exception("Action " + str(action) +" you probably want to use: get, add, update or remove")
+        return("Action not found" + str(action) +" you probably want to use: get, add, update or remove")
 
 if __name__ == "__main__":
     print("hello mysql_connect")
