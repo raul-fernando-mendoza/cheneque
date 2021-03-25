@@ -4,8 +4,9 @@ import json
 import logging
 from cheneque.mysql_connect import processRequest
 
-logging.basicConfig( level=logging.DEBUG)
-logging.debug('test has started') 
+logging = logging.getLogger("exam_app")
+logging.debug("logging has started")
+
 
 class TestExam(unittest.TestCase):
 
@@ -60,3 +61,6 @@ class TestExam(unittest.TestCase):
     
 if __name__ == '__main__':
     unittest.main()
+
+
+curl -d '{json}' -H 'Content-Type: application/json' https://example.com/login
