@@ -1,3 +1,7 @@
+#need to run before debuggin from visual studio
+#gcloud login
+#gcloud info
+#gcloud auth application-default login
 import sys
 import datetime
 import json
@@ -683,6 +687,7 @@ def login(request):
 def validateToken(request):
     log.debug("Validating token has been called")
     id_token = request["token"]  
+    log.info("id_token:%s", id_token)
 
     decoded_token = auth.verify_id_token(id_token)
     log.debug("decoded_token %s", json.dumps(decoded_token,  indent=4, sort_keys=True))
@@ -705,9 +710,46 @@ def validateToken(request):
         raise LoginError("Token Expired")         
 
 
+def addClaim(request):
+    log.debug("addClaim has been called")
+    
+    email = request["user"]["email"]
+    role = request["user"]["role"]
 
+    user = auth.get_user_by_email(email)
 
+    current_claims = {}
+    if( user.custom_claims ):
+        current_claims = user.custom_claims
 
+    current_claims[role] = True
+
+    auth.set_custom_user_claims(user.uid, current_claims)
+
+    return "Success"
+
+def removeClaim(request):
+    log.debug("removeClaim has been called")
+    
+    email = request["user"]["email"]
+    role = request["user"]["role"]
+
+    user = auth.get_user_by_email(email)
+
+    if( user.custom_claims ):
+        user.custom_claims.pop(role, None)
+        auth.set_custom_user_claims(user.uid, user.custom_claims) 
+    
+    return "Success"
+
+def getClaims(request):
+
+    log.debug("getClaims has been called")
+    email = request["user"]["email"]
+    user = auth.get_user_by_email(email)
+
+    return user.custom_claims
+    
 
 def processRequest(req):
     service = req["service"]  #always cheneque
@@ -733,6 +775,12 @@ def processRequest(req):
         return addObject( data )         
     elif action == "deleteUser":
         return deleteObject( data )
+    elif action == "addClaim":
+        return addClaim( data )
+    elif action == "removeClaim":
+        return removeClaim( data )
+    elif action == "getClaims":
+        return getClaims( data )        
 
 
     elif action == "login":
