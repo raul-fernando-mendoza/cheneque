@@ -84,7 +84,18 @@ def getAddValueToExpresion(expresion,value,sep):
         expresion = expresion + str(value)
     return expresion
 
+def getTableAlias(tableName):
+    start_pos = 0
 
+    alias_pos = tableName.find(":")
+    if alias_pos>=0:
+        return tableName[0:alias_pos]
+
+    out_join = tableName.find("(+)")
+    if out_join>=0:
+        return tableName[0:out_join]
+
+    return tableName
 
 class MySql:
     cnx = None
@@ -145,26 +156,42 @@ class MySql:
 
 
 class Table:
-    parentTableName = None
+    parentTable = None
     tableName = None
+    alias = None
     tableFilter = None
     isList = False
     isOuterJoin = False
-    def __init__(self,parentTableName, tableName, filter):
-        log.debug( "new Table(%s,%s)", str(parentTableName) , str(tableName) ) 
-        self.parentTableName = parentTableName
-        if tableName.endswith("(+)") == True:
-            l = len(tableName) - 3
-            self.tableName = tableName[0:l] 
-            self.isOuterJoin = True
-        else:
-            self.tableName = tableName
+    def __init__(self,parentTable, tableName, filter):
+        log.debug( "new Table(%s,%s)", parentTable.alias if parentTable else None, str(tableName) ) 
+        self.parentTable = parentTable
+
+        start_pos = 0
+
+        alias_pos = tableName.find(":")
+        if alias_pos>=0:
+            self.alias = tableName[0:alias_pos]
+            start_pos = alias_pos + 1
+
         
+        outer_pos =  tableName.find("(+)")
+        if outer_pos >= 0:
+            self.tableName = tableName[start_pos:outer_pos]
+            self.isOuterJoin = True 
+        else:
+            l = len(tableName)
+            self.isOuterJoin = False
+            self.tableName = tableName[start_pos:l] 
+
+        if self.alias == None:
+            self.alias = self.tableName            
+       
         if isinstance( filter, list ):
             self.tableFilter = filter[0]
             self.isList = True
         else:
             self.tableFilter = filter 
+            self.isList = False
 
         log.debug("tableFilter:%s", self.tableFilter)       
 
@@ -175,7 +202,7 @@ class Table:
             if not isinstance(value,dict) and not isinstance(value,list):
                 if exp != "":
                     exp = exp + ", "
-                exp = exp + self.tableName + "." + str(key) + " as '" + self.tableName + "." + str(key) + "'"
+                exp = exp + self.alias + "." + str(key) + " as '" + self.alias + "." + str(key) + "'"
         return exp
 
     def getWhereExpression(self):
@@ -185,7 +212,7 @@ class Table:
             value = self.tableFilter[key]
             if value != "":
                 if not isinstance(value,dict) and not isinstance(value,list): 
-                    where = addFieldValueToExpresion(where, self.tableName + "." + key, value, " and ")
+                    where = addFieldValueToExpresion(where, self.alias + "." + key, value, " and ")
                 
         return where
 
@@ -195,7 +222,7 @@ class Table:
         for key in self.tableFilter.keys():
             value = self.tableFilter[key]
             if not isinstance(value,dict) and not isinstance(value,list):
-                rowValue = row[self.tableName + "." + key]
+                rowValue = row[self.alias + "." + key]
                 log.debug("createObjectFromRow key %s is a %s" , key, type(rowValue))
                 if rowValue!=None:
                     isNullObject = False
@@ -216,7 +243,7 @@ class Table:
         for key in self.tableFilter.keys():
             value = self.tableFilter[key]
             if not isinstance(value,dict) and not isinstance(value,list):
-                rowValue = row[self.tableName + "." + key]
+                rowValue = row[self.alias + "." + key]
                 
                 if isinstance(rowValue , datetime.datetime):
                     v = rowValue.strftime("%Y/%m/%d %H:%M:%S")
@@ -244,21 +271,15 @@ class Qry:
                 if (isinstance(request[key],dict) or isinstance(request[key],list) ) and key not in self.reservedWords:
                     t = Table(parentTable, key, request[key])
                     self.tables.append( t )
-                    self.createTableList( t.tableName, t.tableFilter )
+                    self.createTableList( t, t.tableFilter )
         except Exception as e:
             log.error("Exception: createTableList" + str(e))
             raise
 
-    def getTableByName(self,tableName):
-
-        if tableName.endswith("(+)") == True:
-            l = len(tableName) - 3
-            tableName = tableName[0:l] 
-        else:
-            tableName = tableName
+    def getTableByAlias(self,alias):
 
         for i in range(0,len(self.tables)):
-            if self.tables[i].tableName == tableName :
+            if self.tables[i].alias == alias :
                 return self.tables[i]
         return None
 
@@ -273,35 +294,35 @@ class Qry:
                         filter = keyValue[0]
                     elif isinstance(keyValue,dict):
                         filter = keyValue                
-                    t = self.getTableByName(key)
+                    t = self.getTableByAlias( getTableAlias(key) )
                     newObj = t.createObjectFromRow( objRow )
-                    if t.tableName not in obj:
+                    if t.alias not in obj:
                         log.debug("object %s is null creating new", key) 
                         if t.isList:
                             log.debug("objet %s is array creating new", key)
-                            obj[t.tableName] = []
+                            obj[t.alias] = []
                             if newObj != None:
-                                obj[t.tableName].append( newObj )                           
+                                obj[t.alias].append( newObj )                           
                         else:
                             log.debug("object %s is object creating new", key)
-                            obj[t.tableName] = newObj
+                            obj[t.alias] = newObj
                         lastObject = newObj
                     else:
                         if t.isList:
                             log.debug("object %s was not null and array retring last", key) 
-                            if len(obj[t.tableName]) > 0:
-                                lastObject = obj[t.tableName][-1]
+                            if len(obj[t.alias]) > 0:
+                                lastObject = obj[t.alias][-1]
                             else:
                                 lastObject = None
                         else:
                             log.debug("object %s was not null and object retrivig last")
-                            lastObject = obj[t.tableName] 
+                            lastObject = obj[t.alias] 
                     #compare the new row to the previous one and if false then there should be a new row
                     log.debug("compare vs last Object")
                     if lastObject != None:
                         if t.compareObjToRow( lastObject, objRow) == False:
                             log.debug("new row is different from last adding row")
-                            obj[t.tableName].append( newObj )
+                            obj[t.alias].append( newObj )
                             lastObject = newObj
                         log.debug("call for sub filters")
                         self.fillObjectFromRow( lastObject, objRow, filter) 
@@ -321,7 +342,7 @@ class Qry:
                 if i != 0:
                     select = select + ","
                 select = select + t.getSelect() + "\n"
-                log.debug("select %i table:%s temp:%s",i, t.tableName, select )
+                log.debug("select %i table:%s temp:%s",i, t.alias, select )
 
             log.debug("select:" + select)
 
@@ -332,27 +353,36 @@ class Qry:
                 
                 t = self.tables[i]
                 if i == 0:
-                    join = "FROM " + t.tableName 
+                    join = "FROM " + t.tableName + " as " + t.alias
                 else:
                     if t.isOuterJoin:
-                        join = join + " LEFT JOIN " + t.tableName + " ON ("
+                        join = join + " LEFT JOIN " + t.alias + " ON ("
                     else:
-                        join = join + " JOIN " + t.tableName + " ON ("
+                        join = join + " JOIN " + t.tableName + " as " + t.alias + " ON ("
                 
-                    constraints = mydb.getConstraints( t.parentTableName, t.tableName )
+                    constraints = mydb.getConstraints( t.parentTable.tableName, t.tableName )
 
-                    if len(constraints) == 0 :
-                        constraints = mydb.getConstraints( t.tableName, t.parentTableName )
+                    if len(constraints) > 0 :
+                        
+                        for j in range(0,len(constraints)):
+                            c = constraints[j]
+                            if j != 0:
+                                join = join + " AND "
+                            
+                            join = join + t.parentTable.alias + "." + c["column_name"] + " = " + t.alias + "." + c["referenced_column_name"]
+                        join = join + ")"                        
+                    else:
+                        constraints = mydb.getConstraints( t.tableName, t.parentTable.tableName )
+                        
+                        if len(constraints) == 0:
+                            raise Exception("no FK found for tables "+ t.tableName + " and " + t.parentTableName)
 
-                    if len(constraints) == 0:
-                        raise Exception("no FK found for tables "+ t.tableName + " and " + t.parentTableName)
-
-                    for j in range(0,len(constraints)):
-                        c = constraints[j]
-                        if j != 0:
-                            join = join + " AND "
-                        join = join + c["table_name"] + "." + c["column_name"] + " = " + c["reference_table_name"] + "." + c["referenced_column_name"]
-                    join = join + ")"
+                        for j in range(0,len(constraints)):
+                            c = constraints[j]
+                            if j != 0:
+                                join = join + " AND "
+                            join = join + t.alias + "." + c["column_name"] + " = " + t.parentTable.alias + "." + c["referenced_column_name"]
+                        join = join + ")"
 
             log.debug( "join:" + join )
 
@@ -433,14 +463,14 @@ class Qry:
                             filter = keyValue[0]
                         elif isinstance(keyValue,dict):
                             filter = keyValue
-                        t = self.getTableByName(key)
+                        t = self.getTableByAlias(getTableAlias(key))
                         newObj = t.createObjectFromRow( objRow )
                         #ensure there is a lastObject
                         
                         if result == None: 
                             log.debug("key %s is null creating new", key)
                             if t.isList:
-                                log.debug("key %s is array creating new", t.tableName)
+                                log.debug("key %s is array creating new", t.alias)
                                 result = [] 
                                 result.append( newObj )                           
                             else:
@@ -736,9 +766,11 @@ def removeClaim(request):
 
     user = auth.get_user_by_email(email)
 
-    if( user.custom_claims ):
-        user.custom_claims.pop(role, None)
-        auth.set_custom_user_claims(user.uid, user.custom_claims) 
+    custom_claims = user.custom_claims
+
+    if( custom_claims ):
+        r = custom_claims.pop(role, None)
+        auth.set_custom_user_claims(user.uid, custom_claims) 
     
     return "Success"
 
@@ -749,7 +781,32 @@ def getClaims(request):
     user = auth.get_user_by_email(email)
 
     return user.custom_claims
-    
+
+def getUserListForClaim(req):
+    claim = req["user"]["role"]
+    userlist = []
+    log.debug("getUserListForClaim has been called")
+    for user in auth.list_users().iterate_all():
+        if claim:
+            if user.custom_claims and claim in user.custom_claims:
+                userlist.append( { 
+                    "uid":user.uid,
+                    "display_name":user.display_name,
+                    "email":user.email
+                    }
+                )
+        else:
+            userlist.append( { 
+                "uid":user.uid,
+                "email":user.email,
+                "roles":user.claims
+                }
+            )
+    return userlist
+
+
+
+    return user.custom_claims    
 
 def processRequest(req):
     service = req["service"]  #always cheneque
@@ -780,7 +837,10 @@ def processRequest(req):
     elif action == "removeClaim":
         return removeClaim( data )
     elif action == "getClaims":
-        return getClaims( data )        
+        return getClaims( data ) 
+    elif action == "getUserListForClaim":
+        return getUserListForClaim( data )         
+               
 
 
     elif action == "login":
