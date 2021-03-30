@@ -216,6 +216,18 @@ class Table:
                 
         return where
 
+    def getJoinExpression(self):
+        join = ""
+
+        for key in self.tableFilter.keys():
+            if key == "join" :
+                where_values = self.tableFilter[key]
+                for field in where_values:
+                    if join != "":
+                        join = join + " and "
+                    join = join + " " + self.alias + "." + field + "=" + where_values[field]
+        return join        
+
     def createObjectFromRow( self, row ):
         isNullObject = True
         obj = {}
@@ -260,7 +272,7 @@ class Table:
 
 class Qry:
     tables = []
-    reservedWords = ("orderBy","pagination")
+    reservedWords = ("orderBy","pagination","join")
 
     def __init__(self):
         self.tables = []
@@ -289,7 +301,7 @@ class Qry:
                 log.debug("filling object key %s", key)
                 keyValue = request[key]
                 log.debug("key %s is a %s" , key, type(keyValue))
-                if isinstance(keyValue,dict) or isinstance(keyValue,list):
+                if (isinstance(keyValue,dict) or isinstance(keyValue,list)) and key not in self.reservedWords:
                     if isinstance(keyValue,list):
                         filter = keyValue[0]
                     elif isinstance(keyValue,dict):
@@ -348,7 +360,7 @@ class Qry:
 
             log.debug("creating join")
 
-            join = ""
+
             for i in range(0, len(self.tables)):
                 
                 t = self.tables[i]
@@ -360,29 +372,34 @@ class Qry:
                     else:
                         join = join + " JOIN " + t.tableName + " as " + t.alias + " ON ("
                 
-                    constraints = mydb.getConstraints( t.parentTable.tableName, t.tableName )
 
-                    if len(constraints) > 0 :
-                        
-                        for j in range(0,len(constraints)):
-                            c = constraints[j]
-                            if j != 0:
-                                join = join + " AND "
-                            
-                            join = join + t.parentTable.alias + "." + c["column_name"] + " = " + t.alias + "." + c["referenced_column_name"]
-                        join = join + ")"                        
+                    join_exp = self.tables[i].getJoinExpression() 
+                    if join_exp != "":
+                        join = join + join_exp + ")"
                     else:
-                        constraints = mydb.getConstraints( t.tableName, t.parentTable.tableName )
-                        
-                        if len(constraints) == 0:
-                            raise Exception("no FK found for tables "+ t.tableName + " and " + t.parentTableName)
+                        constraints = mydb.getConstraints( t.parentTable.tableName, t.tableName )
 
-                        for j in range(0,len(constraints)):
-                            c = constraints[j]
-                            if j != 0:
-                                join = join + " AND "
-                            join = join + t.alias + "." + c["column_name"] + " = " + t.parentTable.alias + "." + c["referenced_column_name"]
-                        join = join + ")"
+                        if len(constraints) > 0 :
+                            
+                            for j in range(0,len(constraints)):
+                                c = constraints[j]
+                                if j != 0:
+                                    join = join + " AND "
+                                
+                                join = join + t.parentTable.alias + "." + c["column_name"] + " = " + t.alias + "." + c["referenced_column_name"]
+                            join = join + ")"                        
+                        else:
+                            constraints = mydb.getConstraints( t.tableName, t.parentTable.tableName )
+                            
+                            if len(constraints) == 0 :
+                                raise Exception("no FK found for tables "+ t.tableName + " and " + t.parentTable.parentTableName)
+
+                            for j in range(0,len(constraints)):
+                                c = constraints[j]
+                                if j != 0:
+                                    join = join + " AND "
+                                join = join + t.alias + "." + c["column_name"] + " = " + t.parentTable.alias + "." + c["referenced_column_name"]
+                            join = join + ")"
 
             log.debug( "join:" + join )
 
@@ -804,9 +821,18 @@ def getUserListForClaim(req):
             )
     return userlist
 
+def sendEmailVerification(request):
+    log.debug("sendEmailVerification has been called")
+    
+    email = request["user"]["email"]
 
+    link = auth.generate_email_verification_link(email)
 
-    return user.custom_claims    
+    log.debug("link:" + link)
+  
+
+    return "OK"
+
 
 def processRequest(req):
     service = req["service"]  #always cheneque
@@ -817,7 +843,7 @@ def processRequest(req):
     log.debug("processRequest service:%s database:%s action:%s data:%s", service, database, action, data )
 
     if action == "get":
-        validateToken( req ) 
+        #validateToken( req ) 
         return getObject( data )
     elif action == "add":
         validateToken( req ) 
@@ -839,7 +865,9 @@ def processRequest(req):
     elif action == "getClaims":
         return getClaims( data ) 
     elif action == "getUserListForClaim":
-        return getUserListForClaim( data )         
+        return getUserListForClaim( data )
+    elif action == "sendEmailVerification":
+        return sendEmailVerification(data)         
                
 
 
@@ -848,7 +876,7 @@ def processRequest(req):
                 
     else:
         log.error("action not found %s", action)
-        return("Action not found" + str(action) +" you probably want to use: get, add, update or remove")
+        return("Action not found:" + str(action) +" you probably want to use: get, add, update or remove")
 
 if __name__ == "__main__":
     print("hello mysql_connect")
