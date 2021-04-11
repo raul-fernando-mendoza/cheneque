@@ -1,5 +1,6 @@
 #need to run before debuggin from visual studio
-#gcloud login
+#gcloud auth login
+#gcloud config set project celtic-bivouac-307316
 #gcloud info
 #gcloud auth application-default login
 import sys
@@ -151,7 +152,13 @@ class MySql:
         finally:
             cursor.close()
 
-        return referenced_table_schema      
+        return referenced_table_schema 
+
+       
+
+
+
+        
 
 
 
@@ -833,6 +840,30 @@ def sendEmailVerification(request):
 
     return "OK"
 
+def removeUser(request):
+    log.debug("removeUser has been called")
+    email = request["user"]["email"]
+    uid = None
+    user = auth.get_user_by_email(email)
+    try:
+        uid = user.uid
+        mysql = MySql()
+        connection = mysql.getConnection()
+        cursor = connection.cursor()  
+        query = "delete from user where uid = %s"
+        cursor.execute(query, (uid) )
+        log.debug("delete completed")
+        connection.commit()
+
+    except Exception as e:
+        log.error("Exception removeObject:" + str(e) )
+        connection.rollback()
+        raise
+    finally:
+        mysql.close()
+    
+    auth.delete_user(uid)    
+    return uid
 
 def processRequest(req):
     service = req["service"]  #always cheneque
@@ -868,7 +899,8 @@ def processRequest(req):
         return getUserListForClaim( data )
     elif action == "sendEmailVerification":
         return sendEmailVerification(data)         
-               
+    elif action == "removeUser":
+        return removeUser(data)                
 
 
     elif action == "login":
