@@ -12,7 +12,7 @@ import decimal
 import uuid
 import firebase_admin 
 from firebase_admin import auth
-from environments_prd import config
+from environments_dev import config
 
 
 # Initialize the default app only in development
@@ -874,7 +874,7 @@ def processRequest(req):
     log.debug("processRequest service:%s database:%s action:%s data:%s", service, database, action, data )
 
     if action == "get":
-        #validateToken( req ) 
+        validateToken( req ) 
         return getObject( data )
     elif action == "add":
         validateToken( req ) 

@@ -2,6 +2,9 @@ apt install python3.7.3
 apt install python3-pip python3-setuptools python3.7-venv
 
 apt install python-pip python-setuptools python-venv
+or 
+sudo pip install virtualenv
+
 
 curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
 sudo python2 get-pip.py
@@ -44,4 +47,23 @@ python3 -m pip freeze > requirements.txt
 
 gcloud app deploy
 
+/*********************************************/
+<VirtualHost *:10000>
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/cgi-bin/
 
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+       WSGIProcessGroup myapps
+       WSGIApplicationGroup %{GLOBAL}
+
+       WSGIDaemonProcess myapps user=odroid group=odroid threads=5 python-home=/var/www/cgi-bin/venv392
+       #WSGIScriptAlias /api/ /var/www/cgi-bin/myapp.wsgi
+    
+       WSGIScriptAlias /api /var/www/cgi-bin/mysql_connect.wsgi
+       <Directory /var/www/cgi-bin>
+          Require all granted
+       </Directory>		
+</VirtualHost>
+/*************************************************/

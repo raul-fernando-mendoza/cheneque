@@ -1,3 +1,6 @@
+#to find the pid
+#sudo netstat -tulnp | grep :5000
+#kill pid
 from datetime import datetime
 from flask import Flask, request, abort, jsonify
 from flask_json import FlaskJSON, JsonError, json_response, as_json
@@ -6,6 +9,8 @@ from flask_cors import CORS, cross_origin
 import logging
 import json
 import mysql_connect 
+import os
+import sys
 
 
 log = logging.getLogger("exam_app")
@@ -20,7 +25,9 @@ FlaskJSON(app)
 def get_time():
     logging.info('********************* Cheneque / was called ************************') 
     now = datetime.utcnow()
-    return json_response(time=now)
+    is_gunicorn = "gunicorn" in os.environ.get("SERVER_SOFTWARE", "")
+    python_version =  sys.prefix + " " + sys.version
+    return json_response(result={ "time":now, "is_gunicorn":is_gunicorn, "python_version":python_version })
 
 
 @app.route('/api', methods=['GET','POST'])
