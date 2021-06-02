@@ -3,15 +3,10 @@
 #gcloud config set project celtic-bivouac-307316
 #gcloud info
 #gcloud auth application-default login
-import sys
 import datetime
-import json
 import logging
 import pymysql as MySQLdb
 import decimal
-import uuid
-import firebase_admin 
-from firebase_admin import auth
 from environments_dev import config
 
 
@@ -26,18 +21,10 @@ from environments_dev import config
 #database_host="192.168.15.12"
 #database_password="odroid"
 
-default_app = firebase_admin.initialize_app()
-
-
-print(default_app.name)  # "[DEFAULT]"
-
 log = logging.getLogger("exam_app")
 
 class Error(Exception):
     """Base class for exceptions in this module."""
-    pass
-
-class LoginError(Error):
     pass
 
 class DeleteWithEmptyWhereError(Error):
@@ -153,14 +140,6 @@ class MySql:
             cursor.close()
 
         return referenced_table_schema 
-
-       
-
-
-
-        
-
-
 
 class Table:
     parentTable = None
@@ -703,168 +682,6 @@ def deleteObject(request):
 
 
 
-def login(request):
-    user_name = request["user"]["user_name"]
-    password = request["user"]["password"]
-    login_request = {
-        "user":{
-            "id":"",
-            "user_name":user_name,
-            "password":password
-        }
-    }
-    login_result = getObject( login_request )
-    if login_result == None or password != login_result["password"]:
-        log.error("invalid login for %s", user_name)
-        raise LoginError("invalid user_name or password")
-    
-    token = str(uuid.uuid4())
-    t = datetime.datetime.now() + datetime.timedelta(days=1) 
-    user_id = login_result["id"]
-
-    token_request = {
-        "credentials":{
-            "token":token,
-            "expirationDate": t.strftime("%Y/%m/%d %H:%M:%S"),
-            "user_id":user_id
-        }
-    }
-
-    addObject( token_request )
-    result = getObject(request)
-
-    result["token"] = token
-    result["password"] = ""
-
-    return result
-
-def validateToken(request):
-    log.debug("Validating token has been called")
-    id_token = request["token"]  
-    log.info("id_token:%s", id_token)
-
-    decoded_token = auth.verify_id_token(id_token)
-    log.debug("decoded_token %s", json.dumps(decoded_token,  indent=4, sort_keys=True))
-    uid = decoded_token['uid']
-    log.debug("uid:" + uid)
-    email = decoded_token["email"]
-    log.debug("email:" + email)
-
-    #auth.set_custom_user_claims(uid, {'admin': True})
-
-
-    user = auth.get_user(uid)
-    log.debug("user %s", json.dumps(decoded_token,  indent=4, sort_keys=True))
-
-    
-    log.debug("user claims %s", json.dumps(user.custom_claims,  indent=4, sort_keys=True))
-
-    if not email:
-        log.error("Token not valid")
-        raise LoginError("Token Expired")         
-
-
-def addClaim(request):
-    log.debug("addClaim has been called")
-    
-    email = request["user"]["email"]
-    role = request["user"]["role"]
-
-    user = auth.get_user_by_email(email)
-
-    current_claims = {}
-    if( user.custom_claims ):
-        current_claims = user.custom_claims
-
-    current_claims[role] = True
-
-    auth.set_custom_user_claims(user.uid, current_claims)
-
-    return "Success"
-
-def removeClaim(request):
-    log.debug("removeClaim has been called")
-    
-    email = request["user"]["email"]
-    role = request["user"]["role"]
-
-    user = auth.get_user_by_email(email)
-
-    custom_claims = user.custom_claims
-
-    if( custom_claims ):
-        r = custom_claims.pop(role, None)
-        auth.set_custom_user_claims(user.uid, custom_claims) 
-    
-    return "Success"
-
-def getClaims(request):
-
-    log.debug("getClaims has been called")
-    email = request["user"]["email"]
-    user = auth.get_user_by_email(email)
-
-    return user.custom_claims
-
-def getUserListForClaim(req):
-    claim = req["user"]["role"]
-    userlist = []
-    log.debug("getUserListForClaim has been called")
-    for user in auth.list_users().iterate_all():
-        if claim:
-            if user.custom_claims and claim in user.custom_claims:
-                userlist.append( { 
-                    "uid":user.uid,
-                    "display_name":user.display_name,
-                    "email":user.email
-                    }
-                )
-        else:
-            userlist.append( { 
-                "uid":user.uid,
-                "email":user.email,
-                "roles":user.claims
-                }
-            )
-    return userlist
-
-def sendEmailVerification(request):
-    log.debug("sendEmailVerification has been called")
-    
-    email = request["user"]["email"]
-
-    link = auth.generate_email_verification_link(email)
-
-    log.debug("link:" + link)
-  
-
-    return "OK"
-
-def removeUser(request):
-    log.debug("removeUser has been called")
-    email = request["user"]["email"]
-    uid = None
-    user = auth.get_user_by_email(email)
-    try:
-        uid = user.uid
-        mysql = MySql()
-        connection = mysql.getConnection()
-        cursor = connection.cursor()  
-        query = "delete from user where uid = %s"
-        cursor.execute(query, (uid) )
-        log.debug("delete completed")
-        connection.commit()
-
-    except Exception as e:
-        log.error("Exception removeObject:" + str(e) )
-        connection.rollback()
-        raise
-    finally:
-        mysql.close()
-    
-    auth.delete_user(uid)    
-    return uid
-
 def processRequest(req):
     service = req["service"]  #always cheneque
     database = req["database"]
@@ -874,38 +691,17 @@ def processRequest(req):
     log.debug("processRequest service:%s database:%s action:%s data:%s", service, database, action, data )
 
     if action == "get":
-        validateToken( req ) 
         return getObject( data )
     elif action == "add":
-        validateToken( req ) 
         return addObject( data )
     elif action == "update":
-        validateToken( req ) 
         return updateObject( data )  
     elif action == "delete":
-        validateToken( req ) 
         return deleteObject( data ) 
     elif action == "createUser":
         return addObject( data )         
     elif action == "deleteUser":
         return deleteObject( data )
-    elif action == "addClaim":
-        return addClaim( data )
-    elif action == "removeClaim":
-        return removeClaim( data )
-    elif action == "getClaims":
-        return getClaims( data ) 
-    elif action == "getUserListForClaim":
-        return getUserListForClaim( data )
-    elif action == "sendEmailVerification":
-        return sendEmailVerification(data)         
-    elif action == "removeUser":
-        return removeUser(data)                
-
-
-    elif action == "login":
-        return login( data )   
-                
     else:
         log.error("action not found %s", action)
         return("Action not found:" + str(action) +" you probably want to use: get, add, update or remove")

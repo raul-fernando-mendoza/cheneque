@@ -8,7 +8,7 @@ logger.setLevel(logging.DEBUG)
 ## Here we define our formatter
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-logHandler = handlers.TimedRotatingFileHandler( './log/exam_app.log', when='M', interval=1, backupCount=2)
+logHandler = handlers.TimedRotatingFileHandler( '/var/www/cgi-bin/log/exam_app.log', when='M', interval=1, backupCount=2)
 logHandler.setLevel(logging.DEBUG)
 ## Here we set our logHandler's formatter
 logHandler.setFormatter(formatter)

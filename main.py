@@ -8,9 +8,14 @@ from flask_cors import CORS, cross_origin
 
 import logging
 import json
+
 import mysql_connect 
+import firestore_connect
+import auth_connect
 import os
 import sys
+
+# Use a service account
 
 
 log = logging.getLogger("exam_app")
@@ -35,18 +40,25 @@ def get_time():
 def processRequest():
     # We use 'force' to skip mimetype checking to have shorter curl command.
     log.debug("processRequest has been called")
-    data = request.get_json(force=True)
-    log.debug("data:" + str(data))
+    req = request.get_json(force=True)
+    log.debug("data:" + str(req))
+
+    
     try:
-        obj = mysql_connect.processRequest(data)
+        if "cheneque" == req["service"]:#can be auth, cheneque, firestore)
+            obj = mysql_connect.processRequest(req)
+        elif "firestore" == req["service"]:
+            obj = firestore_connect.processRequest(req)
+        elif "auth" == req["service"]:
+            obj = auth_connect.processRequest(req)
         log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
     except mysql_connect.LoginError as le:
         log.error("Exception:" + str(le))
-        log.error("data:" + json.dumps(data,  indent=4, sort_keys=True))
+        log.error("req:" + json.dumps(req,  indent=4, sort_keys=True))
         abort(401, description=str(le))        
     except Exception as e:
         log.error("Exception:" + str(e))
-        log.error("data:" + json.dumps(data,  indent=4, sort_keys=True))
+        log.error("req:" + json.dumps(req,  indent=4, sort_keys=True))
         abort(404, description=str(e))
     return json_response(result=obj)
 
