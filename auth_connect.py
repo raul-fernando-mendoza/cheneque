@@ -1,5 +1,6 @@
 import logging
 from firebase_admin import auth
+import json
 
 class LoginError(Exception):
     pass
@@ -34,17 +35,25 @@ def validateToken(request):
 
 def addClaim(request):
     log.debug("addClaim has been called")
+    log.debug("request: %s", json.dumps(request,  indent=4, sort_keys=True) )    
     
-    email = request["user"]["email"]
-    role = request["user"]["role"]
+    obj = request["data"]
+
+    email = obj["email"]
+    newClaims = obj["claims"]
+    log.debug("email %s", email)
+    log.debug("newClaims %s", json.dumps(newClaims,  indent=4, sort_keys=True) )
+    
 
     user = auth.get_user_by_email(email)
+    #log.debug("user", str(user) )
 
     current_claims = {}
     if( user.custom_claims ):
         current_claims = user.custom_claims
-
-    current_claims[role] = True
+    for key in newClaims:
+        newClaimValue = newClaims[key]
+        current_claims[key] = newClaimValue
 
     auth.set_custom_user_claims(user.uid, current_claims)
 
@@ -52,16 +61,21 @@ def addClaim(request):
 
 def removeClaim(request):
     log.debug("removeClaim has been called")
+    log.debug("request: %s", json.dumps(request,  indent=4, sort_keys=True) ) 
     
-    email = request["user"]["email"]
-    role = request["user"]["role"]
+    obj = request["data"]
+
+    email = obj["email"]
+    claim = obj["claim"]
+
+    
 
     user = auth.get_user_by_email(email)
 
     custom_claims = user.custom_claims
 
     if( custom_claims ):
-        r = custom_claims.pop(role, None)
+        r = custom_claims.pop(claim, None)
         auth.set_custom_user_claims(user.uid, custom_claims) 
     
     return "Success"
@@ -69,7 +83,7 @@ def removeClaim(request):
 def getClaims(request):
 
     log.debug("getClaims has been called")
-    email = request["user"]["email"]
+    email = request["email"]
     user = auth.get_user_by_email(email)
 
     return user.custom_claims
@@ -82,14 +96,16 @@ def getUserList(req):
         userlist.append( { 
             "uid":user.uid,
             "email":user.email,
-            "roles":user.claims
+            "claims":user.custom_claims,
+            "displayName":user.display_name
             }
         )
     return userlist
+    auth.set
 
 
 def getUserListForClaim(req):
-    claim = req["user"]["role"]
+    claim = req["role"]
     userlist = []
     log.debug("getUserListForClaim has been called")
     for user in auth.list_users().iterate_all():
@@ -113,7 +129,8 @@ def getUserListForClaim(req):
 def sendEmailVerification(request):
     log.debug("sendEmailVerification has been called")
     
-    email = request["user"]["email"]
+    
+    email = request["email"]
 
     link = auth.generate_email_verification_link(email)
 
@@ -124,19 +141,22 @@ def sendEmailVerification(request):
 
 def removeUser(request):
     log.debug("removeUser has been called")
-    email = request["user"]["email"]
-    uid = None
+    log.debug("request: %s", json.dumps(request,  indent=4, sort_keys=True) ) 
+    
+    email = request["data"]["email"]
+ 
     user = auth.get_user_by_email(email)
     
-    auth.delete_user(uid)    
-    return uid
+    auth.delete_user(user.uid)    
+    return user.uid
 
 def processRequest(req):
+    log.debug("auth processRequest has been called")
     action = req["action"]
-    log.debug("Auth process request", action)
+    #log.debug("Auth process request", str(json.dumps(action)))
     if action == "validateToken":
         return validateToken( req )
-    elif action == "validateToken":
+    elif action == "addClaim":
         return addClaim( req )
     elif action == "removeClaim":
         return removeClaim( req )

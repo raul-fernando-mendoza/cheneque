@@ -10,16 +10,17 @@ import logging
 import json
 
 import mysql_connect 
-import firestore_connect
-import auth_connect
+
 import os
 import sys
-
-# Use a service account
-
+import firebase_admin
+from firebase_admin import credentials
+cred = credentials.Certificate('celtic-bivouac-307316-firebase-adminsdk-pbsww-2ccfde6abd.json')
+firebase_admin.initialize_app(cred)
+import firestore_connect
+import auth_connect
 
 log = logging.getLogger("exam_app")
-
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
@@ -39,7 +40,7 @@ def get_time():
 @cross_origin(supports_credentials=True)
 def processRequest():
     # We use 'force' to skip mimetype checking to have shorter curl command.
-    log.debug("processRequest has been called")
+    log.debug("main processRequest has been called")
     req = request.get_json(force=True)
     log.debug("data:" + str(req))
 
