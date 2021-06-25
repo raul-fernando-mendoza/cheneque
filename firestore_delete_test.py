@@ -47,11 +47,9 @@ class TestExamenObservations(unittest.TestCase):
                     'action': 'delete', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                        "aspect":
+                        "examGrades":
                             {
-                            "id":"hola",
-                            "idx":1,
-                            "score":6.3
+                            "id":"HCtewHljsFhWaulgKd5i",
                             }
                                                
                     }
