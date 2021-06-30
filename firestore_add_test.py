@@ -26,23 +26,43 @@ class TestFireStore(unittest.TestCase):
                                 "label":"Test1",
                                 "parameters":[
                                     {
+                                        "idx":1,
                                         "label":"parameter 1",
                                         "criterias":[
                                             {
+                                                "idx":1,
+                                                "label":"criteria 1-2",
+                                                "initiallySelected":True,
+                                                "aspects":[
+                                                    {
+                                                        "idx":1,
+                                                        "label":"aspecto 1-2-1",
+                                                    },
+                                                    {
+                                                        "idx":0,
+                                                        "label":"aspecto 1-2-2",
+                                                    }   
+                                                ]                                             
+                                            },
+                                            {
+                                                "idx":0,
                                                 "label":"criteria 1-1",
                                                 "initiallySelected":True,
                                                 "aspects":[
                                                     {
-                                                        "label":"aspecto 1-1-1",
+                                                        "idx":1,
+                                                        "label":"aspecto 1-1-2",
                                                     },
                                                     {
-                                                        "label":"aspecto 1-1-2",
+                                                        "idx":0,
+                                                        "label":"aspecto 1-1-1",
                                                     }   
                                                 ]                                             
-                                            }
+                                            }                                            
                                         ]
                                     },
                                     {
+                                        "idx":0,
                                         "label":"parameter 2",
                                         "criterias":[
                                             {

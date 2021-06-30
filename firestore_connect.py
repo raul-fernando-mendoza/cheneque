@@ -16,10 +16,10 @@ def addSingleSubCollectionToDoc( transaction, collectionId, parentDocRef, obj, i
         docRef = parentDocRef.collection(collectionId).document()
         values["id"] = docRef.id
 
-        if "idx" in obj and obj["idx"]:
+        if "idx" in obj and obj["idx"] != None:
             values["idx"] = obj["idx"]
         else:
-            allDocs = parentDocRef.collection(collectionId).get()
+            #allDocs = parentDocRef.collection(collectionId).get()
             values["idx"] = idx
         
         for key in obj:
