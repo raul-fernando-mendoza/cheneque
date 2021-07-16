@@ -3,6 +3,8 @@ import json
 import logging
 import uuid
 
+
+
 log = logging.getLogger("exam_app")
 
 db = firestore.client()
