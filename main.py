@@ -53,10 +53,6 @@ def processRequest():
         elif "auth" == req["service"]:
             obj = auth_connect.processRequest(req)
         log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
-    except mysql_connect.LoginError as le:
-        log.error("Exception:" + str(le))
-        log.error("req:" + json.dumps(req,  indent=4, sort_keys=True))
-        abort(401, description=str(le))        
     except Exception as e:
         log.error("Exception:" + str(e))
         log.error("req:" + json.dumps(req,  indent=4, sort_keys=True))

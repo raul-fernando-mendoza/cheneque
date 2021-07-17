@@ -22,7 +22,7 @@ class TestFireStore(unittest.TestCase):
                     'action': 'add', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                            "materia": "Espada",
+                            "test_data": "Espada",
                             "title":"uno mas",
                             "student":{
                                 "uid":"YMPmHz85tcNpOqvUwCdZlciDVRs2",
@@ -52,77 +52,55 @@ class TestFireStore(unittest.TestCase):
 
             obj = firestore_connect.processRequest(req)
             logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
-
+    """
     def testAddUser(self):
             req = {
                     'service': 'firestore', 
-                    'database': 'user', 
+                    'database': 'not-userd', 
                     'action': 'add', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                            "name": "Catalina",
-                            "role":["admin","readonly"],
-                            "otro":[
-                                { "elemento1":"value1"},
-                                { "elemento2":"value2"}
-                            ]
+                            "test_data": {
+                                "id":"one",
+                                "description":"desc"
+                            }
                         }
                     
             }
             obj = firestore_connect.processRequest(req)
             logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
-    """
-    def testAddExam(self):
-            req = {
+
+            self.assertIsNotNone( obj["id"] , "the record was not inserted" )
+            req2 = {
                     'service': 'firestore', 
-                    'database': 'user', 
-                    'action': 'add', 
+                    'database': 'not-userd', 
+                    'action': 'delete', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                            "ExamType":{
-                                "label":"Tecnica XIII",
-                                "parameters":[
-                                    {
-                                        "label":"parameter 1",
-                                        "criterias":[
-                                            {
-                                                "label":"criteria 1-1",
-                                                "aspects":[
-                                                    {
-                                                        "label":"aspecto 1-1-1",
-                                                        "idx":1
-                                                    },
-                                                    {
-                                                        "label":"aspecto 1-1-2",
-                                                        "idx":2
-                                                    }   
-                                                ]                                             
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "label":"parameter 2",
-                                        "criterias":[
-                                            {
-                                                "label":"criteria 2-1",
-                                                "aspects":{
-                                                    "label":"aspecto 2-1-1"
-                                                }
-                                            },
-                                            {
-                                                "label":"criteria 2-2",
-                                                "aspects":{
-                                                    "label":"aspecto 2-2-1"
-                                                }
-                                            }                                            
-                                        ]
-                                    }                                    
-                                ]
-                            } 
-                    }
+                            "test_data": {
+                                "id":obj["id"]
+                            }
+                        }
+                    
             }
-            obj = firestore_connect.processRequest(req)
-            logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
+            obj2 = firestore_connect.processRequest(req2)
+            logging.debug( json.dumps(obj2,  indent=4, sort_keys=True) )
+
+            req2 = {
+                    'service': 'firestore', 
+                    'database': 'not-userd', 
+                    'action': 'get', 
+                    'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
+                    'data':{
+                            "test_data": {
+                                "id":obj["id"]
+                            }
+                        }
+                    
+            }
+            obj2 = firestore_connect.processRequest(req2)
+            logging.debug( json.dumps(obj2,  indent=4, sort_keys=True) )
+            self.assertIsNone( obj , "the record was not removed" )
 
 
 if __name__ == '__main__':

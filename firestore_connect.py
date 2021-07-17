@@ -72,21 +72,18 @@ def addObject(obj):
         log.debug("end")  
     return values
 
-
-@firestore.transactional
 def deleteSingleObject(transaction, collectionId, obj):
     collection = db.collection_group(collectionId).where("id", u'==', obj["id"])
         
-    doc = collection.get(transaction=transaction)[0]
+    doc = collection.get()[0]
     transaction.delete( doc.reference )
 
 def deleteObject(obj):
     logging.debug( "firestore deleteObject called")
     logging.debug( "obj:%s",json.dumps(obj,  indent=4, sort_keys=True) ) 
 
-    transaction = db.transaction()
-
     try:
+        transaction = db.transaction()
         for collection in obj:
             data = obj[collection]
             if isinstance(data, list):
@@ -97,9 +94,10 @@ def deleteObject(obj):
                 element = data
                 deleteSingleObject(transaction, collection, element)
 
-
+        transaction.commit()
     except Exception as e:
         log.error("Exception addObject:" + str(e) )
+        
         raise
     finally:
         log.debug("end")  
@@ -130,13 +128,15 @@ def addSubCollection(obj):
 def updateSingleObject(transaction, collectionId, obj):
     
     collection = db.collection_group(collectionId).where("id", u'==', obj["id"])
-        
-    doc = collection.get(transaction=transaction)[0]
+
+    doc = collection.get()[0]
+    
     transaction.update( doc.reference, obj)
 
 def updateObject(obj):
+    
     try:
-        transaction = db.transaction()
+        transaction = db.transaction()    
         for collectionId in obj:
             records = obj[collectionId]
             if isinstance(records, list):
@@ -453,30 +453,31 @@ def processRequest(req):
     if action == "add":
         #validateToken( req ) 
         return addObject( obj )
-    if action == "addSubCollection":
+    elif action == "addSubCollection":
         return addSubCollection( obj )
-    if action == "delete":
+    elif action == "delete":
         #validateToken( req ) 
         return deleteObject( obj )        
-    if action == "get":
+    elif action == "get":
         #validateToken( req ) 
         return getObject( obj )  
-    if action == "dupObject":
+    elif action == "dupObject":
         #validateToken( req ) 
         return dupObject( obj ) 
-    if action == "dupSubCollection":
+    elif action == "dupSubCollection":
         #validateToken( req ) 
         return dupSubCollection( obj )
-                        
-    if action == "update":
+    elif action == "update":
         #validateToken( req ) 
         return updateObject( obj )   
-    if action == "ArrayUnion":
+    elif action == "ArrayUnion":
         #validateToken( req ) 
         return ArrayUnion( obj )   
-    if action == "ArrayRemove":
+    elif action == "ArrayRemove":
         #validateToken( req ) 
-        return ArrayRemove( collection, obj )                       
+        return ArrayRemove( collection, obj )
+    else:
+        raise Exception("invalid action")                       
 
 if __name__ == "__main__":
     print("hello mysql_connect")
