@@ -105,7 +105,7 @@ def getUserList(req):
 
 
 def getUserListForClaim(req):
-    claim = req["role"]
+    claim = req["data"]["claims"]
     userlist = []
     log.debug("getUserListForClaim has been called")
     for user in auth.list_users().iterate_all():
