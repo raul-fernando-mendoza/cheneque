@@ -18,11 +18,12 @@ class TestExamen(unittest.TestCase):
             req = {
                     'service': 'firestore', 
                     'database': 'ex_type', 
-                    'action': 'dupObject', 
+                    'action': 'dupDocument', 
                     'token': 'a3jbbKjmLHzkxmvNKJPt', 
                     'data':{
-                            "examType":{
-                                "id":"a3jbbKjmLHzkxmvNKJPt",
+                            "exams":{
+                                "id":"test1",
+                                "label":"test1-copy"
                             }                                                    
                         },
 

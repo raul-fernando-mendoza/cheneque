@@ -14,29 +14,33 @@ logging.debug('test has started')
 
 class TestExamenObservations(unittest.TestCase):
     """
-    def testAddObject(self):
+    def testGetDocument(self):
             req = {
                     'service': 'firestore', 
-                    'database': 'ex_type', 
+                    'database': 'exams', 
                     'action': 'get', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                            "Exams":{
-                                "id":None,
+                            "exams":{
+                                "id":"test1",
                                 "label":None,
                                 "parameters":[
                                     {
                                         "id":None,
+                                        "idx":None,
                                         "label":None,
                                         "criterias":[
                                             {
                                                 "id":None,
+                                                "idx":None,
                                                 "label":None,
-                                                "aspects":{
+                                                "aspects":[
+                                                    {
                                                     "id":None,
-                                                    "label":None,
-                                                    "idx":None
-                                                }
+                                                    "idx":None,
+                                                    "label":None
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
@@ -56,19 +60,24 @@ class TestExamenObservations(unittest.TestCase):
     def testAddObject(self):
             req = {'service': 'firestore', 
             'database': 'notused', 
-            'action': 'add', 
-            'token': 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImFiMGNiMTk5Zjg3MGYyOGUyOTg5YWI0ODFjYzJlNDdlMGUyY2MxOWQiLCJ0eXAiOiJKV1QifQ.eyJhZG1pbiI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2NlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1ZCI6ImNlbHRpYy1iaXZvdWFjLTMwNzMxNiIsImF1dGhfdGltZSI6MTYyMjY1MTU1MCwidXNlcl9pZCI6IlIxbE8wSGRPRnBjWDFadXIyTlRGdzAzdkxlWTIiLCJzdWIiOiJSMWxPMEhkT0ZwY1gxWnVyMk5URncwM3ZMZVkyIiwiaWF0IjoxNjIzMTA1MjQ5LCJleHAiOjE2MjMxMDg4NDksImVtYWlsIjoicmF1bF9mZXJuYW5kb19tZW5kb3phQGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsicmF1bF9mZXJuYW5kb19tZW5kb3phQGhvdG1haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.TG8UnCC7Ypdj6BzXcxfeViTW-CYIynPE29LqU3X2u6TpVZYXgJ3rWBiTkOQLZn3CcZwIci-NxbcwT_TiobX-lbQvtutASCcjKm5ciGzt3e4YfRCkN8dW3RnqaUm76HsysSPA0w0StIq90dNI69AG5khEJfZ0jlKZq_ohYj9uC83MDgiBAB1pPoNwWeekLjrTxCcnuj2tdHovHNS5Sl-WAz8gRvPI7wAzZK3Yd0JR1-J-sQiUSP66lFzx0t-Iua5oUcfdooyVx_aby_ZrZuiytuYom_N5CIkJQX2CDI9YTYlN1bqCYEd6SZEfCc2lzRjNj-EDH0KSc2Q2DXwcsbjHLw', 
+            'action': 'get', 
+            'token': 'not used', 
             'data': {
                 'test_data': 
                     {
-                        'id': 1, 
-                        'label': "test 1", 
-                        'description': "description test", 
+                        'id': 'test1', 
+                        'label': None, 
+                        'description': None, 
                     }
                 }
             }
             obj = firestore_connect.processRequest(req)
-            logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )    
+            logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )   
+
+            self.assertIsNotNone(obj)
+            self.assertEqual( obj["id"], "test1")
+            self.assertEqual( obj["label"], "label1") 
+            self.assertEqual( obj["description"], "description1") 
     
 
 if __name__ == '__main__':

@@ -1,3 +1,8 @@
+#to create a virtual environment
+python3.9 -m venv venv
+·and then select it in the python interpreter in visual studio code browse for it. it apears at the end of the list
+
+
 apt install python3.7.3
 apt install python3-pip python3-setuptools python3.7-venv
 

@@ -113,15 +113,17 @@ def getUserListForClaim(req):
             if user.custom_claims and claim in user.custom_claims:
                 userlist.append( { 
                     "uid":user.uid,
-                    "display_name":user.display_name,
-                    "email":user.email
+                    "email":user.email,
+                    "displayName":user.display_name,
+                    "claims":user.custom_claims
                     }
                 )
         else:
             userlist.append( { 
                 "uid":user.uid,
                 "email":user.email,
-                "roles":user.claims
+                "displayName":user.display_name,
+                "claims":user.custom_claims
                 }
             )
     return userlist

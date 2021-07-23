@@ -1,6 +1,10 @@
 #to find the pid
 #sudo netstat -tulnp | grep :5000
 #kill pid
+
+#go inside envinments and change it to use dev or prd
+import environments
+
 from datetime import datetime
 from flask import Flask, request, abort, jsonify
 from flask_json import FlaskJSON, JsonError, json_response, as_json
@@ -19,6 +23,7 @@ cred = credentials.Certificate('celtic-bivouac-307316-firebase-adminsdk-pbsww-2c
 firebase_admin.initialize_app(cred)
 import firestore_connect
 import auth_connect
+import gs_connect
 
 log = logging.getLogger("exam_app")
 
@@ -52,6 +57,8 @@ def processRequest():
             obj = firestore_connect.processRequest(req)
         elif "auth" == req["service"]:
             obj = auth_connect.processRequest(req)
+        elif "gs" == req["service"]:
+            obj = gs_connect.processRequest(req)            
         log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
     except Exception as e:
         log.error("Exception:" + str(e))

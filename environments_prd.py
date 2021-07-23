@@ -5,7 +5,7 @@ import sys
 logger = logging.getLogger("exam_app")
 logger.setLevel(logging.ERROR)
 
-logging.basicConfig(format='%(asctime)-15s %(message)s', level=logging.ERROR)
+logging.basicConfig(format='**** -- %(asctime)-15s %(message)s', level=logging.ERROR)
 
 log = logging.getLogger("exam_app")
 

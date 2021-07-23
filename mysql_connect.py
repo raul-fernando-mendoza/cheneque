@@ -7,7 +7,7 @@ import datetime
 import logging
 import pymysql as MySQLdb
 import decimal
-from environments_prd import config
+from environments import config
 
 
 # Initialize the default app only in development

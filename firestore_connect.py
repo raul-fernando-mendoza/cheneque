@@ -3,122 +3,202 @@ import json
 import logging
 import uuid
 
+
+
 log = logging.getLogger("exam_app")
 
 db = firestore.client()
 
-def addSubCollectionToDoc(collectionName, recordset, obj):
+def addSingleSubCollectionToDoc( transaction, collectionId, parentDocRef, obj, idx):
+    log.debug("addSingleSubCollectionToDoc")
+    values = {}
     try:
-        if isinstance(obj,list):
-            for element in obj:    
-                doc_ref = recordset.collection(collectionName).document()
-                values = {}
-                values["id"] = doc_ref.id
-                for key in element:
-                    keyValue = element[key]
-
-                    if isinstance(keyValue,dict) or isinstance(keyValue,list):
-                        subcollection = addSubCollectionToDoc(key, doc_ref, keyValue)
-                    else:
-                        if key != "id":
-                            values[key] = keyValue
-                doc_ref.set(values)
-               
-        elif isinstance(obj,dict):
         
-            doc_ref = recordset.collection(collectionName).document()
-            values = {}
-            values["id"] = doc_ref.id
-            for key in obj:
-                keyValue = obj[key]
 
-                if isinstance(keyValue,dict) or isinstance(keyValue,list):
-                    addSubCollectionToDoc(key, doc_ref, keyValue)
-                else:
-                    if key != "id":
-                        values[key] = keyValue                    
-            doc_ref.set(values) 
-                    
+        docRef = parentDocRef.collection(collectionId).document()
+        values["id"] = docRef.id
 
-           
+        if "idx" in obj and obj["idx"] != None:
+            values["idx"] = obj["idx"]
+        else:
+            #allDocs = parentDocRef.collection(collectionId).get()
+            values["idx"] = idx
+        
+        for key in obj:
+            if key != "id" and key != "idx" and not isinstance(obj[key],list) and not isinstance(obj[key],dict):
+                values[key] = obj[key]
+
+        transaction.create(docRef, values)                
+
+        for key in obj:
+            keyValue = obj[key]
+            if isinstance(keyValue,list):
+                values[key] = []
+                for i in range(len(keyValue)):
+                    element = keyValue[i]
+                    subCollection = addSingleSubCollectionToDoc(transaction, key, docRef, element, i)
+                    values[key].append(subCollection)
+            elif isinstance(keyValue,dict):
+                subCollection = addSingleSubCollectionToDoc(transaction, key, docRef, keyValue, 0)
+                values[key] = subCollection
+
     except Exception as e:
         log.error("Exception addSubCollection:" + str(e) )
         raise
     finally:
-        log.debug("end")  
+        log.debug("addSingleSubCollectionToDoc end") 
+    return values
 
-def addObject(obj):
-    values = {}    
+
+
+def addSingleDocument(transaction, collectionId, obj):
+    #create the reference to the new document
+    values = { }
     try:
-        for collectionName in obj:
-            doc_ref = db.collection(collectionName).document()
-            values["id"] = doc_ref.id
-            data = obj[collectionName]
+    
+        docRef = db.collection(collectionId).document()
+        values["id"] = docRef.id
 
-            for key in data:
-                    keyValue = data[key]
-                    if isinstance(keyValue,dict) or isinstance(keyValue,list):
-                        addSubCollectionToDoc(key, doc_ref, keyValue)
-                    else:
-                        if key != "id":
-                            values[key] = keyValue
-            doc_ref.set(values)
+        #copy all the fields that are not subcollections
+        for key in obj:
+            keyValue = obj[key]
+            if key != "id" and not isinstance(keyValue,dict) and not isinstance(keyValue,list):
+                values[key] = keyValue
+             
 
-           
+        #now create the document
+        transaction.create(docRef, values )
+
+        #create all the subcollections
+        for key in obj:
+            keyValue = obj[key]
+            if isinstance(keyValue,list):
+                values[key] = []
+                for i in range(len(keyValue)):
+                    element = keyValue[i]
+                    subCollection = addSingleSubCollectionToDoc(transaction, key, docRef, element, i)
+                    values[key].append(subCollection)
+            elif isinstance(keyValue,dict):
+                subCollection = addSingleSubCollectionToDoc(transaction, key, docRef, keyValue, 0)
+                values[key] = subCollection
+
+    except Exception as e:
+        log.error("Error addSingleDocument:" + str(e) )
+        raise
+    finally:
+        log.debug("end") 
+    return values
+
+def addDocuments(obj):
+    result = None   
+    try:
+        transaction = db.transaction()
+        for collectionId in obj:
+            data = obj[collectionId]
+            if isinstance(data, list):
+                result = []
+                #this is a multiple insert 
+                for element in data:
+                    singleObject = addSingleDocument(transaction, collectionId, element)
+                    result.append(singleObject)
+            elif isinstance(data, dict):
+                result = addSingleDocument(transaction, collectionId,data)
+        transaction.commit()
     except Exception as e:
         log.error("Exception addObject:" + str(e) )
         raise
     finally:
         log.debug("end")  
-    return values
+    return result
+
+
+def deleteRecursiveObject(transaction, docRef):
+    for collection in docRef.collections():
+        docs = collection.get()
+        for doc in docs:
+            deleteRecursiveObject(transaction, doc.reference) 
+    transaction.delete( docRef )
 
 def deleteSingleObject(transaction, collectionId, obj):
-    collection = db.collection_group(collectionId).where("id", u'==', obj["id"])
-        
-    doc = collection.get()[0]
-    transaction.delete( doc.reference )
+    try:
+        result = {}
+        id = obj["id"]
+        docList = db.collection_group(collectionId).where("id", u'==', id ).get()
+
+        if len(docList) < 1:
+            raise Exception("document to erase not found")
+            
+        doc = docList[0]
+        docJSON = doc.to_dict()
+        if "idx" in docJSON:
+            idx = doc.get("idx")
+            if idx != None:
+                parentDoc = doc.reference.parent.parent
+                toMoveDocList = parentDoc.collection(collectionId).where(u"idx",u">",idx).get()
+                for toMoveDoc in toMoveDocList:
+                    if toMoveDoc.get("id") != doc.get("id"):
+                        transaction.update(toMoveDoc.reference,{"idx":toMoveDoc.get("idx") - 1})
+            result = {"id":id, "idx":idx}
+        else:
+            result = {"id":id }
+        deleteRecursiveObject( transaction, doc.reference )
+    except Exception as e:
+        log.error("Exception deleteSingleObject:" + str(e) )
+        raise
+    finally:
+        log.debug("end")  
+    return result
 
 def deleteObject(obj):
     logging.debug( "firestore deleteObject called")
     logging.debug( "obj:%s",json.dumps(obj,  indent=4, sort_keys=True) ) 
 
+
+    result = {}
     try:
         transaction = db.transaction()
         for collection in obj:
             data = obj[collection]
             if isinstance(data, list):
                 elements = data
+                result = []
                 for element in elements:
-                    deleteSingleObject(transaction, collection, element)
+                    deleted = deleteSingleObject(transaction, collection, element)
+                    result.append(deleted)
             else:
                 element = data
-                deleteSingleObject(transaction, collection, element)
 
+                result = deleteSingleObject(transaction, collection, element)
         transaction.commit()
+
     except Exception as e:
-        log.error("Exception addObject:" + str(e) )
-        
+        log.error("Exception deleteObject:" + str(e) )
         raise
     finally:
         log.debug("end")  
-    return obj
+    return result
 
 def addSubCollection(obj):
     result = None
     try:
-        for collection in obj:
-            recordset = db.collection_group(collection).where(u'id', u'==', obj[collection]["id"]).get()
-            parent = recordset[0]
-            parentData = obj[collection]
-            for parentKey in parentData:
-                if parentKey != "id":
-                    result = parentData[parentKey]
-                    doc_ref = parent.reference.collection(parentKey).document()
-                    result["id"] = doc_ref.id
-                    doc_ref.set( result )
+        collectionId = list(obj.keys())[0]
+        parentDocList = db.collection_group(collectionId).where(u'id', u'==', obj[collectionId]["id"]).get()
+        if len(parentDocList) < 1:
+            raise Exception("Parent doc not found")
+        parent = parentDocList[0]
+        parentData = obj[collectionId]
+        for parentKey in parentData:
+            if parentKey != "id":
+                result = parentData[parentKey]
+                doc_ref = parent.reference.collection(parentKey).document()
+                alldocs = parent.reference.collection(parentKey).get()
+
+                result["id"] = doc_ref.id
+                result["idx"] = len(alldocs)
+                doc_ref.set( result )
             
     except Exception as e:
-        log.error("Exception updateObject:" + str(e) )
+        log.error("Exception addSubCollection:" + str(e) )
         raise
     finally:
         log.debug("end")  
@@ -127,10 +207,11 @@ def addSubCollection(obj):
 
 def updateSingleObject(transaction, collectionId, obj):
     
-    collection = db.collection_group(collectionId).where("id", u'==', obj["id"])
 
-    doc = collection.get()[0]
-    
+    recordList = db.collection_group(collectionId).where("id", u'==', obj["id"]).get()
+    if len(recordList) < 1:
+        raise Exception("record not found:" + obj["id"]) 
+    doc = recordList[0]
     transaction.update( doc.reference, obj)
 
 def updateObject(obj):
@@ -149,7 +230,7 @@ def updateObject(obj):
 
             
     except Exception as e:
-        log.error("Exception updateObject:" + str(e) )
+        log.error("Exception updateSingleObject:" + str(e) )
         raise
     finally:
         log.debug("end")  
@@ -178,7 +259,7 @@ def ArrayUnion(obj):
         log.debug("end")  
     return obj        
 
-def ArrayRemove(collection, obj):
+def ArrayRemove(obj):
     try:
         for parent in obj:
             data = obj[parent]
@@ -199,72 +280,52 @@ def ArrayRemove(collection, obj):
         log.debug("end")  
     return obj    
 
-def getSubCollection(collectionName, parent, filter):
-    result = None  
+def getSubCollection( parentDoc, collectionId, filter):
+    result = None
     try:
-        if filter == None:
-            result = None
-        elif isinstance(filter,list):
-            #the filter shows a list so get the filter from the first element
-            result = []
+        if isinstance( filter, list ):
             filter = filter[0]
-            collectionset = parent.collection(collectionName)
-            doc_ref = collectionset
-            #apply the filter if any
+            result = []
+        collectionset = parentDoc.reference.collection(collectionId)
+        collections = parentDoc.reference.collections()
+        for c in collections:
+            log.debug("%s %s",c.id, c.get())
+        #apply the filter if any
+        for key in filter:
+            keyValue = filter[key]
+            if not isinstance(keyValue,list) and not isinstance(keyValue,dict) and keyValue!=None:
+                collectionset = collectionset.where(key ,"==", keyValue )
+
+        
+        #retrieve the docs that comply with the where
+        docs = collectionset.get()
+        for doc in docs:
+            values = {}
+            documentJSON = doc.to_dict()
+
+           
+            #copy only the fields named in the filter
             for key in filter:
                 keyValue = filter[key]
-                if not isinstance(keyValue,list) and not isinstance(keyValue,dict) and keyValue!=None:
-                    doc_ref = doc_ref.where(key ,"==", keyValue )
-
-            #check that every element in the collection comply with the filter and copy only those
-            for doc in doc_ref.stream():
-                documentJSON = doc.to_dict()
-
-                values = {}
-                #copy only the fields named in the filter
-                for key in filter:
-                    keyValue = filter[key]
-                    if isinstance(keyValue,dict) or isinstance(keyValue,list):
-                        subCollection = getSubCollection(key, collectionset.document(documentJSON["id"]), keyValue)
-                        values[key] = subCollection
-                    elif key in documentJSON:
+                if isinstance(keyValue,dict) or isinstance(keyValue,list):
+                    subCollection = getSubCollection(doc, key, keyValue)
+                    values[key] = subCollection
+                else:
+                    if key in documentJSON:
                         values[key] = documentJSON[key]
-                    else: 
+                    else:
                         values[key] = None
-                    
-                        
-                        
+
+            if isinstance(result,list):
                 result.append(values)
-        elif isinstance(filter,dict):
-                collectionset = parent.collection(collectionName)
-                doc_ref = collectionset
-
-                for key in filter:
-                    keyValue = filter[key]
-                    if not isinstance(keyValue,list) and not isinstance(keyValue,dict) and keyValue!=None:
-                        doc_ref = doc_ref.where(key ,"==", keyValue )
-                
-                for doc in doc_ref.stream():
-                    documentJSON = doc.to_dict()
-
-                    values = {}
-
-                    for key in filter:
-                        keyValue = filter[key]
-                        if isinstance(keyValue,dict) or isinstance(keyValue,list):
-                            subCollection = getSubCollection(key, collectionset.document(documentJSON["id"]), keyValue)
-                            values[key] = subCollection
-                        elif key in documentJSON:
-                            values[key] = documentJSON[key]
-                        else:
-                            values[key] = None
-                       
-
-                    result = values
+            elif result == None: 
+                result = values
+            else:
+                raise Exception("multiple values found for key:" + key + " but only one requested")
 
 
     except Exception as e:
-        log.error("Exception getSubCollection:" + collectionName + " " + str(e) )
+        log.error("Exception getSubCollection:" + collectionId + " " + str(e) )
         raise
     finally:
         log.debug("getSubCollection end")  
@@ -294,7 +355,7 @@ def getObject(obj):
         for key in obj:
             if key not in ["orderBy"]:
                 collectionId = key
-                collectionset = db.collection(collectionId)
+                collectionset = db.collection_group(collectionId)
                 data = obj[collectionId]
                 if isinstance(data, list):
                     result = []
@@ -326,101 +387,168 @@ def getObject(obj):
             for key in data:
                 keyValue = data[key]
                 if isinstance(keyValue,dict) or isinstance(keyValue,list):                
-                    subcollection = getSubCollection(key, collectionset.document(documentJSON["id"]), keyValue)
+                    subcollection = getSubCollection(doc,key, keyValue)
                     values[key] = subcollection
+
                 elif key in documentJSON:
                     values[key] = documentJSON[key]
                 else:
                     values[key] = None
-            if result == None:
+            if isinstance(result, list):
+                result.append(values)
+            elif result == None:
                 result = values
             else:
-                result.append(values)
-        #do the sort
+                raise Exception("multiple values found for collectionId:" + collectionId + " but only one requested" )
+            
+
 
     except Exception as e:
-        log.error("Exception addObject:" + str(e) )
+        log.error("Exception getObject:" + str(e) )
         raise
     finally:
         log.debug("end")  
     return result   
 
-#
+#only a new id is generated for each subcollection all other including idx is copies
 
-def dupSubDoc(transaction, parentDocRef, collectionId, sourceDoc):
-    newDocRef = None
+def copySubCollection(transaction, parentDocRef, collectionId, sourceDoc):
+    values = None
+    try:
+        log.debug( "copy:" + collectionId )
+        
+        newDocRef = parentDocRef.collection(collectionId).document()
 
-    log.debug( "copy:" + collectionId )
-    
-    newId = uuid.uuid4().hex
-    if parentDocRef == None:
-        newDocRef = db.collection(collectionId).document( newId )
-    else:
-        newDocRef = parentDocRef.collection(collectionId).document( newId )
-    
-    values = {"id":newId}
-    documentJSON = sourceDoc.to_dict()
-    for key in documentJSON:
-        keyValue = documentJSON[key]
-        if key != "id":
-            values[key] = documentJSON[key]
-    transaction.create( newDocRef,values)
-    #the new doc thas been created and now copy all the sub collections
-    collections = sourceDoc.reference.collections()
-    
+        values = {"id":newDocRef.id}    
+        documentJSON = sourceDoc.to_dict()
+        for key in documentJSON:
+            keyValue = documentJSON[key]
+            if key != "id":
+                values[key] = documentJSON[key]
+        transaction.create( newDocRef,values)
+        #the new doc thas been created and now copy all the sub collections
+        collections = sourceDoc.reference.collections()
+        
 
-    for subCollection in collections:
-        log.debug("collection %s", subCollection.id)
-        subDocs = subCollection.get()
-        for subDoc in subDocs:
-            dupSubDoc(transaction, newDocRef, subCollection.id, subDoc)
-    return newDocRef
+        for subCollection in collections:
+            log.debug("collection %s", subCollection.id)
+            subDocs = subCollection.get()
+            values[subCollection.id] = []
+            for subDoc in subDocs:
+                newCollection = copySubCollection(transaction, newDocRef, subCollection.id, subDoc)
+                values[subCollection.id].append(newCollection)
+
+    except Exception as e:
+        log.error("Exception copySubCollection:" + str(e) )
+        raise
+    finally:
+        log.debug("copySubCollection end")  
+    return values
 
 
 #copy object
-def dupObject(obj):
-    logging.debug( "firestore copyObject called")
+def dupDocument(obj):
+    logging.debug( "firestore dupObject called")
     logging.debug( "obj:%s",json.dumps(obj,  indent=4, sort_keys=True) )
-    result = None
+    values = None
     try:
         collectionId = None
         recordset = None
         data = None
         result = None
-        for key in obj:
-            collectionId = key
-            collectionset = db.collection(collectionId)
-            data = obj[collectionId]
-            recordset = collectionset
-            recordset = recordset.where(u"id", u"==",  data["id"])
+        collectionId = list(obj.keys())[0]
 
-        #the recordset has the source record, now retrieve the data and copy all data to the new doc
-        docs = recordset.get()
-        sourceDoc = docs[0]
-       
-     
-        transaction = db.transaction()
+        docId = obj[collectionId]["id"]
         
+        docList = db.collection(collectionId).where(u"id", u"==", docId).get()
+        if len(docList) < 1:
+            raise("document to copy not found:" + docId)
+        transaction = db.transaction()
+        sourceDoc = docList[0]
 
-        newDocRef = dupSubDoc(transaction, None, collectionId, sourceDoc)
+        newDocRef = db.collection(collectionId).document()
+        values = {"id":newDocRef.id}  
+        #now copy all the fields 
+        documentJSON = sourceDoc.to_dict()
+        for key in documentJSON:
+            keyValue = documentJSON[key]
+            if key != "id":
+                if key in obj[collectionId]:
+                    values[key] = obj[collectionId][key]
+                else:
+                    values[key] = documentJSON[key]
+  
 
+        transaction.create( newDocRef,values)
+        for collection in sourceDoc.reference.collections():
+            values[key] = []
+            for subDoc in sourceDoc.reference.collection(collection.id).get():
+                subCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc)
+                values[key].append(subCollection)
         transaction.commit()
+        
       
     except Exception as e:
-        log.error("Exception addObject:" + str(e) )
+        log.error("Exception dupDocument:" + str(e) )
         raise
     finally:
-        log.debug("end")  
+        log.debug("dupDocument end")  
     result = newDocRef.get().to_dict() 
-    return result 
+    return values 
 
 def dupSubCollection(obj):
+    values = {}
+    try:
+        transaction = db.transaction()
+        collectionId = list(obj.keys())[0]
+        data = obj[collectionId]
+        docs = db.collection_group(collectionId).where("id", u'==', data["id"]).get()
+        if len(docs) < 1:
+            raise Exception("subCollection to dup not found")
+        doc = docs[0]
 
+        parentCollection = doc.reference.parent
+        newDocRef = parentCollection.document()
+        values["id"] = newDocRef.id
+        allDocs = parentCollection.get()
+        values["idx"] = len(allDocs)
+
+        #now copy all the fields 
+        documentJSON = doc.to_dict()
+        for key in documentJSON:
+            keyValue = documentJSON[key]
+            if key != "id" and key != "idx":
+                values[key] = documentJSON[key]
+
+
+        transaction.create( newDocRef,values)
+        for collection in doc.reference.collections():
+            values[collection.id] = []
+            for subDoc in doc.reference.collection(collection.id).get():
+                newSubCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc)
+                values[collection.id].append(newSubCollection)
+                
+        transaction.commit()
+
+    except Exception as e:
+        log.error("Exception dupSubCollection:" + str(e) )
+        raise
+    finally:
+        log.debug("dupSubCollection end")  
+
+    return values
+    
+def moveSubCollectionIndex(obj):
+    result = None
     try:
         for parentCollectionId in obj:
             parentData = obj[parentCollectionId]
-            parentDocRef = db.collection_group(parentCollectionId).where("id", u'==', parentData["id"])
-            parentDoc = parentDocRef.get()[0]
+            parentDocList = db.collection_group(parentCollectionId).where("id", u'==', parentData["id"]).get()
+            if len(parentDocList) < 1:
+                errorMessage = "parentDoc has not been found:" + parentData["id"]
+                log.error(errorMessage)
+                raise Exception(errorMessage)
+            parentDoc = parentDocList[0]
             for key in parentData:
                 if key != "id":
                     childCollectionId = key
@@ -428,22 +556,39 @@ def dupSubCollection(obj):
                     
                     transaction = db.transaction()
                     childId = childData["id"]
+                    newIndex = childData["idx"]
 
-                    resultSet = parentDoc.reference.collection(childCollectionId).where(u"id",u"==",childData["id"])
-                    sourceDoc = resultSet.get()[0]
+                    childList = parentDoc.reference.collection(childCollectionId).where(u"id",u"==",childId).get()
+                    if len(childList) < 1:
+                        errorMessage = "childDoc has not been found:" + childId
+                        log.error(errorMessage)
+                        raise Exception(errorMessage)                    
+                    sourceDoc = childList[0]
+                    sourceIndex = sourceDoc.get("idx")
 
-                    
+                    if newIndex < sourceIndex :
+                        toMoveDocRefs = parentDoc.reference.collection(childCollectionId).where(u"idx",u">=",newIndex)
+                        for toMoveDoc in toMoveDocRefs.get():
+                            if toMoveDoc.get("id") != sourceDoc.get("id"):
+                                transaction.update(toMoveDoc.reference,{"idx":toMoveDoc.get("idx") + 1})
+                    elif newIndex > sourceIndex :
+                        toMoveDocList = parentDoc.reference.collection(childCollectionId).where(u"idx",u">",sourceIndex).where(u"idx",u"<=",newIndex).get()
+                        for toMoveDoc in toMoveDocList:
+                            if toMoveDoc.get("id") != sourceDoc.get("id"):
+                                transaction.update(toMoveDoc.reference,{"idx":toMoveDoc.get("idx") - 1})
 
-                    resultRef = dupSubDoc(transaction, parentDoc.reference, childCollectionId, sourceDoc)
+                    transaction.update(sourceDoc.reference,{"idx":newIndex})
+                    result = {"id":childId, "idx":newIndex}
 
                     transaction.commit()
+
     except Exception as e:
-        log.error("Exception dupSubCollection:" + str(e) )
+        log.error("Exception moveSubCollectionIndex:" + str(e) )
         raise
     finally:
-        log.debug("end dupSubCollection")  
+        log.debug("end moveSubCollectionIndex")  
 
-    return resultRef.get().to_dict()
+    return result
 
 def processRequest(req):
     log.debug("firestore processRequest has been called")
@@ -452,7 +597,8 @@ def processRequest(req):
     action = req["action"]
     if action == "add":
         #validateToken( req ) 
-        return addObject( obj )
+
+        return addDocuments( obj )
     elif action == "addSubCollection":
         return addSubCollection( obj )
     elif action == "delete":
@@ -461,9 +607,10 @@ def processRequest(req):
     elif action == "get":
         #validateToken( req ) 
         return getObject( obj )  
-    elif action == "dupObject":
+
+    elif action == "dupDocument":
         #validateToken( req ) 
-        return dupObject( obj ) 
+        return dupDocument( obj ) 
     elif action == "dupSubCollection":
         #validateToken( req ) 
         return dupSubCollection( obj )
@@ -475,9 +622,12 @@ def processRequest(req):
         return ArrayUnion( obj )   
     elif action == "ArrayRemove":
         #validateToken( req ) 
-        return ArrayRemove( collection, obj )
+        return ArrayRemove( obj )                       
+    elif action == "moveSubCollectionIndex":
+        #validateToken( req ) 
+        return moveSubCollectionIndex( obj ) 
     else:
-        raise Exception("invalid action")                       
+        raise Exception("Action not recognized")
 
 if __name__ == "__main__":
     print("hello mysql_connect")

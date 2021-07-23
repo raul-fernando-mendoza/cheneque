@@ -21,3 +21,4 @@ __pycache__/
 venv
 *_test.py
 *.sh
+venv*
