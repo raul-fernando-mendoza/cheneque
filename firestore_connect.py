@@ -5,7 +5,7 @@ import uuid
 
 
 
-log = logging.getLogger("exam_app")
+log = logging.getLogger("cheneque")
 
 db = firestore.client()
 
@@ -17,6 +17,7 @@ def addSingleSubCollectionToDoc( transaction, collectionId, parentDocRef, obj, i
 
         docRef = parentDocRef.collection(collectionId).document()
         values["id"] = docRef.id
+        values[parentDocRef.parent.id + "_id"] = parentDocRef.id
 
         if "idx" in obj and obj["idx"] != None:
             values["idx"] = obj["idx"]
@@ -194,6 +195,7 @@ def addSubCollection(obj):
                 alldocs = parent.reference.collection(parentKey).get()
 
                 result["id"] = doc_ref.id
+                result[collectionId + "_id" ] = obj[collectionId]["id"]
                 result["idx"] = len(alldocs)
                 doc_ref.set( result )
             
@@ -418,12 +420,14 @@ def copySubCollection(transaction, parentDocRef, collectionId, sourceDoc):
         log.debug( "copy:" + collectionId )
         
         newDocRef = parentDocRef.collection(collectionId).document()
+        
+        parent_id_key = parentDocRef.parent.id + "_id"
 
-        values = {"id":newDocRef.id}    
+        values = {"id":newDocRef.id , parent_id_key: parentDocRef.id}    
         documentJSON = sourceDoc.to_dict()
         for key in documentJSON:
             keyValue = documentJSON[key]
-            if key != "id":
+            if key != "id" and key != parent_id_key:
                 values[key] = documentJSON[key]
         transaction.create( newDocRef,values)
         #the new doc thas been created and now copy all the sub collections
@@ -473,7 +477,7 @@ def dupDocument(obj):
         for key in documentJSON:
             keyValue = documentJSON[key]
             if key != "id":
-                if key in obj[collectionId]:
+                if key in obj[collectionId]: #the value can be overwritten from the source object
                     values[key] = obj[collectionId][key]
                 else:
                     values[key] = documentJSON[key]
@@ -481,10 +485,10 @@ def dupDocument(obj):
 
         transaction.create( newDocRef,values)
         for collection in sourceDoc.reference.collections():
-            values[key] = []
+            values[collection.id] = []
             for subDoc in sourceDoc.reference.collection(collection.id).get():
                 subCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc)
-                values[key].append(subCollection)
+                values[collection.id].append(subCollection)
         transaction.commit()
         
       

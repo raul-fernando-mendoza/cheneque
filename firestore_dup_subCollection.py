@@ -4,7 +4,7 @@ import logging
 
 import firebase_admin
 from firebase_admin import credentials
-cred = credentials.Certificate('celtic-bivouac-307316-firebase-adminsdk-pbsww-2ccfde6abd.json')
+cred = credentials.Certificate('credentials.json')
 firebase_admin.initialize_app(cred)
 import firestore_connect
 
@@ -21,8 +21,8 @@ class TestExamen(unittest.TestCase):
                     'action': 'dupSubCollection', 
                     'token': 'a3jbbKjmLHzkxmvNKJPt', 
                     'data':{
-                            "parameters":{
-                                "id":"Rudyh2AmUORtBBX65NqR"
+                            "subtest":{
+                                "id":"N932fhSaf5mK7mdqzZSm"
                             }                                
                     }                                                                        
                        

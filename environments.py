@@ -1,1 +1,1 @@
-from environments_prd import config
+from environments_dev import config

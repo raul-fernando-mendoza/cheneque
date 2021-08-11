@@ -18,9 +18,8 @@ import mysql_connect
 import os
 import sys
 import firebase_admin
-from firebase_admin import credentials
-cred = credentials.Certificate('celtic-bivouac-307316-firebase-adminsdk-pbsww-2ccfde6abd.json')
-firebase_admin.initialize_app(cred)
+
+firebase_admin.initialize_app(environments.config["cred"] )
 import firestore_connect
 import auth_connect
 import gs_connect
