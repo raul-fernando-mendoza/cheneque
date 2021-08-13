@@ -51,7 +51,7 @@ class TestMoveSubCollectionIndex(unittest.TestCase):
                                     "id":obj["profiles"]["id"],
                                     "projects":{
                                         "id":obj["profiles"]["projects"]["id"],
-                                        "idx":0
+                                        "idx":3
                                     }
                                 }
                             }                                                    

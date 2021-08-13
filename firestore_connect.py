@@ -649,6 +649,11 @@ def moveSubCollectionIndex(obj):
         newIndex = data["idx"]
         parentDocRef = doc.reference.parent.parent
 
+        count = len(parentDocRef.collection(doc.reference.parent.id).get())
+        if  newIndex < 0 or newIndex >= count:
+            raise Exception("new index:" + str(newIndex) + " is invalid for collection size:" + str(count))
+
+
         if newIndex < sourceIndex :
             toMoveDocRefs = parentDocRef.collection(doc.reference.parent.id).where(u"idx",u">=",newIndex)
             for toMoveDoc in toMoveDocRefs.get():
