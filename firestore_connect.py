@@ -199,13 +199,13 @@ def addSingleSubcollection(transaction, doc, obj):
         #if there is more sub dicts follow them until there is no more 
         for key in obj:
             value = obj[key]
-            if isinstance(value, dict) and "id" in value:
+            if isinstance(value, dict) and "id" in value and value["id"] != None:
                 isEnd = False
                 docList = doc.reference.collection(key).where("id", u'==', value["id"] ).get()
                 if len(docList) < 1:
                     raise Exception("object collectionID:" + key + " id:" + str(value["id"]) + " not found")
                 result = addSingleSubcollection(transaction, docList[0], value) 
-            elif isinstance(value, dict) and "id" not in value:
+            elif isinstance(value, dict) and ("id" not in value or value["id"] == None):
                 log.debug( json.dumps(value,  indent=4, sort_keys=True) )
                 result = value
                 doc_ref = doc.reference.collection(key).document()

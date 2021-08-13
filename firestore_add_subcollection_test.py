@@ -20,16 +20,18 @@ class TestFireStore(unittest.TestCase):
             req = {
                     'service': 'firestore', 
                     'database': 'not-used', 
-                    'action': 'addSubCollection', 
+                    'action': 'get', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
                             "employee": {
-                                "id":"pMWEXP2tqY33OEhFX7bw",
+                                "id":None,
+                                "name":"Raul",
                                 "profiles":{
-                                        "id":"RUJdrf1mDmKCiqzKb3aC",
-                                        "details":{
-                                                "place":"Mexico",
-                                                "year":2019
+                                        "id":None,
+                                        "name":"tester",
+                                        "projects":{
+                                                "id":"None",
+                                                "name":"InvoiceSystemTest"
                                         }
                                 }
                             }
@@ -39,7 +41,32 @@ class TestFireStore(unittest.TestCase):
             obj = firestore_connect.processRequest(req)
             logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
 
-            self.assertIsNotNone( obj["id"] , "the record was not found" )
+
+
+            req = {
+                    'service': 'firestore', 
+                    'database': 'not-used', 
+                    'action': 'addSubCollection', 
+                    'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
+                    'data':{
+                            "employee": {
+                                "id":obj["id"],
+                                "profiles":{
+                                        "id":obj["profiles"]["id"],
+                                        "projects":{     
+                                                "id":None,                                           
+                                                "name":"npmProject",
+                                                "year":2019
+                                        }
+                                }
+                            }
+                        }
+                    
+            }
+            obj2 = firestore_connect.processRequest(req)
+            logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
+
+            self.assertIsNotNone( obj2["id"] , "the record was not found" )
 
 if __name__ == '__main__':
     unittest.main()
