@@ -24,16 +24,11 @@ class TestExamenObservations(unittest.TestCase):
                   "id": "cXwCNUiSnbehBwRjjgX4",
                   "name": "raul mendoza",
                   "description": "Long time programmer",
-                  "profiles":[
+                  "profiles":
                     {
                       "id":"bdUnhM39aWyTFsPMYhEj",
-                      "years":9
-                    },
-                    {
-                      "id":"vwtdCP28wNt0iBnxIYTH",
-                      "years":3
+                      "years":8
                     }
-                  ]
                 }
               }
             }

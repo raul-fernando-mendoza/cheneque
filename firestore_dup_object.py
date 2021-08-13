@@ -22,9 +22,9 @@ class TestExamen(unittest.TestCase):
                     'action': 'get', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                            "test":{
+                            "employee":{
                                 "id":None,
-                                "desc":"description"
+                                "name":"Raul"
                             }                                                    
                         },
 
@@ -40,7 +40,7 @@ class TestExamen(unittest.TestCase):
                     'action': 'dupDocument', 
                     'token': 'a3jbbKjmLHzkxmvNKJPt', 
                     'data':{
-                            "test":{
+                            "employee":{
                                 "id":obj["id"]
                             }                                                    
                         },

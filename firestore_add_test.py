@@ -4,13 +4,12 @@ import logging
 
 import firebase_admin
 from firebase_admin import credentials
-cred = credentials.Certificate('credentials.json')
-firebase_admin.initialize_app(cred)
+import environments
+firebase_admin.initialize_app(environments.config["cred"] )
 
 import firestore_connect
 
-logging.basicConfig( level=logging.DEBUG)
-logging.debug('test has started') 
+log = logging.getLogger("exam_app")
 
 
 class TestFireStore(unittest.TestCase):
@@ -22,17 +21,50 @@ class TestFireStore(unittest.TestCase):
                     'action': 'add', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                            "test":{
-                                "desc":"description",
-                                "subtest":{
-                                    "desc":"subdescription",
-                                    "subsubtest":{
-                                        "desc":"subsubdescription"
+                            "employee":{
+                                "name":"Raul",
+                                "salary":1000,
+                                "profiles":[
+                                    {
+                                        "name":"programmer",
+                                        "years":8,
+                                        "projects":[
+                                            {
+                                                "name":"BookSystem",
+                                                "year":1998
+                                            },
+                                            {
+                                                "name":"DefectsSystem",
+                                                "year":1999
+                                            },
+                                            {
+                                                "name":"InvoiceSystem",
+                                                "year":2000
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name":"tester",
+                                        "years":2,
+                                        "projects":[
+                                            {
+                                                "name":"BookSystemTest",
+                                                "year":1998
+                                            },
+                                            {
+                                                "name":"DefectsSystemTest",
+                                                "year":1999
+                                            },
+                                            {
+                                                "name":"InvoiceSystemTest",
+                                                "year":2000
+                                            }
+                                        ]
+
                                     }
-                                }
+                                ]
                             }
                         }
-                    
             }
             obj = firestore_connect.processRequest(req)
             logging.debug( json.dumps(obj,  indent=4, sort_keys=True) )
@@ -45,19 +77,22 @@ class TestFireStore(unittest.TestCase):
                     'action': 'get', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                            "test": {
+                            "employee": {
                                 "id":obj["id"],
-                                "desc":None,
-                                "subtest":{
-                                    "desc":None
-                                }
+                                "name":None,
+                                "profiles":[
+                                    {
+                                        "name":None,
+                                        "years":None
+                                    }
+                                ]
                             }
                         }
                     
             }
             obj2 = firestore_connect.processRequest(req2)
             logging.debug( json.dumps(obj2,  indent=4, sort_keys=True) )
-            self.assertEqual(obj2["desc"],"description")
+            self.assertEqual(obj2["name"],"Raul")
 
 
 
