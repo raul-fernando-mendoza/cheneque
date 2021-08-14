@@ -33,11 +33,11 @@ FlaskJSON(app)
 
 @app.route('/')
 def get_time():
-    logging.info('********************* Cheneque / was called ************************') 
+    logging.info('********************* Cheneque 1.1/ was called ************************') 
     now = datetime.utcnow()
     is_gunicorn = "gunicorn" in os.environ.get("SERVER_SOFTWARE", "")
     python_version =  sys.prefix + " " + sys.version
-    return json_response(result={ "time":now, "is_gunicorn":is_gunicorn, "python_version":python_version })
+    return json_response(result={ "cheneque_version":1.1, "time":now, "is_gunicorn":is_gunicorn, "python_version":python_version })
 
 
 @app.route('/api', methods=['GET','POST'])

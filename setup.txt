@@ -49,7 +49,7 @@ python3 -m pip install pymysql
 python3 -m pip install firebase_admin
 
 python3 -m pip freeze > requirements.txt
-
+gcloud init
 gcloud app deploy
 
 /*********************************************/

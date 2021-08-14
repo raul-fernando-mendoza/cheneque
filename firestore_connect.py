@@ -263,28 +263,28 @@ def updateSingleObject(transaction, doc, data):
                 if len(subDocList) < 1:
                     raise "document:" + str(collectionId) + " id:" + str(subCollectionData["id"]) + "not found" 
                 updateSingleObject( transaction, subDocList[0], subCollectionData)
-
-            values[key] = data[key]
-
-    transaction.update( doc.reference, values)
+            else:
+                values[key] = data[key]
+    if len(values.keys()) > 0:
+        transaction.update( doc.reference, values)
 
 def updateObject(obj):
     try:
         transaction = db.transaction()    
-        for collectionId in obj:
-            records = obj[collectionId]
-            if isinstance(records, list):
-                for element in records:
-                    docList = db.collection(collectionId).where("id", u'==', element["id"]).get()
-                    if len(docList) < 1:
-                        raise "document:" + str(collectionId) + " id:" + str(element["id"]) + "not found" 
-                    updateSingleObject( transaction, docList[0], element)
-            else:
-                element = records
+        collectionId = list(obj.keys())[0]
+        records = obj[collectionId]
+        if isinstance(records, list):
+            for element in records:
                 docList = db.collection(collectionId).where("id", u'==', element["id"]).get()
                 if len(docList) < 1:
                     raise "document:" + str(collectionId) + " id:" + str(element["id"]) + "not found" 
                 updateSingleObject( transaction, docList[0], element)
+        elif isinstance(records, dict):
+            element = records
+            docList = db.collection(collectionId).where("id", u'==', element["id"]).get()
+            if len(docList) < 1:
+                raise "document:" + str(collectionId) + " id:" + str(element["id"]) + "not found" 
+            updateSingleObject( transaction, docList[0], element)
         transaction.commit()
 
             
