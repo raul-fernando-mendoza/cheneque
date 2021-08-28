@@ -18,11 +18,14 @@ import mysql_connect
 import os
 import sys
 import firebase_admin
-
-firebase_admin.initialize_app(environments.config["cred"] )
+from firebase_admin import credentials
+#credentials.Certificate(environments.config["service_account_key"])
+firebase_admin.initialize_app()
 import firestore_connect
 import auth_connect
 import gs_connect
+import identity_connect
+import compute_connect
 
 log = logging.getLogger("exam_app")
 
@@ -31,9 +34,11 @@ CORS(app, support_credentials=True)
 #cors = CORS(app, resources={r"/exam-app/*": {"origins": "*"}})
 FlaskJSON(app)
 
+import requests
+
 @app.route('/')
 def get_time():
-    logging.info('********************* Cheneque 1.1/ was called ************************') 
+    logging.info('********************* Cheneque 1.2/ was called ************************') 
     now = datetime.utcnow()
     is_gunicorn = "gunicorn" in os.environ.get("SERVER_SOFTWARE", "")
     python_version =  sys.prefix + " " + sys.version
@@ -48,7 +53,6 @@ def processRequest():
     req = request.get_json(force=True)
     log.debug("data:" + str(req))
 
-    
     try:
         if "cheneque" == req["service"]:#can be auth, cheneque, firestore)
             obj = mysql_connect.processRequest(req)
@@ -58,12 +62,19 @@ def processRequest():
             obj = auth_connect.processRequest(req)
         elif "gs" == req["service"]:
             obj = gs_connect.processRequest(req)            
+        elif "identity" == req["service"]:
+            obj = identity_connect.processRequest(req)
+        elif "compute" == req["service"]:
+            obj = compute_connect.processRequest(req)                         
+        else:
+            raise Exception("service not found" + str(req["service"]))
         log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
     except Exception as e:
-        log.error("Exception:" + str(e))
+        log.error("processRequest Exception:" + str(e))
         log.error("req:" + json.dumps(req,  indent=4, sort_keys=True))
         abort(404, description=str(e))
     return json_response(result=obj)
+
 
 if __name__ == '__main__':
     log.info('********************* Cheneque logger has started ************************')  

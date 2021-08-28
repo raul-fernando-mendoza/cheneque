@@ -5,7 +5,7 @@ import json
 class LoginError(Exception):
     pass
 
-log = logging.getLogger("exam_app")
+log = logging.getLogger("cheneque")
 
 def validateToken(request):
     log.debug("Validating token has been called")

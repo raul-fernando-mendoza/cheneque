@@ -2,6 +2,8 @@
 python3.9 -m venv venv
 ·and then select it in the python interpreter in visual studio code browse for it. it apears at the end of the list
 
+#first upgrade pip
+python -m pip install --upgrade pip
 
 apt install python3.7.3
 apt install python3-pip python3-setuptools python3.7-venv
@@ -42,11 +44,11 @@ sudo apt install python3-pip
 sudo apt-get install python3.9-dev python3.9-venv
 python3.9 -m venv venv
 
-python3 -m pip install Flask
-python3 -m pip install flask_json
-python3 -m pip install flask_cors
-python3 -m pip install pymysql
-python3 -m pip install firebase_admin
+python -m pip install Flask
+python -m pip install flask_json
+python -m pip install flask_cors
+python -m pip install pymysql
+python -m pip install firebase_admin
 
 python3 -m pip freeze > requirements.txt
 gcloud init

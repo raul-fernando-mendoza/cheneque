@@ -9,7 +9,7 @@ firebase_admin.initialize_app(environments.config["cred"] )
 
 import firestore_connect
 
-log = logging.getLogger("exam_app")
+log = logging.getLogger("cheneque")
 
 
 class TestFireStore(unittest.TestCase):
