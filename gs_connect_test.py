@@ -3,9 +3,7 @@ import json
 import logging
 
 import firebase_admin
-from firebase_admin import credentials
-cred = credentials.Certificate('celtic-bivouac-307316-firebase-adminsdk-pbsww-2ccfde6abd.json')
-firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app()
 
 import gs_connect
 
@@ -18,11 +16,11 @@ class TestFireStore(unittest.TestCase):
     def test01_addDocument(self):
             req = {
                     'service': 'gs', 
-                    'bucket': 'celtic-bivouac-307316.appspot.com', 
+                    'bucket': 'cheneque-dev-videos', 
                     'action': 'list', 
                     'token': '7680ea3c-244b-4f4a-af3b-4cc1a475b3e8', 
                     'data':{
-                        "path":"videos/"
+                        "path":"rax-academy/videos/"
                     }
             }
             obj = gs_connect.processRequest(req)

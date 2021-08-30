@@ -18,8 +18,7 @@ import mysql_connect
 import os
 import sys
 import firebase_admin
-from firebase_admin import credentials
-#credentials.Certificate(environments.config["service_account_key"])
+import environments
 firebase_admin.initialize_app()
 import firestore_connect
 import auth_connect
@@ -42,7 +41,7 @@ def get_time():
     now = datetime.utcnow()
     is_gunicorn = "gunicorn" in os.environ.get("SERVER_SOFTWARE", "")
     python_version =  sys.prefix + " " + sys.version
-    return json_response(result={ "cheneque_version":1.1, "time":now, "is_gunicorn":is_gunicorn, "python_version":python_version })
+    return json_response(result={ "cheneque_version":1.2, "time":now, "is_gunicorn":is_gunicorn, "python_version":python_version })
 
 
 @app.route('/api', methods=['GET','POST'])

@@ -2,9 +2,8 @@ import unittest
 import json
 import logging
 import firebase_admin
-from firebase_admin import credentials
-cred = credentials.Certificate('celtic-bivouac-307316-firebase-adminsdk-pbsww-2ccfde6abd.json')
-firebase_admin.initialize_app(cred)
+import environments
+firebase_admin.initialize_app()
 import firestore_connect
 
 logging.basicConfig( level=logging.DEBUG)

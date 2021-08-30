@@ -1,6 +1,4 @@
 from google.cloud import compute 
-import json
-import environments
 import logging
 
 from google.oauth2 import service_account

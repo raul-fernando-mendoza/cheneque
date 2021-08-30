@@ -3,10 +3,10 @@ import json
 import logging
 
 import firebase_admin
-from firebase_admin import credentials
+
 import environments
 
-firebase_admin.initialize_app(environments.config["cred"] )
+firebase_admin.initialize_app( )
 
 log = logging.getLogger("cheneque")
 log.setLevel(logging.DEBUG)

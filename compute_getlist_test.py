@@ -2,6 +2,7 @@ import unittest
 import json
 import logging
 import compute_connect
+import environments
 
 
 log = logging.getLogger("cheneque")

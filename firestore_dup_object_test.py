@@ -6,7 +6,7 @@ import firebase_admin
 from firebase_admin import credentials
 import environments
 
-firebase_admin.initialize_app(environments.config["cred"])
+firebase_admin.initialize_app()
 import firestore_connect
 
 logging.basicConfig( level=logging.DEBUG)

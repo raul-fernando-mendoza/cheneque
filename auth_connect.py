@@ -114,18 +114,10 @@ def getUserListForClaim(req):
                 userlist.append( { 
                     "uid":user.uid,
                     "email":user.email,
-                    "displayName":user.display_name,
+                    "displayName":user.custom_claims["displayName"] if ("displayName" in user.custom_claims) else None ,
                     "claims":user.custom_claims
                     }
                 )
-        else:
-            userlist.append( { 
-                "uid":user.uid,
-                "email":user.email,
-                "displayName":user.display_name,
-                "claims":user.custom_claims
-                }
-            )
     return userlist
 
 def sendEmailVerification(request):
