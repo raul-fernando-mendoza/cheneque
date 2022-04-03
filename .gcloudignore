@@ -22,3 +22,5 @@ venv
 *_test.py
 *.sh
 venv*
+.vscode
+setup.txt
