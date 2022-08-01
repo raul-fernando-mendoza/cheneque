@@ -6,7 +6,7 @@ import sys
 logger = logging.getLogger("cheneque")
 logger.setLevel(logging.DEBUG)
 
-logging.basicConfig(format='**** -- %(asctime)-15s %(message)s', level=logging.ERROR)
+logging.basicConfig(format='**** -- %(asctime)-15s %(message)s', level=logging.DEBUG)
 
 log = logging.getLogger("cheneque")
 

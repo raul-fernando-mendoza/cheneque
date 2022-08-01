@@ -1,0 +1,5 @@
+#deploy function to cloud functions
+gcloud functions deploy chenequeRequest --runtime python39 --trigger-http --allow-unauthenticated --security-level=secure-optional
+
+//show the project app will apply to
+gcloud config list

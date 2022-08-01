@@ -3,7 +3,6 @@ import json
 import logging
 
 import firebase_admin
-import environments
 firebase_admin.initialize_app( )
 
 import firestore_connect

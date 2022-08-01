@@ -4,8 +4,7 @@ import logging
 
 import firebase_admin
 from firebase_admin import credentials
-import environments
-firebase_admin.initialize_app)
+firebase_admin.initialize_app()
 
 import firestore_connect
 
@@ -14,7 +13,7 @@ log = logging.getLogger("exam_app")
 
 class TestExamen(unittest.TestCase):
     
-    def testDupSubCollection(self):
+    def testDupSubCollection1(self):
 
             req = {
                     'service': 'firestore', 
@@ -47,7 +46,8 @@ class TestExamen(unittest.TestCase):
                             "employee":{
                                 "id":obj["id"],
                                 "profiles":{
-                                        "id":obj["profiles"]["id"]
+                                        "id":obj["profiles"]["id"],
+                                        "name":"otro mas"
                                 }
                             }                                
                     }                                                                        
@@ -57,7 +57,6 @@ class TestExamen(unittest.TestCase):
 
             obj = firestore_connect.processRequest(req)
             log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
-    
 
 if __name__ == '__main__':
     unittest.main()

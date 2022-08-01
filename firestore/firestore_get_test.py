@@ -2,11 +2,11 @@ import unittest
 import json
 import logging
 
+
 import firebase_admin
-import environments
+from  .. import firestore_connect 
 firebase_admin.initialize_app( )
 
-import firestore_connect
 
 log = logging.getLogger("cheneque")
 
@@ -14,11 +14,11 @@ log = logging.getLogger("cheneque")
 class TestExamenObservations(unittest.TestCase):
 
     def testGetObject(self):
-            req = {'service': 'firestore', 
-            'database': 'notused', 
-            'action': 'get', 
-            'token': 'not used', 
-            'data': {
+            req = {"service": "firestore", 
+            "database": "notused", 
+            "action": "get", 
+            "token": "not used", 
+            "data": {
                         "employee": {
                             "id":"cXwCNUiSnbehBwRjjgX4",
                             "name":None,
@@ -39,5 +39,5 @@ class TestExamenObservations(unittest.TestCase):
             self.assertEqual( obj["name"], "Raul") 
     
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

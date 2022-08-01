@@ -399,6 +399,9 @@ def getSubCollection( parentDoc, collectionId, filter):
 #            criteria = {
 #                id : "123-p1-c1"
 #            }
+#        },
+#        orderBy:{
+#            id : 'desc' 
 #        }
 #   }    
 #}
@@ -426,16 +429,6 @@ def getObject(obj):
                     fieldValue = data[field]
                     if not isinstance(fieldValue,dict) and not isinstance(fieldValue,list) and fieldValue != None:
                         recordset = recordset.where(field, u"==", fieldValue)
-        #recordset has the where now add the sort
-
-        if 'orderBy' in obj:
-                orderBy = obj['orderBy'] 
-                for orderField in orderBy:
-                    orderValue = orderBy[orderField]
-                    if orderValue == "asc":
-                        recordset = recordset.order_by(orderField,direction=firestore.Query.ASCENDING)    
-                    else:
-                        recordset = recordset.order_by(orderField, direction=firestore.Query.DESCENDING)
         #the recordset has the where and the sortby now retrieve the data
         docs = recordset.get()
         for doc in docs:
@@ -459,6 +452,38 @@ def getObject(obj):
                 result = values
             else:
                 raise Exception("multiple values found for collectionId:" + collectionId + " but only one requested" )
+        #recordset has the where now add the sort
+        if 'orderBy' in obj:
+                orderBy = obj['orderBy'] 
+                field = orderBy["field"]
+                direction = "asc"
+                if "direction" in orderBy:
+                    direction = orderBy["direction"]
+                useReverse = False
+                if direction.lower() == 'desc':
+                    useReverse=True
+                
+                result = sorted(result, key=lambda obj : obj[field], reverse=useReverse)
+                startAfter=None
+                if "startAfterId" in orderBy:
+                    startAfter = orderBy["startAfterId"]
+                    pageSize = 20
+                    if "pageSize" in orderBy:
+                        pageSize = orderBy["pageSize"]
+                
+                    page = []
+                    index = 0
+                    if startAfter:
+                        for index, item in enumerate(result, start=0):   # Python indexes start at zero
+                            if item["id"] == startAfter:
+                                break
+                    for i in range(1,pageSize):
+                        if( index + i ) < len(result):
+                            page.append(result[index+i])
+                        else: 
+                            break
+                    result = page
+
             
 
 
@@ -596,7 +621,10 @@ def dupSubCollection(obj):
         for key in documentJSON:
             keyValue = documentJSON[key]
             if key != "id" and key != "idx":
-                values[key] = documentJSON[key]
+                if key in data:
+                    values[key] = data[key]
+                else:
+                    values[key] = documentJSON[key]
 
 
         transaction.create( newDocRef,values)
@@ -677,6 +705,123 @@ def moveSubCollectionIndex(obj):
         log.debug("end moveSubCollectionIndex")  
 
     return result
+
+#retrieve the datasubcollection described in the obj
+#obj = {
+#   exams = {
+#        id : "123"
+#        parameter = {
+#            id : "123-p1"
+#            criteria = {
+#                id : "123-p1-c1"
+#            }
+#        },
+#        orderBy:{
+#            id : 'desc' 
+#        },
+#        paginatedBy:{
+#           pageIndex: 0,
+#           pageSize:0,
+#           length:0  
+#        }
+#   }    
+#}
+# return value
+#   {
+#     resultSet:{
+#        id=100,
+#        label:"El cascanueces"       
+#     }
+#     info:{
+#        totalNumRows:100
+#     }
+#   } 
+def getPaginatedObject(obj):
+    logging.debug( "firestore getObject called")
+    logging.debug( "obj:%s",json.dumps(obj,  indent=4, sort_keys=True) )
+    result = None
+    pageIndex = 0
+    pageSize = 0  
+    totalNumRows = 0 
+    afterId = None
+    try:
+        collectionId = None
+        recordset = None
+        data = None
+        result = None
+        for key in obj:
+            if key not in ["orderBy", "paginatedBy"]:
+                collectionId = key
+                collectionset = db.collection(collectionId)
+                data = obj[collectionId]
+                if isinstance(data, list):
+                    result = []
+                    data = data[0]
+
+                recordset = collectionset
+
+                for field in data:
+                    fieldValue = data[field]
+                    if not isinstance(fieldValue,dict) and not isinstance(fieldValue,list) and fieldValue != None:
+                        recordset = recordset.where(field, u"==", fieldValue)
+        #recordset has the where now add the sort
+
+        if 'orderBy' in obj:
+                orderBy = obj['orderBy'] 
+                orderField = orderBy["field"]                
+                orderValue = orderBy["direction"]
+                if orderValue == "asc":
+                    recordset = recordset.order_by(orderField,direction=firestore.Query.ASCENDING)    
+                else:
+                    recordset = recordset.order_by(orderField, direction=firestore.Query.DESCENDING)
+
+        if 'paginatedBy' in obj:
+                paginatedBy = obj['paginatedBy'] 
+                afterId = paginatedBy['startAtId']
+                if afterId != None:
+                    recordset = recordset.start_at({u'id':afterId})
+
+
+        #the recordset has the where and the sortby now retrieve the data
+        docs = recordset.get()
+        totalNumRows = docs.size()
+        for doc in docs:
+            documentJSON = doc.to_dict()
+
+            values = {}
+            #if there is a subcollection to retrieve call it
+            for key in data:
+                keyValue = data[key]
+                if isinstance(keyValue,dict) or isinstance(keyValue,list):                
+                    subcollection = getSubCollection(doc,key, keyValue)
+                    values[key] = subcollection
+
+                elif key in documentJSON:
+                    values[key] = documentJSON[key]
+                else:
+                    values[key] = None
+            if isinstance(result, list):
+                result.append(values)
+            elif result == None:
+                result = values
+            else:
+                raise Exception("multiple values found for collectionId:" + collectionId + " but only one requested" )
+        #create the info object
+        info = {
+            totalNumRows:totalNumRows
+        } 
+        result = {
+            
+        }           
+
+
+    except Exception as e:
+        log.error("Exception getObject:" + str(e) )
+        raise
+    finally:
+        log.debug("end")  
+    return result   
+
 
 def processRequest(req):
     log.debug("firestore processRequest has been called")

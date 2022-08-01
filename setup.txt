@@ -1,3 +1,18 @@
+#deploy function to cloud functions
+gcloud functions deploy chenequeRequest --runtime python39 --trigger-http --allow-unauthenticated --security-level=secure-optional
+
+//show the project app will apply to
+gcloud config list
+
+//use in case you what to change something
+
+//deploy to app
+gcloud app deploy
+
+
+#copy the json data from firebaseConfig  into an environment variable (use " to enclose all names): DEV_GOOGLE_APPLICATION_CREDENTIALS
+
+
 #to create a virtual environment
 python3.9 -m venv venv
 ·and then select it in the python interpreter in visual studio code browse for it. it apears at the end of the list

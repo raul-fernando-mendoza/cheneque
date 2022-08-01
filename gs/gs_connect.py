@@ -1,34 +1,23 @@
-from firebase_admin import storage
-
-from datetime import timedelta
-import json
+from google.cloud import storage
 import logging
-import uuid
 
-from google.oauth2 import service_account
-
-log = logging.getLogger("exam_app")
-
-
+log = logging.getLogger("gs")
 
 def gsList( bucket_name , data):
     log.debug("gsList has been called")
     paths = []
     try:
-        bucket = storage.bucket(bucket_name)
+        storage_client = storage.Client()
+        bucket =  storage_client.get_bucket(bucket_name)
+        
         log.debug("exist:" + str(bucket.exists()))
         blobs = bucket.list_blobs(prefix=data["path"])
-
-        import firebase_admin
-        expiration = timedelta(3) # valid for 3 days
-        
 
         for blob in blobs:
             log.debug(blob.name)
             if not blob.name.endswith("/"):
-                url = blob.generate_signed_url(expiration, method="GET")
-                log.debug(url)
-                paths.append({ "name":blob.name, "url":url} )
+                log.debug(blob.name)
+                paths.append({ "name":blob.name, "url":blob.public_url} )
     except Exception as e:
         log.error("Exception gsList:" + str(e) )
         raise
@@ -39,11 +28,11 @@ def gsList( bucket_name , data):
 def processRequest(req):
     log.debug("gs processRequest has been called")
     bucket = req["bucket"]
-    obj = req["data"]
+    data = req["data"]
     action = req["action"]
     if action == "list":
         #validateToken( req ) 
-        return gsList( bucket, obj )
+        return gsList( bucket, data )
     else:
         raise Exception("Action not recognized")
 if __name__ == "__main__":

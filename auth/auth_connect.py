@@ -144,6 +144,18 @@ def removeUser(request):
     auth.delete_user(user.uid)    
     return user.uid
 
+def getUser(request):
+    log.debug("retrive user data")
+    uid = request["data"]["uid"]  
+
+    user = auth.get_user(uid)
+    return { 
+        "uid":user.uid,
+        "email":user.email,
+        "displayName":user.custom_claims["displayName"] if ("displayName" in user.custom_claims) else None ,
+        "claims":user.custom_claims
+        }
+
 def processRequest(req):
     log.debug("auth processRequest has been called")
     action = req["action"]
@@ -166,6 +178,8 @@ def processRequest(req):
         return sendEmailVerification()
     elif action == "removeUser":
         return removeUser(req)
+    elif action == "getUser":
+        return getUser(req)
 
 if __name__ == "__main__":
     print("hello auth_connect")
