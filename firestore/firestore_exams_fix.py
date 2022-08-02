@@ -24,8 +24,9 @@ if evaluator_email does not exist
 if __name__ == '__main__':
     db = firestore.client()
     examsSet = db.collection("exams") \
-        .where("materia_id","==",'77b9d6a5-7c20-4f9d-b266-fe72945bba97') \
         .get()
+        #.where("materia_id","==",'77b9d6a5-7c20-4f9d-b266-fe72945bba97') 
+        
     for indexExam, exam in enumerate(examsSet):
         log.debug("exam" , indexExam,  str(exam.to_dict()) )
 
