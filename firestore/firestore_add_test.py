@@ -3,11 +3,12 @@ import json
 import logging
 
 import firebase_admin
-from firebase_admin import credentials
-import environments
-
-
+#takes the connection from the environment variable FIREBASE_CONFIG make sure is development
 firebase_admin.initialize_app( )
+import firestore_connect 
+
+
+
 
 import firestore_connect
 
@@ -33,15 +34,21 @@ class TestFireStore(unittest.TestCase):
                                         "projects":[
                                             {
                                                 "name":"BookSystem",
-                                                "year":1998
+                                                "year":1998,
+                                                "resumePath":"/DefectSystem",
+                                                "resumeUrl":"http://some//some"
                                             },
                                             {
                                                 "name":"DefectsSystem",
-                                                "year":1999
+                                                "year":1999,
+                                                "resumePath":"/DefectSystem",
+                                                "resumeUrl":"http://defectSystem"
                                             },
                                             {
                                                 "name":"InvoiceSystem",
-                                                "year":2000
+                                                "year":2000,
+                                                "resumePath":"/InvoiceSystem",
+                                                "resumeUrl":"http://InvoiceSystem"
                                             }
                                         ]
                                     },
@@ -51,18 +58,36 @@ class TestFireStore(unittest.TestCase):
                                         "projects":[
                                             {
                                                 "name":"BookSystemTest",
-                                                "year":1998
+                                                "year":1998,
+                                                "resumePath":"/BookSystemTest",
+                                                "resumeUrl":"http://BookSystemTest"
                                             },
                                             {
                                                 "name":"DefectsSystemTest",
-                                                "year":1999
+                                                "year":1999,
+                                                "resumePath":"/DefectsSystemTest",
+                                                "resumeUrl":"http://DefectsSystemTest"
                                             },
                                             {
                                                 "name":"InvoiceSystemTest",
-                                                "year":2000
+                                                "year":2000,
+                                                "resumePath":"/InvoiceSystemTest",
+                                                "resumeUrl":"http://InvoiceSystemTest"
                                             }
                                         ]
 
+                                    }
+                                ],
+                                "education":[
+                                    {
+                                        "school":"MIT",
+                                        "title":"Engineer",
+                                        "year":2001
+                                    },
+                                    {
+                                        "school":"Warton",
+                                        "title":"Master",
+                                        "year":2002
                                     }
                                 ]
                             }
@@ -87,7 +112,14 @@ class TestFireStore(unittest.TestCase):
                                         "name":None,
                                         "years":None
                                     }
-                                ]
+                                ],
+                                "education":[
+                                    {
+                                        "school":None,
+                                        "title":None,
+                                        "year":None
+                                    }
+                                ]                                
                             }
                         }
                     

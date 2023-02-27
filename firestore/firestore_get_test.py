@@ -4,8 +4,11 @@ import logging
 
 
 import firebase_admin
-from  .. import firestore_connect 
+#takes the connection from the environment variable FIREBASE_CONFIG make sure is development
 firebase_admin.initialize_app( )
+import firestore_connect 
+
+
 
 
 log = logging.getLogger("cheneque")

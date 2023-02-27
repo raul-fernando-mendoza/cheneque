@@ -3,11 +3,9 @@ import json
 import logging
 
 import firebase_admin
-from firebase_admin import credentials
-import environments
-
-firebase_admin.initialize_app()
-import firestore_connect
+#takes the connection from the environment variable FIREBASE_CONFIG make sure is development
+firebase_admin.initialize_app( )
+import firestore_connect 
 
 logging.basicConfig( level=logging.DEBUG)
 logging.debug('test has started') 
@@ -26,7 +24,7 @@ class TestExamen(unittest.TestCase):
                                 "id":None,
                                 "name":"Raul"
                             }                                                    
-                        },
+                        }
 
             }
 
@@ -44,6 +42,9 @@ class TestExamen(unittest.TestCase):
                                 "id":obj["id"]
                             }                                                    
                         },
+                    "options":{
+                        "exceptions":["education","Path"]
+                    }                        
 
             }
 

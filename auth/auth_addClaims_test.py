@@ -3,12 +3,12 @@ import json
 import logging
 
 import firebase_admin
-import environments
 firebase_admin.initialize_app()
 
 import auth_connect
 
 log = logging.getLogger("cheneque")
+log.setLevel(logging.DEBUG)
 
 
 class TestExamenObservations(unittest.TestCase):
@@ -18,9 +18,9 @@ class TestExamenObservations(unittest.TestCase):
                     'service': 'auth', 
                     'action': 'addClaim',
                     'data':{
-                        "email":"admin-dev@hotmail.com", 
+                        "email":"admin-dev@raxacademy.com", 
                         'claims':{
-                            "admin":True
+                            "role-admin-autocad":True
                         }
                     }
             }
@@ -32,7 +32,7 @@ class TestExamenObservations(unittest.TestCase):
             req = {
                     'service': 'auth', 
                     'action': 'getClaims',
-                    "email":"admin-dev@hotmail.com", 
+                    "email":"admin-dev@raxacademy.com", 
             }
                     
 

@@ -4,3 +4,5 @@ gcloud functions deploy gsRequest --runtime python39 --trigger-http --allow-unau
 //show the project app will apply to
 gcloud config list
 
+//to set the project
+gcloud config set project thoth-qa

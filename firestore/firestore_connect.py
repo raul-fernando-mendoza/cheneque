@@ -9,6 +9,21 @@ log = logging.getLogger("cheneque")
 
 db = firestore.client()
 
+
+def isInExceptions( str:str, options):
+    if options != None and "exceptions" in options:
+        patterns = options["exceptions"]
+        if isinstance(patterns,list):
+            for pattern in patterns:
+                if str.endswith( pattern ) == True:
+                    log.debug("not coping:" + str)
+                    return True
+        else:
+            raise Exception("exceptions shuld be a list of strings")
+    
+    return False
+
+
 def addSingleSubCollectionToDoc( transaction, collectionId, parentDocRef, obj, idx):
     log.debug("addSingleSubCollectionToDoc")
     values = {}
@@ -496,7 +511,7 @@ def getObject(obj):
 
 #only a new id is generated for each subcollection all other including idx is copies
 
-def copySubCollection(transaction, parentDocRef, collectionId, sourceDoc):
+def copySubCollection(transaction, parentDocRef, collectionId, sourceDoc, options):
     values = None
     try:
         log.debug( "copy:" + collectionId )
@@ -508,21 +523,23 @@ def copySubCollection(transaction, parentDocRef, collectionId, sourceDoc):
         values = {"id":newDocRef.id , parent_id_key: parentDocRef.id}    
         documentJSON = sourceDoc.to_dict()
         for key in documentJSON:
-            keyValue = documentJSON[key]
-            if key != "id" and key != parent_id_key:
-                values[key] = documentJSON[key]
+            if key != "id" and isInExceptions(key, options)==False:
+                keyValue = documentJSON[key]
+                if key != "id" and key != parent_id_key:
+                    values[key] = documentJSON[key]
         transaction.create( newDocRef,values)
         #the new doc thas been created and now copy all the sub collections
         collections = sourceDoc.reference.collections()
         
 
         for subCollection in collections:
-            log.debug("collection %s", subCollection.id)
-            subDocs = subCollection.get()
-            values[subCollection.id] = []
-            for subDoc in subDocs:
-                newCollection = copySubCollection(transaction, newDocRef, subCollection.id, subDoc)
-                values[subCollection.id].append(newCollection)
+            if( isInExceptions(subCollection.id, options)==False ):
+                log.debug("collection %s", subCollection.id)
+                subDocs = subCollection.get()
+                values[subCollection.id] = []
+                for subDoc in subDocs:
+                    newCollection = copySubCollection(transaction, newDocRef, subCollection.id, subDoc, options)
+                    values[subCollection.id].append(newCollection)
 
     except Exception as e:
         log.error("Exception copySubCollection:" + str(e) )
@@ -533,7 +550,9 @@ def copySubCollection(transaction, parentDocRef, collectionId, sourceDoc):
 
 
 #copy object
-def dupDocument(obj):
+#options if the name ends with any of the string it will not be copied
+#option = { exceptions = ["Path", "secretInfo"] }
+def dupDocument(obj, options):
     logging.debug( "firestore dupObject called")
     logging.debug( "obj:%s",json.dumps(obj,  indent=4, sort_keys=True) )
     values = None
@@ -557,8 +576,8 @@ def dupDocument(obj):
         #now copy all the fields 
         documentJSON = sourceDoc.to_dict()
         for key in documentJSON:
-            keyValue = documentJSON[key]
-            if key != "id":
+            if key != "id" and isInExceptions(key, options)==False:
+                keyValue = documentJSON[key]
                 if key in obj[collectionId]: #the value can be overwritten from the source object
                     values[key] = obj[collectionId][key]
                 else:
@@ -567,10 +586,11 @@ def dupDocument(obj):
 
         transaction.create( newDocRef,values)
         for collection in sourceDoc.reference.collections():
-            values[collection.id] = []
-            for subDoc in sourceDoc.reference.collection(collection.id).get():
-                subCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc)
-                values[collection.id].append(subCollection)
+            if( isInExceptions(collection.id,options) == False):
+                values[collection.id] = []
+                for subDoc in sourceDoc.reference.collection(collection.id).get():
+                    subCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc, options)
+                    values[collection.id].append(subCollection)
         transaction.commit()
         
       
@@ -582,7 +602,7 @@ def dupDocument(obj):
     result = newDocRef.get().to_dict() 
     return values 
 
-def dupSubCollection(obj):
+def dupSubCollection(obj, options):
     values = {}
     try:
         transaction = db.transaction()
@@ -619,20 +639,21 @@ def dupSubCollection(obj):
         #now copy all the fields 
         documentJSON = doc.to_dict()
         for key in documentJSON:
-            keyValue = documentJSON[key]
-            if key != "id" and key != "idx":
+            if key != "id" and key != "idx" and isInExceptions(key, options)==False:            
+                keyValue = documentJSON[key]
                 if key in data:
                     values[key] = data[key]
                 else:
                     values[key] = documentJSON[key]
 
-
+        #now copy all the subcollections
         transaction.create( newDocRef,values)
         for collection in doc.reference.collections():
-            values[collection.id] = []
-            for subDoc in doc.reference.collection(collection.id).get():
-                newSubCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc)
-                values[collection.id].append(newSubCollection)
+            if isInExceptions(collection.id, options)==False:
+                values[collection.id] = []
+                for subDoc in doc.reference.collection(collection.id).get():
+                    newSubCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc, options)
+                    values[collection.id].append(newSubCollection)
                 
         transaction.commit()
 
@@ -825,9 +846,13 @@ def getPaginatedObject(obj):
 
 def processRequest(req):
     log.debug("firestore processRequest has been called")
-    collection = req["database"]
+    database = req["database"]
     obj = req["data"]
     action = req["action"]
+    options = None
+    if "options" in req:
+        options = req["options"]
+
     if action == "add":
         #validateToken( req ) 
 
@@ -843,10 +868,10 @@ def processRequest(req):
 
     elif action == "dupDocument":
         #validateToken( req ) 
-        return dupDocument( obj ) 
+        return dupDocument( obj , options) 
     elif action == "dupSubCollection":
         #validateToken( req ) 
-        return dupSubCollection( obj )
+        return dupSubCollection( obj, options )
     elif action == "update":
         #validateToken( req ) 
         return updateObject( obj )   

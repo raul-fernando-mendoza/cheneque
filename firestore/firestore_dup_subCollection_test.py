@@ -50,7 +50,10 @@ class TestExamen(unittest.TestCase):
                                         "name":"otro mas"
                                 }
                             }                                
-                    }                                                                        
+                    },
+                    "options":{
+                        "exceptions":["years"]
+                    }    
                        
 
             }

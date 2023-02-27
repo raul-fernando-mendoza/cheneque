@@ -59,5 +59,5 @@ def chenequeRequest(request):
         log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
     except Exception as e:
         log.error("**** processRequest Exception:" + str(e))
-        return ({"error":str(e)}, 200, headers)
+        return ({"error":str(e)}, 404, headers)
     return ({"result":obj}, 200, headers)
