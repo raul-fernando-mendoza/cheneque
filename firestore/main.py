@@ -1,8 +1,9 @@
-
-from google.cloud import firestore
 import json
 import logging
 import firebase_admin
+
+import datetime
+from json import JSONEncoder
 
 firebase_admin.initialize_app()
 import firestore_connect
@@ -12,7 +13,13 @@ logging.basicConfig(format='**** -- %(asctime)-15s %(message)s', level=logging.E
 log = logging.getLogger("exams")
 log.setLevel(logging.ERROR)
 
-
+# subclass JSONEncoder
+class DateTimeEncoder(JSONEncoder):
+        #Override the default method
+        def default(self, obj):
+            if isinstance(obj, (datetime.date, datetime.datetime)):
+                return obj.isoformat()
+            
 def chenequeRequest(request):
     log.error("**** create cheneque receive:" + str(request))
     log.error("**** create cheneque type:" + str(type(request)))
@@ -56,7 +63,7 @@ def chenequeRequest(request):
             obj = firestore_connect.processRequest(req)
         else:
             raise Exception("service not found" + str(req["service"]))
-        log.debug( json.dumps(obj,  indent=4, sort_keys=True) )
+        log.debug( json.dumps(obj,  indent=4, sort_keys=True, cls=DateTimeEncoder) )
     except Exception as e:
         log.error("**** processRequest Exception:" + str(e))
         return ({"error":str(e)}, 404, headers)
