@@ -3,6 +3,9 @@ gcloud functions deploy chenequeRequest --runtime python39 --trigger-http --allo
 
 //show the project app will apply to
 gcloud config list
+gcloud projects list
+gcloud config set project thoth-dev-346022
+gcloud auth list
 
 //use in case you what to change something
 
