@@ -114,7 +114,7 @@ def getUserListForClaim(req):
                 userlist.append( { 
                     "uid":user.uid,
                     "email":user.email,
-                    "displayName":user.custom_claims["displayName"] if ("displayName" in user.custom_claims) else None ,
+                    "displayName":user.display_name ,
                     "claims":user.custom_claims
                     }
                 )
@@ -152,7 +152,7 @@ def getUser(request):
     return { 
         "uid":user.uid,
         "email":user.email,
-        "displayName":user.custom_claims["displayName"] if ("displayName" in user.custom_claims) else None ,
+        "displayName":user.display_name,
         "claims":user.custom_claims
         }
 

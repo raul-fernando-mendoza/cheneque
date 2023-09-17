@@ -18,7 +18,7 @@ class TestExamenObservations(unittest.TestCase):
                     "service": "auth", 
                     "action": "getUser", 
                     "data":{
-                        "uid":"uZP1VwpZJCg8zjMrnHNwh7s2Q3e2"
+                        "uid":"TSjEeIwjQrXPOa0qltIB3ot8yov2"
                     }
             }
                     

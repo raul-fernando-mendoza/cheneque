@@ -2,8 +2,8 @@ from firebase_admin import firestore
 import json
 import logging
 import uuid
-
-
+import datetime
+from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 
 log = logging.getLogger("cheneque")
 
@@ -602,6 +602,89 @@ def dupDocument(obj, options):
     result = newDocRef.get().to_dict() 
     return values 
 
+#create a new version of a document with and incremented version
+# set the new version of the document as isCurrentVersion
+# update the old version of the document isCurrentVersion as false
+# update the updated_on with the date on both old a new version
+# parameters: a json object with the following data
+#  collectionPath of the document
+#  id of the document to duplicate
+#  versionKey usually "version"
+#  isCurrentVersionKey usually "is_current_version"
+#  updateOnKey usually "updated_on"
+#  options to exclude some items in the duplication
+# return the new id of the document
+def createDocumentNewVersion(obj, options):
+    logging.debug( "firestore createNewDocumentVersion called")
+    logging.debug( "obj :%s",json.dumps(obj,  indent=4, sort_keys=True) )
+    values = None
+    try:
+        collectionId = obj["collectionPath"]
+        docId = obj["id"]
+        versionKey = obj["versionKey"]
+        isCurrentVersionKey = obj["isCurrentVersionKey"]
+        updateOnKey = obj["updateOnKey"]
+        newValues = obj["newValues"]
+         
+  
+        recordset = None
+        data = None
+        result = None
+       
+       #find the document to generate a new version
+        sourceRef = db.collection(collectionId).document(docId)
+        sourceDoc = sourceRef.get()
+        if not sourceDoc.exists:
+            raise("document to copy not found:" + docId)
+        documentJSON = sourceDoc.to_dict()
+
+        transaction = db.transaction()
+  
+
+        newDocRef = db.collection(collectionId).document(docId.split("_")[0] + "_" + str(documentJSON[versionKey] + 1) )
+        values = {"id":newDocRef.id}  
+        #now copy all the fields 
+        
+        for key in documentJSON:
+            if key != "id" and isInExceptions(key, options)==False:
+                if key in newValues: #the value can be overwritten from the source object
+                    values[key] = newValues[key]
+                else:
+                    values[key] = documentJSON[key]                
+        
+        #now update the values related to version
+        dateTimeNow = datetime.datetime.now()
+        timeNow = DatetimeWithNanoseconds(dateTimeNow.year, dateTimeNow.month, dateTimeNow.day, dateTimeNow.hour, dateTimeNow.minute, dateTimeNow.second, 0) 
+
+        updateValues = {
+            updateOnKey: timeNow,
+            isCurrentVersionKey: False
+        }
+        transaction.update( sourceRef , updateValues )
+
+        values[versionKey] = values[versionKey] + 1
+        values[updateOnKey] = timeNow
+
+
+
+        transaction.create( newDocRef,values)
+        for collection in sourceDoc.reference.collections():
+            if( isInExceptions(collection.id,options) == False):
+                values[collection.id] = []
+                for subDoc in sourceDoc.reference.collection(collection.id).get():
+                    subCollection = copySubCollection(transaction, newDocRef, collection.id, subDoc, options)
+                    values[collection.id].append(subCollection)
+
+        transaction.commit()
+        
+      
+    except Exception as e:
+        log.error("Exception dupDocument:" + str(e) )
+        raise
+    finally:
+        log.debug("dupDocument end")  
+    return values 
+
 def dupSubCollection(obj, options):
     values = {}
     try:
@@ -872,6 +955,9 @@ def processRequest(req):
     elif action == "dupSubCollection":
         #validateToken( req ) 
         return dupSubCollection( obj, options )
+    elif action == "createDocumentNewVersion":
+        #validateToken( req ) 
+        return createDocumentNewVersion( obj, options )    
     elif action == "update":
         #validateToken( req ) 
         return updateObject( obj )   

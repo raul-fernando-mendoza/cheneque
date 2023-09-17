@@ -1,4 +1,5 @@
 #deploy function to cloud functions
+#  YOU MUST RUN FROM THE FOLDER WHERE THE funtion is located. use change dir
 gcloud functions deploy chenequeRequest --runtime python39 --trigger-http --allow-unauthenticated --security-level=secure-optional
 
 //show the project app will apply to
