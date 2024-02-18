@@ -3,6 +3,7 @@
 gcloud functions deploy chenequeRequest --runtime python39 --trigger-http --allow-unauthenticated --security-level=secure-optional
 
 //show the project app will apply to
+gcloud config configurations list
 gcloud config list
 gcloud projects list
 gcloud config set project thoth-dev-346022

@@ -206,6 +206,37 @@ def deleteObject(obj):
         log.debug("end")  
     return result
 
+#deletes all objects below a path
+#obj{
+#   collection:"employees/emp1234/jobs",
+#   id:job123   
+#}
+def deleteCollectionObject(obj):
+    logging.debug( "firestore deleteCollectionObject called")
+    logging.debug( "obj:%s",json.dumps(obj,  indent=4, sort_keys=True) ) 
+
+
+    result = {}
+    try:
+        transaction = db.transaction()
+        collectionId = obj["collection"]
+        id = obj["id"]
+
+        sourceRef = db.collection(collectionId).document(id)
+        sourceDoc = sourceRef.get()
+        if not sourceDoc.exists:
+            raise Exception("document:" + str(collectionId) + " id:" + str(id) + "not found")
+        
+        deleteRecursiveObject( transaction, sourceDoc.reference )
+
+        transaction.commit()
+        result = obj
+    except Exception as e:
+        log.error("Exception deleteCollectionObject:" + str(e) )
+        raise
+    finally:
+        log.debug("end")  
+    return result
 
 def addSingleSubcollection(transaction, doc, obj):
         result = {}
@@ -970,6 +1001,8 @@ def processRequest(req):
     elif action == "moveSubCollectionIndex":
         #validateToken( req ) 
         return moveSubCollectionIndex( obj ) 
+    elif action == "deleteCollectionObject":
+        return deleteCollectionObject( obj )
     else:
         raise Exception("Action not recognized")
 
